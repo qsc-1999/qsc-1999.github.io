@@ -135,10 +135,60 @@
                 <p><strong>写在前面：</strong></p>
 <p>​    一直想用写博客的方式记录周报，可是偷懒一直没做，现在终于要开始了！每周会产出一篇博客，记录每天的学习收获，同时会不定期写一些总结性的文章！</p>
 <h2 id="2021-03-31"><a href="#2021-03-31" class="headerlink" title="2021-03-31"></a>2021-03-31</h2><p><strong>auc曲线计算：</strong></p>
+<p>​    <code>AUC</code>指标也是机器学习、统计学中关于分类问题一个常见的指标，这里只记录在<code>python</code>中如何计算<code>AUC</code>，至于<code>AUC</code>的细节问题，专门开一个博客讲解。</p>
+<p>​    在<code>python</code>，常用<code>sklearn</code>包来计算<code>AUC</code>，那么如何计算呢？首先上代码，这里只分析二分类：</p>
+<pre><code>from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+X, y = load_breast_cancer(return_X_y=True)
+clf = LogisticRegression(solver=&quot;liblinear&quot;, random_state=0).fit(X, y)
+roc_auc_score(y, clf.predict_proba(X)[:, 1])
+roc_auc_score(y, clf.decision_function(X))
+</code></pre>
+<p>我们可以看以下<code>X、y、clf.predict_proba(X)</code>的<code>shape</code>，以及<code>clf.predict_proba(X)</code>是什么：</p>
+<p><img src="/2021/03/31/%E5%91%A8%E6%8A%A520210403/QQ%E6%88%AA%E5%9B%BE20210401161032.jpg"></p>
+<p>我们可以看到一组<code>X、y</code>是由一个<code>30</code>维的向量与一个<code>label</code>构成，而预测的结果是一个二维向量，在计算<code>roc_auc_score</code>中，是取<code>[:, 1]</code>，也就是预测为正例的概率。</p>
+<p>对于二分类图像<code>DeepFakes</code>检测中，判断一张图片是否为<code>fake</code>，那么正例就是<code>fake</code>，由此可以计算<code>AUC</code>指标。</p>
 <p><strong>crossEntropyloss回顾：</strong></p>
-<p><strong>fc层之后softmax：</strong></p>
+<p>这个函数是在<code>pytorch</code>中常用交叉熵损失函数，其用法如下：</p>
+<pre><code>output = model(data) # 注意，这里的output是Linear之后的output，并无激活函数
+loss = nn.CrossEntropyLoss(output,label) # 注意，这里的label是类别，而不是one-hot编码
+</code></pre>
+<p>那么这个函数具体做了什么，主要包含两个部分：<code>nn.LogSoftmax()</code>和<code>nn.NLLLoss()</code>，具体来说做了下面三件事：</p>
+<p>1、<code>Softmax</code>后的数值都在<code>0~1</code>之间，且它们之和为<code>1</code>，所以<code>ln</code>之后值域是负无穷到<code>0</code>。</p>
+<p>2、然后将<code>Softmax</code>之后的结果取<code>log</code>，将乘法改成加法减少计算量，同时保障函数的单调性 。</p>
+<p>3、<code>NLLLoss</code>的结果就是把上面的输出与Label对应的那个值拿出来，去掉负号，再求均值。</p>
+<p>在这里不需要知道太多的细节，关于<code>softmax</code>与交叉熵损失，我会再起一篇博客仔细记录。</p>
 <p><strong>pytorch自定义数据增强方式：</strong></p>
+<p>这个是我觉得很有用的一个东西，在<code>pytorch</code>中自带了一个数据增强方式<code>torchvision</code>，但是这个库中只有一些常见的数据增强，甚至都没有<code>Gauss Blur</code>，链接：<a target="_blank" rel="noopener" href="https://github.com/pytorch/vision">https://github.com/pytorch/vision</a></p>
+<p>这里介绍两种常用的数据增强库：</p>
+<p>1.<code>imgaug</code>，链接：<a target="_blank" rel="noopener" href="https://github.com/aleju/imgaug">https://github.com/aleju/imgaug</a></p>
+<p>2.<code>albumentations</code>，链接：<a target="_blank" rel="noopener" href="https://albumentations.readthedocs.io/">https://albumentations.readthedocs.io</a></p>
+<p>值得一提的是，第二种方法可以自定义<code>transform</code>，很好用，封装了<code>ToTensor</code>，而第一种我尝试结合<code>torchvision</code>最终失败。</p>
+<p>如何在<code>torchvision</code>自定义一个数据增强函数，可以采用如下代码：</p>
+<pre><code>class FUN(object):
+    def __init__(self, length):
+        self.length = length
+        
+    def __call__(self, img):
+        # 这里的参数只能是img，最终返回img
+        # 这里要注意是什么时候调用该函数，如果在ToTensor之后，由于其本身带有维度转换，因此要注意提取
+        return img
+</code></pre>
+<p>最后调用方式为：</p>
+<pre><code>transform_train = transforms.Compose([
+    transforms.Resize((224,224)),
+    transforms.ToTensor(),
+    FUN(length=16)
+])
+</code></pre>
 <p><strong>github与git使用教程：</strong></p>
+<p>不得不说做开发还是要会<code>git</code>的，这里一定要再起一篇文章来学习<code>git</code>，所以在这里就不多讲解了。</p>
+<h2 id="2021-04-01"><a href="#2021-04-01" class="headerlink" title="2021-04-01"></a>2021-04-01</h2><p><strong>nohup命令学习：</strong></p>
+<p>这个命令主要是为了解决在远程访问服务器时，当<code>session</code>断开时，随着程序也会中断，所以很烦。所以要使用如下命令：</p>
+<pre><code>nohup python train.py &amp; 
+</code></pre>
+<p><strong>泊松融合学习：</strong></p>
 
             </div>
 

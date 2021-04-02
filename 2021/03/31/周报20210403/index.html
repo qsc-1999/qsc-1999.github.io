@@ -186,9 +186,41 @@ loss = nn.CrossEntropyLoss(output,label) # 注意，这里的label是类别，�
 <p>不得不说做开发还是要会<code>git</code>的，这里一定要再起一篇文章来学习<code>git</code>，所以在这里就不多讲解了。</p>
 <h2 id="2021-04-01"><a href="#2021-04-01" class="headerlink" title="2021-04-01"></a>2021-04-01</h2><p><strong>nohup命令学习：</strong></p>
 <p>这个命令主要是为了解决在远程访问服务器时，当<code>session</code>断开时，随着程序也会中断，所以很烦。所以要使用如下命令：</p>
-<pre><code>nohup python train.py &amp; 
+<pre><code>nohup python train.py &gt; res.txt &amp; 
+</code></pre>
+<p>但是这个命令还有一个问题，在<code>train.py</code>中如果用<code>print</code>是不显示的，因为<code>print</code>是有缓冲的，导致<code>res.txt</code>不能看到输出，因此最后用如下命令：</p>
+<pre><code>nohup python -u train.py &gt; res.txt &amp; 
 </code></pre>
 <p><strong>泊松融合学习：</strong></p>
+<p>这个是<code>image fusion</code>领域的一个东西，目前是传统方法中一个效果非常不错的方法，而现在大多数都基于<code>CNN</code>进行<code>fusion</code>。可以先来看一下效果：</p>
+<p><img src="/2021/03/31/%E5%91%A8%E6%8A%A520210403/QQ%E6%88%AA%E5%9B%BE20210402112625.jpg"></p>
+<p>在<code>python-opencv</code>中已经封装好了该函数，这里不做原理上的讲解，只做代码上的应用：</p>
+<pre><code>import cv2
+import numpy as np
+
+# Read images : src image will be cloned into dst
+im = cv2.imread(&quot;dehazing/results/0001_content.jpg&quot;)
+im = cv2.resize(im,(550,410))
+obj = cv2.imread(&quot;dehazing/results2/0001_content_dehaze.png&quot;)
+obj = cv2.resize(obj,(550,410)) 
+
+# Create an all white mask
+mask = 255 * np.ones(obj.shape, obj.dtype)
+
+# The location of the center of the src in the dst
+width, height, channels = im.shape
+center = (int(height/2), int(width/2))
+print(center)
+
+# Seamlessly clone src into dst and put the results in output
+normal_clone = cv2.seamlessClone(obj, im, mask, center, cv2.NORMAL_CLONE)
+mixed_clone = cv2.seamlessClone(obj, im, mask, center, cv2.MIXED_CLONE)
+
+# Write results
+cv2.imwrite(&quot;./opencv-normal-clone-example.jpg&quot;, normal_clone)
+cv2.imwrite(&quot;./opencv-mixed-clone-example.jpg&quot;, mixed_clone)
+</code></pre>
+<p>这个的具体原理应该再学习一下。</p>
 
             </div>
 

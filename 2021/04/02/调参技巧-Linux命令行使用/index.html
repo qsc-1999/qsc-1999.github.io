@@ -128,22 +128,85 @@
 
         <div id="main" >
             <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >todolist</h2></a>
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >调参技巧/Linux命令行使用</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
                 <p><strong>写在前面：</strong></p>
-<p>​    这篇文章用来记录我欠下了多少博客要写！！！</p>
-<h2 id="未完成文章："><a href="#未完成文章：" class="headerlink" title="未完成文章："></a>未完成文章：</h2><p><strong>pytorch调参、训练技巧、Linux命令行技巧：</strong></p>
-<p><strong>DeepFakes数据集概述：</strong></p>
-<p><strong>DeepFakes技术介绍：</strong></p>
-<p><strong>DeepFakes检测论文汇总：</strong></p>
-<p><strong>深度学习环境搭建(win10、linux)：</strong></p>
-<p><strong>Softmax与交叉熵损失：</strong></p>
-<p><strong>AUC指标：</strong></p>
-<p><strong>git与github的使用：</strong></p>
-<p><strong>泊松融合：</strong></p>
-<p><strong>图像库使用教程：</strong></p>
+<p>​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、<code>linux</code>命令行使用过程中的一点心得体会。</p>
+<h2 id="一、调参技巧"><a href="#一、调参技巧" class="headerlink" title="一、调参技巧"></a>一、调参技巧</h2><p><strong>pytorch多GPU训练：</strong></p>
+<p>多<code>GPU</code>训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡：</p>
+<pre><code>model = Net()
+model = torch.nn.DataParallel(model, device_ids=[0,1,2,3])
+model.cuda()
+</code></pre>
+<p>没错，正如你所看到的一样，就是这么简单。</p>
+<p><strong>tensorboard启动：</strong></p>
+<p>具体<code>tensorboard</code>使用教程请参照另一篇博客，这里只介绍启动技巧：</p>
+<pre><code>tensorboard --logdir=./runs
+</code></pre>
+<p><strong>pip安装包时换源：</strong></p>
+<pre><code>pip install xxx -r https://pypi.douban.com/simple/
+</code></pre>
+<p><strong>ToTensor：</strong></p>
+<p>该函数有自动更改维度的功能，调用前是：<code>(H,W,C)</code>，调用后是<code>(C,W,H)</code></p>
+<p><strong>图片出错：</strong></p>
+<p>首先先加载一轮，输出图片的<code>path</code></p>
+<p><strong>常用的防止过拟合方法：</strong></p>
+<pre><code># 优化器层面：
+weight_decay
+    在每个batch跑完之后，optimizer.step()
+lr_scheduler
+    在一轮结束之后，lr.step()
+# 网络方面：
+正则化
+Droupout
+</code></pre>
+<h2 id="二、Linux命令行技巧"><a href="#二、Linux命令行技巧" class="headerlink" title="二、Linux命令行技巧"></a>二、Linux命令行技巧</h2><p><strong>Ubuntu统计文件个数：</strong></p>
+<p>1.统计当前文件夹内文件数量且包含子目录中的文件数量，命令如下：</p>
+<pre><code>ls -lR|grep &quot;^-&quot;| wc -l
+</code></pre>
+<p>2.统计当前文件夹内文件数量且不包含子目录文件数量，命令如下：</p>
+<pre><code>ls -l|grep &quot;^-&quot;| wc -l
+</code></pre>
+<p>3.统计当前文件夹下的目录个数且包含子目录，命令如下：</p>
+<pre><code>ls -lR|grep &quot;^d&quot;| wc -l
+</code></pre>
+<p>4.统计当前文件夹下的目录个数，命令如下：</p>
+<pre><code>ls -l |grep &quot;^d&quot;| wc -l
+</code></pre>
+<p>5.统计包含部分前缀，命令如下：</p>
+<pre><code>ls -lR data*/|grep &quot;^-&quot;| wc -l # data*/ 代表统计前缀为data的文件
+</code></pre>
+<p>6.查看当前目录下每个文件夹的大小，命令如下：</p>
+<pre><code>du -h --max-depth=1 
+</code></pre>
+<p><strong>unzip使用：</strong></p>
+<p>1.把文件解压到当前目录下：</p>
+<pre><code>unzip test.zip
+</code></pre>
+<p>2.如果要把文件解压到指定的目录下，需要用到<code>-d</code>参数：</p>
+<pre><code>unzip -d /temp test.zip
+</code></pre>
+<p>3.解压的时候，有时候不想覆盖已经存在的文件，那么可以加上<code>-n</code>参数：</p>
+<pre><code>unzip -n test.zip
+unzip -n -d /temp test.zip
+</code></pre>
+<p><strong>Ubuntu sudo python路径修改：</strong></p>
+<p>首先找到要更改后的<code>python</code>的安装路径，例如：<code>/home/anaconda3/envs/qsc/bin/python</code></p>
+<p>1.备份：</p>
+<pre><code>sudo cp /usr/bin/python /usr/bin/python_bak
+</code></pre>
+<p>2.删除指向：</p>
+<pre><code>sudo rm /usr/bin/python
+</code></pre>
+<p>3.修改路径：</p>
+<pre><code>sudo ln -s /home/sss/anaconda3/bin/python /usr/bin/python
+</code></pre>
+<p><strong>ubuntu给文件赋权限：</strong></p>
+<pre><code>sudo chmod 777 xxx.txt # 给一个文件赋权限
+sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
+</code></pre>
 
             </div>
 
@@ -206,8 +269,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://example.com/2021/03/31/todolist/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://example.com/2021/03/31/todolist/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 

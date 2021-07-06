@@ -143,7 +143,7 @@
 <p>3.对于<code>SA</code>模块来说，我们认为有两点需要改进的地方。首先针对其速度，我们需要利用<code>CNN</code>来替代线性计算，同时针对特征图中尺度不一的伪造痕迹，我们认为应该在<code>SA</code>中构造多尺度模块，从而来增强模型的鲁棒性。</p>
 <h2 id="三、每周总结"><a href="#三、每周总结" class="headerlink" title="三、每周总结"></a>三、每周总结</h2><p><strong>2021.6.28~2021.7.4：</strong></p>
 <p>1.做了初步的<code>Seg</code>+<code>Res</code>+<code>VIT</code>的实验，效果不是很理想，结果如下：</p>
-<p><img src="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/Blog\blog\source_posts\第一篇论文记录\1625447955928.png"></p>
+<p><img src="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/Blog\blog\source\_posts\第一篇论文记录\1625447955928.png"></p>
 <p>2.利用<code>Res+VIT</code>在<code>Fmfcc</code>数据集上也做了测试，效果只能说凑合，不过得出了一些结论：</p>
 <p>​    2.1 训练时数据增广是一件非常重要的事情，一定要做数据增广</p>
 <p>​    2.2 在切分数据集时，最好要用<code>RetinalFace</code>来脸部区域，使用<code>Dlib</code>库会丢掉很多变形的脸部。</p>

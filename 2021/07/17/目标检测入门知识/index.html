@@ -127,31 +127,18 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://i.loli.net/2021/07/09/k3LtN29MsXleAgO.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >TaiHezi</h2></a>
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://i.loli.net/2021/07/17/juL36qyE7kMSvZ9.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >目标检测入门知识</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <h2 id="一、太赫兹项目"><a href="#一、太赫兹项目" class="headerlink" title="一、太赫兹项目"></a>一、太赫兹项目</h2><p><strong>这是我第一个接到的项目，一定要好好完成！是做目标检测的一个任务，正好可以学习目标检测的一些内容。</strong></p>
-<h2 id="二、项目介绍"><a href="#二、项目介绍" class="headerlink" title="二、项目介绍"></a>二、项目介绍</h2><p>这是一个目标检测任务，用于检测在安检过程中，识别其行人所携带的违禁物品。</p>
-<p>其升级任务是，将五张图片的目标检测结果汇总到一张图片上。</p>
-<p>其验收准则有三：</p>
-<ol>
-<li>速度：单人检测不超过<code>1s</code>，其中包括单张检测与汇总结果</li>
-<li>准确率不低于<code>95%</code></li>
-<li>误检率不高于<code>5%</code></li>
-</ol>
-<p><strong>由于本人是第一次做目标检测的项目，到目前为止才明白IOU、Precision、Recall、AP、MAP等相关指标的含义，以及目标检测框架在训练与测试时是如何推理的。</strong></p>
-<h2 id="三、当下甲方存在的问题"><a href="#三、当下甲方存在的问题" class="headerlink" title="三、当下甲方存在的问题"></a>三、当下甲方存在的问题</h2><p>1.误检率比较高。<strong>个人建议解决办法：</strong>需要对数据集进行分析，对数据集重新标定，清洗等。因为有<code>11000</code>张数据样本，我觉得这个是非常好的数据集。</p>
-<p>2.甲方提出一个五张汇总到一张的需求，在这个问题上需要提出一个新的框架，可以借鉴于多模态融合的思路去解决这个问题。</p>
-<h2 id="四、2021-7-12-第一次交流"><a href="#四、2021-7-12-第一次交流" class="headerlink" title="四、2021.7.12 第一次交流"></a>四、2021.7.12 第一次交流</h2><h3 id="4-1-数据集处理"><a href="#4-1-数据集处理" class="headerlink" title="4.1 数据集处理"></a>4.1 数据集处理</h3><p>1.<strong>数据清洗与分析：</strong></p>
-<p><strong>首先这里需要学习一下COCO/VOC数据标注解读</strong></p>
-<p>2.<strong>数据标注问题：</strong>标注问题请专业人士来看</p>
-<h3 id="4-2-模型算法"><a href="#4-2-模型算法" class="headerlink" title="4.2 模型算法"></a>4.2 模型算法</h3><h4 id="4-2-1-基于单帧检测"><a href="#4-2-1-基于单帧检测" class="headerlink" title="4.2.1 基于单帧检测"></a>4.2.1 基于单帧检测</h4><p>1.运行当下主流的目标检测算法：<strong>Faster-RCNN、ATSS、Deformerable DETR、EfficentNet Det、FCOS</strong></p>
-<p>2.对<code>Faster-RCNN</code>做出进一步改进。</p>
-<h4 id="4-2-2-基于多帧检测"><a href="#4-2-2-基于多帧检测" class="headerlink" title="4.2.2 基于多帧检测"></a>4.2.2 基于多帧检测</h4><p>1.五张结果汇总+决策判断</p>
-<p>2.多模态思想</p>
-
+                <h2 id="一、目标检测基础知识"><a href="#一、目标检测基础知识" class="headerlink" title="一、目标检测基础知识"></a>一、目标检测基础知识</h2><p><strong>IOU：</strong></p>
+<p><strong>precision：</strong></p>
+<p><strong>Recall：</strong></p>
+<p><strong>AP:</strong></p>
+<p><strong>MAP：</strong></p>
+<p><strong>Anchor Based方法对于Anchor的使用：</strong></p>
+<h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2>
             </div>
 
             <!-- Post Comments -->
@@ -213,8 +200,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://example.com/2021/07/09/TaiHezi/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://example.com/2021/07/09/TaiHezi/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 

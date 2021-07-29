@@ -1,23 +1,1776 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
 
-{% block content %}
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Beautiful Now!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Qsc&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Qsc&#39;s Blog">
+<meta property="og:description" content="Beautiful Now!">
+<meta property="og:locale">
+<meta property="article:author" content="qishicheng">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/"/>
+
+
+
+
+
+  <title>Qsc's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qsc's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
   <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/28/test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/28/test/" itemprop="url">test</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-28T22:29:15+08:00">
+                2021-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" itemprop="url">目标检测入门知识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-17T16:35:32+08:00">
+                2021-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、目标检测基础知识"><a href="#一、目标检测基础知识" class="headerlink" title="一、目标检测基础知识"></a>一、目标检测基础知识</h2><p><strong>IOU：</strong></p>
+<p><strong>precision：</strong></p>
+<p><strong>Recall：</strong></p>
+<p><strong>AP:</strong></p>
+<p><strong>MAP：</strong></p>
+<p><strong>Anchor Based方法对于Anchor的使用：</strong></p>
+<h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/09/TaiHezi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/09/TaiHezi/" itemprop="url">TaiHezi</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-09T10:10:30+08:00">
+                2021-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、太赫兹项目"><a href="#一、太赫兹项目" class="headerlink" title="一、太赫兹项目"></a>一、太赫兹项目</h2><p><strong>这是我第一个接到的项目，一定要好好完成！是做目标检测的一个任务，正好可以学习目标检测的一些内容。</strong></p>
+<h2 id="二、项目介绍"><a href="#二、项目介绍" class="headerlink" title="二、项目介绍"></a>二、项目介绍</h2><p>这是一个目标检测任务，用于检测在安检过程中，识别其行人所携带的违禁物品。</p>
+<p>其升级任务是，将五张图片的目标检测结果汇总到一张图片上。</p>
+<p>其验收准则有三：</p>
+<ol>
+<li>速度：单人检测不超过<code>1s</code>，其中包括单张检测与汇总结果</li>
+<li>准确率不低于<code>95%</code></li>
+<li>误检率不高于<code>5%</code></li>
+</ol>
+<p><strong>由于本人是第一次做目标检测的项目，到目前为止才明白IOU、Precision、Recall、AP、MAP等相关指标的含义，以及目标检测框架在训练与测试时是如何推理的。</strong></p>
+<h2 id="三、当下甲方存在的问题"><a href="#三、当下甲方存在的问题" class="headerlink" title="三、当下甲方存在的问题"></a>三、当下甲方存在的问题</h2><p>1.误检率比较高。<strong>个人建议解决办法：</strong>需要对数据集进行分析，对数据集重新标定，清洗等。因为有<code>11000</code>张数据样本，我觉得这个是非常好的数据集。</p>
+<p>2.甲方提出一个五张汇总到一张的需求，在这个问题上需要提出一个新的框架，可以借鉴于多模态融合的思路去解决这个问题。</p>
+<h2 id="四、2021-7-12-第一次交流"><a href="#四、2021-7-12-第一次交流" class="headerlink" title="四、2021.7.12 第一次交流"></a>四、2021.7.12 第一次交流</h2><h3 id="4-1-数据集处理"><a href="#4-1-数据集处理" class="headerlink" title="4.1 数据集处理"></a>4.1 数据集处理</h3><p>1.<strong>数据清洗与分析：</strong></p>
+<p><strong>首先这里需要学习一下COCO/VOC数据标注解读</strong></p>
+<p>2.<strong>数据标注问题：</strong>标注问题请专业人士来看</p>
+<h3 id="4-2-模型算法"><a href="#4-2-模型算法" class="headerlink" title="4.2 模型算法"></a>4.2 模型算法</h3><h4 id="4-2-1-基于单帧检测"><a href="#4-2-1-基于单帧检测" class="headerlink" title="4.2.1 基于单帧检测"></a>4.2.1 基于单帧检测</h4><p>1.运行当下主流的目标检测算法：<strong>Faster-RCNN、ATSS、Deformerable DETR、EfficentNet Det、FCOS</strong></p>
+<p>2.对<code>Faster-RCNN</code>做出进一步改进。</p>
+<h4 id="4-2-2-基于多帧检测"><a href="#4-2-2-基于多帧检测" class="headerlink" title="4.2.2 基于多帧检测"></a>4.2.2 基于多帧检测</h4><p>1.五张结果汇总+决策判断</p>
+<p>2.多模态思想</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" itemprop="url">第一篇论文记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-06T11:14:52+08:00">
+                2021-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong>用这篇博客来记录第一篇论文的前前后后，也算是一个总结吧。</p>
+<h2 id="一、论文发表发展经历"><a href="#一、论文发表发展经历" class="headerlink" title="一、论文发表发展经历"></a>一、论文发表发展经历</h2><p>1.首先是去年10月份拿到的这个方向，大概简略地看了<code>Deepfake</code>的攻击与防御，差不多看到了第二年的一月份，然后确定了实验的对比方向与大概的方法。</p>
+<p>2.然后从1月到5月是毕设，正好就开始训练<code>VIT</code>模型，利用<code>ResNet+Transformer</code>的方法可以在<code>FF++</code>的<code>baseline</code>上达到一个相对较好的水平，因此觉得可以在这个方法上继续深入探究。</p>
+<p>3.确定我这个进一步细致的<code>idea</code>我记得特别清楚，是在<code>4.10</code>那天，但是因为毕设、毕业玩耍等乱七八糟的事情，一直拖到现在。期间学习了一下如何编写语义分割的代码，还是比较头疼的。</p>
+<p>4.然后从<code>7</code>月份开始可以说正式开始这篇论文努力地实验、细化方法等等。</p>
+<h2 id="二、Idea概括"><a href="#二、Idea概括" class="headerlink" title="二、Idea概括"></a>二、Idea概括</h2><p>​    由于<code>Deepfake</code>说到底是一个二分类任务，同时由于脸部伪造痕迹的存在、以及<code>blending</code>的边缘痕迹明显，因此我的<code>idea</code>总结如下：</p>
+<p>1.利用<code>Transformer</code>针对脸部的不一致性建模，从而检测。</p>
+<p>2.针对纯<code>VIT</code>模型，我们认为直接将图片进行编码是一件很蠢的事情，首先直观考虑是利用<code>ResNet</code>对图片进行编码，但是由于<code>VIT</code>的特性，我们仅能用两个<code>Stage</code>的<code>ResNet</code>，其次我们考虑使用语义分割所训练的网络，从而来指导在伪造图像中，伪造区域与原区域的不一致性问题，接着将特征图放入<code>VIT</code>中进行建模。</p>
+<p>3.对于<code>SA</code>模块来说，我们认为有两点需要改进的地方。首先针对其速度，我们需要利用<code>CNN</code>来替代线性计算，同时针对特征图中尺度不一的伪造痕迹，我们认为应该在<code>SA</code>中构造多尺度模块，从而来增强模型的鲁棒性。</p>
+<h2 id="三、每周总结"><a href="#三、每周总结" class="headerlink" title="三、每周总结"></a>三、每周总结</h2><p><strong>2021.6.28~2021.7.4：</strong></p>
+<p>1.做了初步的<code>Seg</code>+<code>Res</code>+<code>VIT</code>的实验，效果不是很理想，结果如下：</p>
+<p><img src="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png"></p>
+<p>2.利用<code>Res+VIT</code>在<code>Fmfcc</code>数据集上也做了测试，效果只能说凑合，不过得出了一些结论：</p>
+<p>​    2.1 训练时数据增广是一件非常重要的事情，一定要做数据增广</p>
+<p>​    2.2 在切分数据集时，最好要用<code>RetinalFace</code>来脸部区域，使用<code>Dlib</code>库会丢掉很多变形的脸部。</p>
+<p><strong>2021.7.5~2021.7.11：</strong></p>
+<p>1.重新在<code>Fmfcc</code>数据集上进行实验，采用严格的数据处理方式，在训练集中构造了<code>50W</code>个样本，分别训练<code>VIT、Xception、ResNet+VIT</code>，看效果如何。</p>
+<p>2.调试<code>Idea</code>失败的实验，其中包括两部分的内容：</p>
+<p>​    2.1 找出在原实验中，出错误的点在何处，其中包括：</p>
+<ul>
+<li>代码问题：卷积核使用了偶数大小、自己的卷积效果不好、没有加<code>BN/Relu</code>等</li>
+<li>语义分割部分：考虑对语义分割的训练过程是不是不好，从而导致在融合时特征图不咋样。</li>
+<li>训练问题：可能是参数设置有问题？调参解决</li>
+<li>特征融合策略：采用简单的<code>add/cat</code>可能无法很好地利用二者的特征，应设计一个模块来专门解决该问题。</li>
+</ul>
+<p>​    2.2 考虑语义分割与分类网络在特征上如何更好地融合</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/" itemprop="url">深度学习环境搭建(win10、linux)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T15:26:40+08:00">
+                2021-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong></p>
+<p>​    这篇文章主要是介绍深度学习环境的搭建，本来是打算写<code>windows/Linux</code>两个版本的，但是<code>Linux</code>用习惯之后，也就摒弃了<code>windows</code>版本，这里只介绍<code>Linux</code>版本，其<code>OS</code>为<code>Ubuntu</code>。</p>
+<h2 id="一、Anaconda环境准备"><a href="#一、Anaconda环境准备" class="headerlink" title="一、Anaconda环境准备"></a>一、Anaconda环境准备</h2><p>​    在深度学习的环境中，少不了的是<code>conda</code>，有了这个东西，就可以创建多个深度学习环境，其不会相互干扰，需要用哪个就切换就可以了，这里就首先介绍<code>Anaconda</code>的环境准备。</p>
+<h2 id="二、Python环境准备"><a href="#二、Python环境准备" class="headerlink" title="二、Python环境准备"></a>二、Python环境准备</h2><h2 id="三、CUDA环境准备"><a href="#三、CUDA环境准备" class="headerlink" title="三、CUDA环境准备"></a>三、CUDA环境准备</h2><h2 id="四、Pytorch安装"><a href="#四、Pytorch安装" class="headerlink" title="四、Pytorch安装"></a>四、Pytorch安装</h2><h2 id="五、Tensorflow-gpu安装"><a href="#五、Tensorflow-gpu安装" class="headerlink" title="五、Tensorflow-gpu安装"></a>五、Tensorflow-gpu安装</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/" itemprop="url">调参技巧/Linux命令行使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T15:11:06+08:00">
+                2021-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong></p>
+<p>​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、<code>linux</code>命令行使用过程中的一点心得体会。</p>
+<h2 id="一、调参技巧"><a href="#一、调参技巧" class="headerlink" title="一、调参技巧"></a>一、调参技巧</h2><p><strong>pytorch多GPU训练：</strong></p>
+<p>多<code>GPU</code>训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡：</p>
+<pre><code>model = Net()
+model = torch.nn.DataParallel(model, device_ids=[0,1,2,3])
+model.cuda()
+</code></pre>
+<p>没错，正如你所看到的一样，就是这么简单。</p>
+<p><strong>tensorboard启动：</strong></p>
+<p>具体<code>tensorboard</code>使用教程请参照另一篇博客，这里只介绍启动技巧：</p>
+<pre><code>tensorboard --logdir=./runs
+</code></pre>
+<p><strong>pip安装包时换源：</strong></p>
+<pre><code>pip install xxx -r https://pypi.douban.com/simple/
+</code></pre>
+<p><strong>ToTensor：</strong></p>
+<p>该函数有自动更改维度的功能，调用前是：<code>(H,W,C)</code>，调用后是<code>(C,H,W)</code></p>
+<p><strong>图片出错：</strong></p>
+<p>首先先加载一轮，输出图片的<code>path</code></p>
+<p><strong>常用的防止过拟合方法：</strong></p>
+<pre><code># 优化器层面：
+weight_decay
+    在每个batch跑完之后，optimizer.step()
+lr_scheduler
+    在一轮结束之后，lr.step()
+# 网络方面：
+正则化
+Droupout
+</code></pre>
+<p><strong>给不同网络层设置不同的学习参数：</strong></p>
+<pre><code>dense_block1_params = list(map(id, model.patch_embed.backbone.block1.parameters()))
+dense_block2_params = list(map(id, model.patch_embed.backbone.block2.parameters()))
+dense_block3_params = list(map(id, model.patch_embed.backbone.block3.parameters()))
+base_params = filter(lambda p: id(p) not in dense_block1_params + dense_block2_params + dense_block3_params, model.parameters())
+params = [&#123;&#39;params&#39;: base_params&#125;,
+          &#123;&#39;params&#39;: model.patch_embed.backbone.block1.parameters(), &#39;lr&#39;: lr * 0.125 &#125;,
+          &#123;&#39;params&#39;: model.patch_embed.backbone.block2.parameters(), &#39;lr&#39;: lr * 0.25&#125;,
+          &#123;&#39;params&#39;: model.patch_embed.backbone.block3.parameters(), &#39;lr&#39;: lr * 0.5&#125;
+]
+</code></pre>
+<p><strong>pytorch最简单的方式自定义网络：</strong></p>
+<pre><code>class Dense(nn.Module):
+
+    def __init__(self, conv0, norm0, pool0, block1, trans1, block2, trans2, block3):
+        super(Dense, self).__init__()
+        self.conv0 = conv0
+        self.norm0 = norm0
+        self.pool0 = pool0
+        self.block1 = block1
+        self.trans1 = trans1
+        self.block2 = block2
+        self.trans2 = trans2
+        self.block3 = block3
+        self.BN = nn.BatchNorm2d(1280)
+        self.ACT = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        conv0 = self.conv0(x)
+        norm0 = self.norm0(conv0)
+        pool0 = self.pool0(norm0)
+        denseblock1 = self.block1(pool0)
+        transition1 = self.trans1(denseblock1)
+        denseblock2 = self.block2(transition1)
+        transition2 = self.trans2(denseblock2)
+        denseblock3 = self.block3(transition2)
+        bn = self.BN(denseblock3)
+        act = self.ACT(bn)
+        return act
+</code></pre>
+<h2 id="二、Linux命令行技巧"><a href="#二、Linux命令行技巧" class="headerlink" title="二、Linux命令行技巧"></a>二、Linux命令行技巧</h2><p><strong>Ubuntu统计文件个数：</strong></p>
+<p>1.统计当前文件夹内文件数量且包含子目录中的文件数量，命令如下：</p>
+<pre><code>ls -lR|grep &quot;^-&quot;| wc -l
+</code></pre>
+<p>2.统计当前文件夹内文件数量且不包含子目录文件数量，命令如下：</p>
+<pre><code>ls -l|grep &quot;^-&quot;| wc -l
+</code></pre>
+<p>3.统计当前文件夹下的目录个数且包含子目录，命令如下：</p>
+<pre><code>ls -lR|grep &quot;^d&quot;| wc -l
+</code></pre>
+<p>4.统计当前文件夹下的目录个数，命令如下：</p>
+<pre><code>ls -l |grep &quot;^d&quot;| wc -l
+</code></pre>
+<p>5.统计包含部分前缀，命令如下：</p>
+<pre><code>ls -lR data*/|grep &quot;^-&quot;| wc -l # data*/ 代表统计前缀为data的文件
+</code></pre>
+<p>6.查看当前目录下每个文件夹的大小，命令如下：</p>
+<pre><code>du -h --max-depth=1 
+</code></pre>
+<p><strong>unzip使用：</strong></p>
+<p>1.把文件解压到当前目录下：</p>
+<pre><code>unzip test.zip
+</code></pre>
+<p>2.如果要把文件解压到指定的目录下，需要用到<code>-d</code>参数：</p>
+<pre><code>unzip -d /temp test.zip
+</code></pre>
+<p>3.解压的时候，有时候不想覆盖已经存在的文件，那么可以加上<code>-n</code>参数：</p>
+<pre><code>unzip -n test.zip
+unzip -n -d /temp test.zip
+</code></pre>
+<p><strong>Ubuntu sudo python路径修改：</strong></p>
+<p>首先找到要更改后的<code>python</code>的安装路径，例如：<code>/home/anaconda3/envs/qsc/bin/python</code></p>
+<p>1.备份：</p>
+<pre><code>sudo cp /usr/bin/python /usr/bin/python_bak
+</code></pre>
+<p>2.删除指向：</p>
+<pre><code>sudo rm /usr/bin/python
+</code></pre>
+<p>3.修改路径：</p>
+<pre><code>sudo ln -s /home/sss/anaconda3/bin/python /usr/bin/python
+</code></pre>
+<p><strong>ubuntu给文件赋权限：</strong></p>
+<pre><code>sudo chmod 777 xxx.txt # 给一个文件赋权限
+sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/24/DeepFaceLab%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/24/DeepFaceLab%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" itemprop="url">DeepFaceLab使用教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-24T00:00:00+08:00">
+                2021-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DeepFake/" itemprop="url" rel="index">
+                    <span itemprop="name">DeepFake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong>本篇文章旨在帮助大家快速搭建<code>Linux</code>版本的<code>DeepFaceLab</code>，不注意调参等细节。</p>
+<h2 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h2><h3 id="1-1-基本环境配置"><a href="#1-1-基本环境配置" class="headerlink" title="1.1 基本环境配置"></a>1.1 基本环境配置</h3><p><strong>python=3.7</strong></p>
+<p><strong>FFMpeg</strong></p>
+<p><strong>Git</strong></p>
+<p>最新的<code>Nvidia</code>显卡，这里是<code>CUDA 11</code>，因为代码用的是<code>tensorflow-gpu==2.4.0</code>，关于如何在<code>linux</code>中搭建<code>tensorflow-gpu/pytorch</code>环境请参照另一篇博客：</p>
+<p><a target="_blank" rel="noopener" href="https://qsc-1999.github.io/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/">https://qsc-1999.github.io/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/</a></p>
+<h3 id="1-2-环境搭建步骤"><a href="#1-2-环境搭建步骤" class="headerlink" title="1.2 环境搭建步骤"></a>1.2 环境搭建步骤</h3><p>采用以下命令行：</p>
+<pre><code># 利用conda创建环境
+conda create -n deepfacelab -c main python=3.7 cudnn=7.6.5 cudatoolkit=10.1.243
+conda activate deepfacelab
+# 将linux版本的脚本拷贝
+git clone https://github.com/nagadit/DeepFaceLab_Linux.git
+cd DeepFaceLab_Linux
+# 将整个项目拷贝
+git clone --depth 1 https://github.com/iperov/DeepFaceLab.git
+# 安装所需要的环境
+pip install -r ./DeepFaceLab/requirements-cuda.txt
+</code></pre>
+<p>其中在安装<code>h5py</code>时，要求版本为<code>2.10.0</code>，这里需要自行修改。</p>
+<p>最终的文件目录结构如下：</p>
+<pre><code>/DeepFaceLab_Linux：
+    /DeepFaceLab：#DeepFaceLab代码
+    /scripts：     #Linux运行版本脚本
+    /workspace：  #视频处理
+</code></pre>
+<h3 id="1-3-Workshop准备"><a href="#1-3-Workshop准备" class="headerlink" title="1.3 Workshop准备"></a>1.3 Workshop准备</h3><p>准备两个视频，分别命名为：<code>data_dst.mp4/data_src.mp4</code>。</p>
+<p>之后就可以开始我们的<code>DeepFaceLab</code>之旅！</p>
+<p>​</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/23/my-first-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/23/my-first-blog/" itemprop="url">我的第一篇博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-23T00:00:00+08:00">
+                2021-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>​    第一个<code>Blog</code>，折腾了半天终于好了！</p>
+<p><img src="/2021/03/23/my-first-blog/1.jpg"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/7484348e1e863797925e9869687131b3.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qishicheng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

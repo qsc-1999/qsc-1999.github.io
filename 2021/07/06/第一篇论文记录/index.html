@@ -1,37 +1,762 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="论文," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面：用这篇博客来记录第一篇论文的前前后后，也算是一个总结吧。 一、论文发表发展经历1.首先是去年10月份拿到的这个方向，大概简略地看了Deepfake的攻击与防御，差不多看到了第二年的一月份，然后确定了实验的对比方向与大概的方法。 2.然后从1月到5月是毕设，正好就开始训练VIT模型，利用ResNet+Transformer的方法可以在FF++的baseline上达到一个相对较好的水平，因此">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一篇论文记录">
+<meta property="og:url" content="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Qsc&#39;s Blog">
+<meta property="og:description" content="写在前面：用这篇博客来记录第一篇论文的前前后后，也算是一个总结吧。 一、论文发表发展经历1.首先是去年10月份拿到的这个方向，大概简略地看了Deepfake的攻击与防御，差不多看到了第二年的一月份，然后确定了实验的对比方向与大概的方法。 2.然后从1月到5月是毕设，正好就开始训练VIT模型，利用ResNet+Transformer的方法可以在FF++的baseline上达到一个相对较好的水平，因此">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png">
+<meta property="article:published_time" content="2021-07-06T03:14:52.000Z">
+<meta property="article:modified_time" content="2021-07-07T08:05:34.659Z">
+<meta property="article:author" content="qishicheng">
+<meta property="article:tag" content="论文">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/07/06/第一篇论文记录/"/>
+
+
+
+
+
+  <title>第一篇论文记录 | Qsc's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qsc's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第一篇论文记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-06T11:14:52+08:00">
+                2021-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>写在前面：</strong>用这篇博客来记录第一篇论文的前前后后，也算是一个总结吧。</p>
+<h2 id="一、论文发表发展经历"><a href="#一、论文发表发展经历" class="headerlink" title="一、论文发表发展经历"></a>一、论文发表发展经历</h2><p>1.首先是去年10月份拿到的这个方向，大概简略地看了<code>Deepfake</code>的攻击与防御，差不多看到了第二年的一月份，然后确定了实验的对比方向与大概的方法。</p>
+<p>2.然后从1月到5月是毕设，正好就开始训练<code>VIT</code>模型，利用<code>ResNet+Transformer</code>的方法可以在<code>FF++</code>的<code>baseline</code>上达到一个相对较好的水平，因此觉得可以在这个方法上继续深入探究。</p>
+<p>3.确定我这个进一步细致的<code>idea</code>我记得特别清楚，是在<code>4.10</code>那天，但是因为毕设、毕业玩耍等乱七八糟的事情，一直拖到现在。期间学习了一下如何编写语义分割的代码，还是比较头疼的。</p>
+<p>4.然后从<code>7</code>月份开始可以说正式开始这篇论文努力地实验、细化方法等等。</p>
+<h2 id="二、Idea概括"><a href="#二、Idea概括" class="headerlink" title="二、Idea概括"></a>二、Idea概括</h2><p>​    由于<code>Deepfake</code>说到底是一个二分类任务，同时由于脸部伪造痕迹的存在、以及<code>blending</code>的边缘痕迹明显，因此我的<code>idea</code>总结如下：</p>
+<p>1.利用<code>Transformer</code>针对脸部的不一致性建模，从而检测。</p>
+<p>2.针对纯<code>VIT</code>模型，我们认为直接将图片进行编码是一件很蠢的事情，首先直观考虑是利用<code>ResNet</code>对图片进行编码，但是由于<code>VIT</code>的特性，我们仅能用两个<code>Stage</code>的<code>ResNet</code>，其次我们考虑使用语义分割所训练的网络，从而来指导在伪造图像中，伪造区域与原区域的不一致性问题，接着将特征图放入<code>VIT</code>中进行建模。</p>
+<p>3.对于<code>SA</code>模块来说，我们认为有两点需要改进的地方。首先针对其速度，我们需要利用<code>CNN</code>来替代线性计算，同时针对特征图中尺度不一的伪造痕迹，我们认为应该在<code>SA</code>中构造多尺度模块，从而来增强模型的鲁棒性。</p>
+<h2 id="三、每周总结"><a href="#三、每周总结" class="headerlink" title="三、每周总结"></a>三、每周总结</h2><p><strong>2021.6.28~2021.7.4：</strong></p>
+<p>1.做了初步的<code>Seg</code>+<code>Res</code>+<code>VIT</code>的实验，效果不是很理想，结果如下：</p>
+<p><img src="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png"></p>
+<p>2.利用<code>Res+VIT</code>在<code>Fmfcc</code>数据集上也做了测试，效果只能说凑合，不过得出了一些结论：</p>
+<p>​    2.1 训练时数据增广是一件非常重要的事情，一定要做数据增广</p>
+<p>​    2.2 在切分数据集时，最好要用<code>RetinalFace</code>来脸部区域，使用<code>Dlib</code>库会丢掉很多变形的脸部。</p>
+<p><strong>2021.7.5~2021.7.11：</strong></p>
+<p>1.重新在<code>Fmfcc</code>数据集上进行实验，采用严格的数据处理方式，在训练集中构造了<code>50W</code>个样本，分别训练<code>VIT、Xception、ResNet+VIT</code>，看效果如何。</p>
+<p>2.调试<code>Idea</code>失败的实验，其中包括两部分的内容：</p>
+<p>​    2.1 找出在原实验中，出错误的点在何处，其中包括：</p>
+<ul>
+<li>代码问题：卷积核使用了偶数大小、自己的卷积效果不好、没有加<code>BN/Relu</code>等</li>
+<li>语义分割部分：考虑对语义分割的训练过程是不是不好，从而导致在融合时特征图不咋样。</li>
+<li>训练问题：可能是参数设置有问题？调参解决</li>
+<li>特征融合策略：采用简单的<code>add/cat</code>可能无法很好地利用二者的特征，应设计一个模块来专门解决该问题。</li>
+</ul>
+<p>​    2.2 考虑语义分割与分类网络在特征上如何更好地融合</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E8%AE%BA%E6%96%87/" rel="tag"># 论文</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/" rel="next" title="深度学习环境搭建(win10、linux)">
+                <i class="fa fa-chevron-left"></i> 深度学习环境搭建(win10、linux)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/07/09/TaiHezi/" rel="prev" title="TaiHezi">
+                TaiHezi <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/7484348e1e863797925e9869687131b3.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AE%BA%E6%96%87%E5%8F%91%E8%A1%A8%E5%8F%91%E5%B1%95%E7%BB%8F%E5%8E%86"><span class="nav-number">1.</span> <span class="nav-text">一、论文发表发展经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Idea%E6%A6%82%E6%8B%AC"><span class="nav-number">2.</span> <span class="nav-text">二、Idea概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AF%8F%E5%91%A8%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">三、每周总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qishicheng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

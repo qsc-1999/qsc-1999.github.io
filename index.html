@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -95,7 +95,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '',
-    scheme: 'Pisces',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -225,16 +225,6 @@
               <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
             归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-schedule">
-          <a href="/schedule" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
-            
-            日程表
           </a>
         </li>
       
@@ -409,7 +399,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" itemprop="url">目标检测入门知识</a></h1>
+                <a class="post-title-link" href="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" itemprop="url">目标检测基础知识</a></h1>
         
 
         <div class="post-meta">
@@ -431,6 +421,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/detection/" itemprop="url" rel="index">
+                    <span itemprop="name">detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -461,12 +473,76 @@
       
         
           
-            <h2 id="一、目标检测基础知识"><a href="#一、目标检测基础知识" class="headerlink" title="一、目标检测基础知识"></a>一、目标检测基础知识</h2><p><strong>IOU：</strong></p>
-<p><strong>precision：</strong></p>
-<p><strong>Recall：</strong></p>
-<p><strong>AP:</strong></p>
-<p><strong>MAP：</strong></p>
-<p><strong>Anchor Based方法对于Anchor的使用：</strong></p>
+            <h2 id="一、目标检测基础知识"><a href="#一、目标检测基础知识" class="headerlink" title="一、目标检测基础知识"></a>一、目标检测基础知识</h2><p><strong>写在前面：</strong>本来这点知识是最初入门<code>CV</code>时学的，但是没想到用在实践中这么地不堪一击，因此决心要脚踏实地，一点一点来。</p>
+<ul>
+<li><p><code>IOU</code>：交并比，指两个<code>Anchor</code>的面积交集比上并集、</p>
+</li>
+<li><p>混淆矩阵：这个概念在分类中是搞得很清楚的，<code>TP/FP/TN/FN</code>分别对应真阳、假阳、真阴、假阴性。</p>
+</li>
+<li><p><code>Faster RCNN(anchor)</code>方法中如何生成最终的结果<code>(NMS)</code>：</p>
+<p>对于生成的<code>BBox</code>集合，采用以下方法：</p>
+<pre><code>选prediction cls 分数最高的作为该anchor的类别；
+对所有的anchor，将分数低于score_thr的都扔掉(这一点与分类要区别开，因为分类就算分数低，也是这张图片的结果，必须得要)
+for category in categories:
+    首先prediction cls最高的分数anchor
+    用这个框，按顺序与其他框计算IOU，当IOU大于一定时，将那个框扔掉
+    接着回到上一步，选次大的anchor作为第二个预测框，依次计算
+最终得到了预测结果
+</code></pre>
+<p><strong>而在DETR中，是没有NMS的，由于Set prediction的思想，因此query全部作为预测框，但是在测试的时候，又会经过一些处理，这时我们可以拿这个结果与测试集手动计算！！！</strong></p>
+</li>
+<li><p><code>TP/FP</code>：</p>
+<ul>
+<li><p>首先要区分分类与目标检测的不同，对于分类任务而言，<code>TN/FN</code>是有用的，而在目标检测中，通过后期的<code>NMS</code>处理后，对于某一类别，我生成的<code>anchor</code>，只要预测成这一类别，就因此肯定是正例，因此重点就在于如何计算<code>TP/FP</code></p>
+</li>
+<li><p>对于单张图片的某一类别而言，以下图为例</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627523370794.png" alt="1627523370794"></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>def tpfp_func(det_bbox, gt_bbox, iou_thr = 0.5):    # 输入一张图片一个类别的预测框与label
+    
+    # 读取det与gt的数量
+    num_dets = det_bboxes.shape[0]
+    num_gts = gt_bboxes.shape[0]
+    
+    # 开一个数组，对det_box的fp与tp记录
+    record = np.zeros((num_dets), dtype=np.float32)
+    
+    # 如果gt == 0，那么都是fp
+    return record
+    
+    # 如果存在gt，那么计算gt与det最大iou的匹配：
+    ious = bbox_overlaps(det_bboxes, gt_bboxes)
+    # 从置信度高到低开始，依次记录fp与tp
+    for det in dets：
+        如果当前det的最大iou&lt;iou_thr,则为fp
+        如果大于：
+            判断是否是该gt的首次匹配，如果是首次匹配，则为tp
+            否则为fp
+</code></pre>
+<p><strong>值得注意：分类任务注重于score的大小，从而利用AUC来做评价指标，而检测任务是存在数量的问题，因此更重要的AP，而是对于某一类来说，不存在负样本，只要生成确定了这个anchor，就一定是tp或者是fp。</strong></p>
+<ul>
+<li><p><code>Faster RCNN loss</code>：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627525303190.png" alt="1627525303190"></p>
+<p>注意，这个<code>loss</code>是正常的<code>loss</code>，但是在计算<code>loss</code>之前，有一步<code>anchor</code>与<code>gt</code>的匹配问题。<strong>这个以后需要的话，再去仔细研究</strong></p>
+</li>
+<li><p><code>precision：</code>查准率，预测对的结果比上预测结果。</p>
+</li>
+<li><p><code>Recall：</code>召回率，预测对的结果比上真实结果</p>
+</li>
+<li><p><code>AP:</code>大多数情况下，我们希望<code>precision、recall</code>都很高，但这其实是一件矛盾的事情，因此类比于<code>TPR/FNR</code>一样，我们可以画出<code>PR</code>曲线。但其实，<code>score/iou</code>的阈值都会影响到<code>AP</code></p>
+</li>
+<li><p><code>MAP</code>：指的是所有类别的平均<code>AP</code></p>
+</li>
+</ul>
+<p><strong>因此在MMdetection框架中，想对DETR加上清洗的话，得自己写score：</strong></p>
+<ol>
+<li>不管训练，测试完在代码里加上，然后存入</li>
+<li>利用<code>demo</code>得到结果，然后手写，统计计算</li>
+<li>训练的话， 应该还是同<code>1</code>的想法</li>
+</ol>
 <h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2>
           
         
@@ -1536,7 +1612,7 @@ pip install -r ./DeepFaceLab/requirements-cuda.txt
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1547,7 +1623,7 @@ pip install -r ./DeepFaceLab/requirements-cuda.txt
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1602,7 +1678,7 @@ pip install -r ./DeepFaceLab/requirements-cuda.txt
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 

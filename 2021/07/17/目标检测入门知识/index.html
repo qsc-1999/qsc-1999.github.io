@@ -88,8 +88,11 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627523370794.png">
 <meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627525303190.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627713419843.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627715134388.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627716105341.png">
 <meta property="article:published_time" content="2021-07-17T08:35:32.000Z">
-<meta property="article:modified_time" content="2021-07-30T09:47:25.914Z">
+<meta property="article:modified_time" content="2021-08-04T08:11:23.158Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="项目">
 <meta property="article:tag" content="detection">
@@ -404,6 +407,37 @@ for category in categories:
         如果大于：
             判断是否是该gt的首次匹配，如果是首次匹配，则为tp
             否则为fp
+
+def tpfp_fun(gt_bbox, det_bbox, iou_thr=0.5):
+
+    tpfp = np.zeros(len(det_bbox))    # tpfp数组记录
+    if len(gt_bbox) == 0:            # 如果gt=0，说明检测出来的都是fp
+        tpfp = tpfp.tolist()
+        return tpfp
+    
+    # 将det_bbox分开，同时再复制一个score用于索引，一个visited用于记录
+    pred_bbox = [box[0:4] for box in det_bbox]
+    pred_score = [box[4] for box in det_bbox]
+    score_idx = pred_score
+    gt_bbox_visit = np.zeros(len(gt_bbox))
+    pred_score.sort(reverse = True)
+
+    # 将bbox按照score从大到小的顺序，依次判断，同时将匹配的gt记录
+    ious = calculate_iou(gt_bbox, pred_bbox)
+    max_iou = np.max(ious, axis=0)
+    max_iou_idx = np.argmax(ious, axis=0)
+    for i in range(len(pred_bbox)):
+        idx = score_idx.index(pred_score[i])
+        if max_iou[idx] &gt; iou_thr:
+            if gt_bbox_visit[max_iou_idx[idx]] == 0:
+                tpfp[idx] = 1
+                gt_bbox_visit[max_iou_idx[idx]] = 1
+            else:
+                continue
+        else:
+            continue
+    tpfp = tpfp.tolist()
+    return tpfp
 </code></pre>
 <p><strong>值得注意：分类任务注重于score的大小，从而利用AUC来做评价指标，而检测任务是存在数量的问题，因此更重要的AP，而是对于某一类来说，不存在负样本，只要生成确定了这个anchor，就一定是tp或者是fp。</strong></p>
 <ul>
@@ -426,7 +460,109 @@ for category in categories:
 <li>利用<code>demo</code>得到结果，然后手写，统计计算</li>
 <li>训练的话， 应该还是同<code>1</code>的想法</li>
 </ol>
-<h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2>
+<p><strong>最终选择第二种方式来计算了</strong></p>
+<h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><p>一个对数据集良好的清洗，可在训练的过程中，提升一些，因此我用太赫兹的数据集为例，总结一些常用的数据清洗。</p>
+<p><strong>图像大小分布：</strong>对图像的大小进行统计，在太赫兹数据集中，图像均为<code>(400, 760)</code></p>
+<p><strong>GT_BBox的大小分布：</strong>对真实<code>bbox</code>的大小进行统计，有利于设定<code>anchor</code>，例如在本数据集中，<code>gt_bbox</code>的大小分布如下：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627713419843.png" alt="1627713419843"></p>
+<p>可以看到基本上在<code>(20, 80)</code>之间，因此在设计<code>anchor</code>时，可以进一步考虑</p>
+<p><strong>每类目标数统计：</strong>有利于直观看到每类的数量，判断是否存在类间不平衡的情况</p>
+<p><strong>每张图片目标数量统计：</strong>直观观察每张图片的目标数量，判断是否在图片中存在着极其不平衡的现象</p>
+<p><strong>每类长宽比：</strong>这个其实与<code>GT_bbox</code>是类似的</p>
+<p><strong>注意：其实这些指标需要记住，但是代码写起来是非常简单的，在此基础上额外多了一个plt的画图而已</strong></p>
+<h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2><h3 id="3-1-环境搭建"><a href="#3-1-环境搭建" class="headerlink" title="3.1 环境搭建"></a>3.1 环境搭建</h3><p>其实这个框架的环境还是蛮好搭建的，但是一定要搞清楚两个事情：</p>
+<ul>
+<li>必须在<code>linux</code>下进行</li>
+<li><code>cuda</code>、<code>gpu</code>这些版本一定要对应，否则就会发生意料之外的错误</li>
+</ul>
+<p>其实官方教程已经说的很清楚了，这里我再将命令行汇总一遍：</p>
+<pre><code>conda create -n open-mmlab python=3.7 -y
+conda activate open-mmlab
+
+# 这个要根据自己的电脑，然后在pytorch的官网用官方命令
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch -y
+
+# 这句话是根据上一句pytorch的版本决定的
+pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
+
+# install mmdetection
+git clone https://github.com/open-mmlab/mmdetection.git
+cd mmdetection
+pip install -r requirements/build.txt
+pip install -v -e .
+</code></pre>
+<p><strong>有一点需要注意，当你如果更改了mmdetection文件夹的名字时，是需要重新bulid的</strong></p>
+<h3 id="3-2-使用教程"><a href="#3-2-使用教程" class="headerlink" title="3.2 使用教程"></a>3.2 使用教程</h3><p>这个框架其实使用起来非常方便，你只需要将你的数据集格式修改成<code>VOC</code>或者<code>COCO</code>的格式，然后放到文件夹中，接着修改一些信息即可，主要按照如下步骤：</p>
+<ol>
+<li><p>上传数据集，在主文件夹下创建<code>data</code>文件夹，然后将自己的数据按照对应格式放入，如图所示：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627715134388.png" alt="1627715134388"></p>
+</li>
+<li><p>修改<code>mmdet/evaluation/mean_ap.py</code>文件，可以加上你需要的<code>precision</code>、<code>F1</code>指标</p>
+</li>
+<li><p>修改对<code>VOC</code>/<code>COCO</code>数据集的设计管理文件：</p>
+<ul>
+<li><p>在<code>mmdet/datasets/voc</code>中，修改成你所需要的类，针对训练。</p>
+</li>
+<li><p>在<code>mmdet/core/evaluation/classname</code>中，修改类名，针对评估与测试。</p>
+</li>
+</ul>
+</li>
+<li><p>在主文件中，生成一个你自己的<code>config</code>文件，尽量避免在原<code>config</code>文件中修改，这里拿<code>atss</code>举例，运行命令行：</p>
+<pre><code>python tools/misc/print_config.py configs/atss/atss_r50_fpn_1x_coco.py
+</code></pre>
+<p>在自己的<code>config</code>文件夹中，生成一个<code>my_atss.py</code>文件，将打印的信息全部粘贴到该文件下，接着我们对该文件进行相对应的修改即可。</p>
+</li>
+<li><p>在自己的<code>config</code>文件里，修改如下配置：</p>
+<ul>
+<li><p><code>img_scale</code>：修改成你对应的图像大小</p>
+</li>
+<li><p><code>batch/lr/step</code>：最初始的是<code>16</code>张图片的学习率，你根据自己的<code>batch</code>然后对学习率进行成倍数的缩小</p>
+</li>
+<li><p>数据路径：修改成如下格式：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627716105341.png" alt="1627716105341"></p>
+</li>
+<li><p><code>metric</code>：如果是<code>VOC</code>格式，需要改成<code>mAP</code></p>
+</li>
+<li><p><code>class,score</code>：其中<code>class</code>需要改成自己的类别数量，<code>score</code>是用于测试评估的</p>
+</li>
+</ul>
+</li>
+<li><p>在修改好配置文件后，就可以运行训练了，其中训练命令为：</p>
+<pre><code>./tools/dist_train.sh qsc/my_atss_r50_fpn_1x_coco.py 2(gpu数量)  # 多GPU
+python tools/train.py qsc/my_atss_r50_fpn_1x_coco.py            # 单GPU
+</code></pre>
+</li>
+<li><p>训练好之后，会自动生成一个<code>work_dir</code>的文件夹，采用如下命令进行测试，一般测试时需要看<code>fps</code>与<code>mem</code>，因此都采用单卡：</p>
+<pre><code>python tools/test.py work_dir/my_atss_r50_fpn_1x_coco/my_atss_r50_fpn_1x_coco.py work_dir/my_atss_r50_fpn_1x_coco/epoch_36.pth --eval mAP
+</code></pre>
+</li>
+<li><p>将模型进行可视化，需修改<code>demo</code>文件中<code>image_demo.py</code>文件，接着采用如下命令：</p>
+<pre><code>python demo/image_demo.py demo/test.jpg work_dir/my_atss_r50_fpn_1x_coco/my_atss_r50_fpn_1x_coco.py work_dir/my_atss_r50_fpn_1x_coco/epoch_36.pth
+</code></pre>
+</li>
+</ol>
+<p>以上就是<code>mmdetection</code>框架最简单的使用方式，通过此方式就可以实现很多<code>sota</code>的目标检测模型</p>
+<h3 id="3-3-调参Tricks"><a href="#3-3-调参Tricks" class="headerlink" title="3.3 调参Tricks"></a>3.3 调参Tricks</h3><ol>
+<li><p>根据<code>gt_bbox</code>的长宽分布，从而确定<code>anchor</code>的设置。具体到代码中，修改如下参数：</p>
+<pre><code>anchor_rations = [0.5, 1.0, 2.0]
+</code></pre>
+</li>
+<li><p><code>Albu</code>数据增广 ，这个要看具体任务，受不受光照、形变等影响，像太赫兹任务中，就不需要进行很多的数据增广问题，但可以考虑随机生成<code>abnormal</code>样本</p>
+</li>
+<li><p>多尺度训练与测试, 这个也要看数据集,因为这里就根本不需要多尺度</p>
+</li>
+<li><p>利用软化非极大值抑制策略,  代码如下:</p>
+<pre><code>rcnn=dict(score_thr=0.05, nms=dict(type=&#39;soft_nms&#39;, iou_thr=0.5, min_score=0.001), max_per_img=100)
+</code></pre>
+</li>
+<li><p>一般情况下,用<code>GIoULoss</code>会比<code>L1Loss</code>涨点, 具体代码如下:</p>
+<pre><code>reg_decoded_bbox=True,     # 使用GIoUI时注意添加
+loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
+</code></pre>
+</li>
+</ol>
+<p>**肯定还有许多tricks我没有用到, 这是一个经验积累的过程, 慢慢将遇到的方法在此记录就好了. **</p>
+
       
     </div>
     
@@ -551,7 +687,7 @@ for category in categories:
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -562,7 +698,7 @@ for category in categories:
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -573,7 +709,7 @@ for category in categories:
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -606,7 +742,7 @@ for category in categories:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">一、目标检测基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B8%85%E6%B4%97"><span class="nav-number">2.</span> <span class="nav-text">二、目标检测数据集清洗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81MMdetection%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">三、MMdetection检测框架使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">一、目标检测基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B8%85%E6%B4%97"><span class="nav-number">2.</span> <span class="nav-text">二、目标检测数据集清洗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81MMdetection%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">三、MMdetection检测框架使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 使用教程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%B0%83%E5%8F%82Tricks"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 调参Tricks</span></a></li></ol></li></ol></div>
             
 
           </div>

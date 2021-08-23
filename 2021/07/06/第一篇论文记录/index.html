@@ -88,7 +88,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png">
 <meta property="article:published_time" content="2021-07-06T03:14:52.000Z">
-<meta property="article:modified_time" content="2021-08-16T02:37:45.512Z">
+<meta property="article:modified_time" content="2021-08-23T07:19:49.075Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="论文">
 <meta name="twitter:card" content="summary">
@@ -386,9 +386,27 @@
 <p>最后就是要自己找一个新坑，然后去发掘，这样从最初始的<code>idea</code>就可以吸引专家。</p>
 <p><strong>2021.8.16：</strong></p>
 <ul>
-<li>语义分割这里存在问题，模型效果整体不好，同时考虑是否加入边缘监督从而强调边缘特征，对图片的<code>label</code>进一步修正</li>
+<li>语义分割这里存在问题，模型效果整体不好，同时考虑是否加入边缘监督从而强调边缘特征，对图片的<code>label</code>进一步修正<ul>
+<li>训练调参，取最好的情况</li>
+<li>边缘监督 / 对图片的<code>Label</code>进行修改</li>
+</ul>
+</li>
 <li>联合训练：应该对语义分割的权重学习率降到很低，甚至不变</li>
 <li>考虑两个特征的融合模块</li>
+</ul>
+<p><strong>2021.8.18：</strong></p>
+<ul>
+<li>修正数据集，改为<code>blending</code>分割，同时对数据集比例进行修正，这里的含义表示：在语义分割中关注于换脸的边缘检测，拿到这特征图再与整体的做自注意力</li>
+<li>联合训练调参，语义分割少学习</li>
+<li>想一个特征融合模块</li>
+</ul>
+<p><strong>2021.8.23：</strong></p>
+<p>今天写这个话，就是要和这个<code>idea</code>告别了，从去年九月份起到今年一年的时间，可以说整个科研的经历是失败的，但是我相信好事多磨，只要我愿意去做，努力去做就一定还会有成果的，当然失败的科研经历也是好事， 这是一种成长，我会记录下来这种成长。</p>
+<h2 id="四、科研经历总结"><a href="#四、科研经历总结" class="headerlink" title="四、科研经历总结"></a>四、科研经历总结</h2><p>经过了一年的努力颗粒无收，我认为我存在着以下的几点问题：</p>
+<ul>
+<li>将结果看的太重太重。我知道科研的结果就是努力发顶会的，可我太好高骛远，没有将过程走好，一心想着能不能发顶会，这样会和我的目标越差越远</li>
+<li>基础知识不扎实，我没有能力像老朱那样可以提出一个又一个模块来，说明我的论文读的还不够多，要读到个四五十篇的时候，自然而然就肚子里有东西了。当然读论文一定要注意积累，要善于总结，而不是读完就完事了，这也是我以前在读论文中犯的大忌</li>
+<li>行动力太差。一年了，所有的事情也该结束结束了，你的行动力太差，脑子里想的东西太杂，应该脚踏实地，踏踏实实的，一周读3篇文章，一点点的积累，积少成多开始吧。</li>
 </ul>
 
       
@@ -513,7 +531,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +553,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -568,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AE%BA%E6%96%87%E5%8F%91%E8%A1%A8%E5%8F%91%E5%B1%95%E7%BB%8F%E5%8E%86"><span class="nav-number">1.</span> <span class="nav-text">一、论文发表发展经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Idea%E6%A6%82%E6%8B%AC"><span class="nav-number">2.</span> <span class="nav-text">二、Idea概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AF%8F%E5%91%A8%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">三、每周总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AE%BA%E6%96%87%E5%8F%91%E8%A1%A8%E5%8F%91%E5%B1%95%E7%BB%8F%E5%8E%86"><span class="nav-number">1.</span> <span class="nav-text">一、论文发表发展经历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Idea%E6%A6%82%E6%8B%AC"><span class="nav-number">2.</span> <span class="nav-text">二、Idea概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%AF%8F%E5%91%A8%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">三、每周总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%A7%91%E7%A0%94%E7%BB%8F%E5%8E%86%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">四、科研经历总结</span></a></li></ol></div>
             
 
           </div>

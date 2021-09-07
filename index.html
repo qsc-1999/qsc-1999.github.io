@@ -261,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/%E8%AE%BA%E6%96%87%E7%A7%AF%E7%B4%AF%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -280,7 +280,178 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/08/23/%E8%AE%BA%E6%96%87%E7%A7%AF%E7%B4%AF%E6%80%BB%E7%BB%93/" itemprop="url">论文积累总结</a></h1>
+                <a class="post-title-link" href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" itemprop="url">Deepfake论文总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-07T22:28:13+08:00">
+                2021-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong>经过前面一年的填坑，我打算重新开始读论文，想实验，做实验，提出新的<code>idea</code>，这个博客作为我的论文阅读总结，其实是一个提纲性质的东西， 具体来说分布在每一篇论文当中。</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">作者</th>
+<th align="center">发表刊物/会议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">` OpenForensics: Large-Scale Challenging Dataset</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">For Multi-Face Forgery Detection And Segmentation In-The-Wild`</td>
+<td align="center">日本<code>NII</code>机构，<code>Trung-Nghia Le</code></td>
+<td align="center"><code>ICCV 2021</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/OpenForensics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/23/OpenForensics/" itemprop="url">OpenForensics</a></h1>
         
 
         <div class="post-meta">
@@ -354,8 +525,185 @@
       
         
           
-            <p><strong>写在前面：</strong>经过前面一年的填坑，我打算重新开始读论文，想实验，做实验，提出新的<code>idea</code>，这个博客作为我的论文阅读总结</p>
-
+            <h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><ul>
+<li>针对问题：<ul>
+<li>目前的研究大多都是<code>deepfake</code>二分类人物，对检测与分割的任务很少</li>
+<li>其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测</li>
+<li>最后，针对<code>Face-swap GAN</code>这种网络来说，需要成对单独训练，耗费大量的时间</li>
+</ul>
+</li>
+<li>解决方案：<ul>
+<li>提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间</li>
+<li>其次，制作了一个多样世界下的数据集，其中包括对数据集进行了大量的标注，从而可以应用到检测、分割领域</li>
+<li>最后提出了一个<code>benchmark</code>，为后续的学者提供对比实验以及评价指标，同时还对鲁棒性问题做了一点自己的看法</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-具体方法"><a href="#1-2-具体方法" class="headerlink" title="1.2 具体方法"></a>1.2 具体方法</h3><p><strong>方法流程：</strong></p>
+<p><img src="/2021/08/23/OpenForensics/Blog\blog\source_posts\OpenForensics\iccv_nii_methods.png"></p>
+<ul>
+<li><p>首先从<code>Google Open Images</code>中获取大量图片， 接着剔除没有人的图片，其中包括一系列不属于人的东西</p>
+</li>
+<li><p>接着对面部进行篡改，首先对图片中的对脸部进行提取，然后放入一个是否可操作的判别器中进行判断，如果可以进行篡改，那么提取脸部的潜在向量，放入<code>GAN</code>模型中，生成新的面孔。将新面孔替换到原脸上去，其中细节采用泊松融合和<code>Face Swapping</code>的颜色自适应模块。接着新生成的图片会放入一个二分类的<code>Xception</code>网络进行判断，如果可以骗过该网络，那么进行下一步，否则丢弃。</p>
+</li>
+<li><p>但是之后的<code>Face Embedding</code>这个东西，它没有好好讲。</p>
+</li>
+<li><p>采用此方法带来的好处是：</p>
+<ul>
+<li>省时间</li>
+<li>可以生成高分辨率图像</li>
+<li>可以生成多任务的标注</li>
+</ul>
+</li>
+<li><p>最后采用了一系列数据增广方式，对数据集进一步提高其挑战性。</p>
+</li>
+</ul>
+<p><strong>数据集介绍：</strong></p>
+<ul>
+<li>任务多样性，每一张<code>face</code>有各种各样的标注，其中有分类、检测框、分割掩码、伪造边界、脸部特征点</li>
+<li>场景多样性，但比<code>DFDC</code>还少一点</li>
+<li>图片多样性，其中户外包含了<code>36.3%</code></li>
+<li>图片分辨率，其中主要集中于<code>680-720/720-1024</code>，是高分辨率数据集</li>
+<li>一张图片包括了<code>1~n</code>张<code>face</code></li>
+<li>人物属性，主要是<code>bounding box</code>和<code>mask size</code>的分布</li>
+<li>数据增广，这个在方法中已经有介绍</li>
+</ul>
+<p><strong>用户调研：</strong></p>
+<p>这个是数据集经典的一部分，从用户调研的角度来证明自己的数据集有多好，其中包括如下调研：</p>
+<ul>
+<li>首先是数据的真实性，真实等级从<code>1-5</code>，可以证明自己的数据集有较高的真实性</li>
+<li>其次是用户伪造检测的准确度问题，这里又提到个新的指标叫<code>BRISQUE</code>，这个指标越高，图片质量越差</li>
+<li>最后是用户在多人物人脸伪造检测中的能力问题，从而证明自己的数据集有很大的挑战性</li>
+</ul>
+<h3 id="1-3-实验细节"><a href="#1-3-实验细节" class="headerlink" title="1.3 实验细节"></a>1.3 实验细节</h3><p>这个是这种类型的论文也是常用的方法，提出一系列<code>benchmark</code>，为了后续学者对比实验，用了目前主流的检测、分割网络框架。其中评价指标为<code>MSCOCO AP、LPR</code>。</p>
+<p><code>localization recall precision (LRP) error</code>：一种新的目标检测领域的评价指标</p>
+<p>最后其主要实验针对测试集、未知场景测试集，从检测与分割两个任务入手做了对比实验：</p>
+<p><img src="/2021/08/23/OpenForensics/Blog\blog\source_posts\OpenForensics\iccv_nii_experiment.png"></p>
+<h3 id="1-4-论文收获"><a href="#1-4-论文收获" class="headerlink" title="1.4 论文收获"></a>1.4 论文收获</h3><p><strong>整体评价：</strong>这篇论文是经典的<code>Deepfake</code>生成方向中一类论文。它对<code>Deepfake</code>生成技术没有创新，但是对<code>Deepfake</code>任务提出了新的方向，从而开辟了新的点。我觉得最重要的贡献点是真实世界下，引导的不同任务的数据集和一个<code>benchmark</code>，其实我们可以根据领导人这一个方向，出一个数据集。</p>
+<p><strong>方法：</strong>方法层面上，没有很突出的贡献点，不具有参考价值</p>
+<p><strong>实验：</strong>其实实验也很少，主要就是两个常用的指标，其实我觉得<code>LPR</code>的引入也是为了充实内容</p>
+<p><strong>写作：</strong>这个写作我觉得还是非常严谨的，值得学习词汇、句式、思路</p>
+<p><strong>词汇：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">morph</td>
+<td align="center"></td>
+<td align="center">emergence</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">interpretable attributes</td>
+<td align="center"></td>
+<td align="center">sketches</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">subsequently</td>
+<td align="center"></td>
+<td align="center">sculptures</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">be oriented to the front</td>
+<td align="center"></td>
+<td align="center">feasibility</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">inspection</td>
+<td align="center"></td>
+<td align="center">intensity</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">undergo</td>
+<td align="center"></td>
+<td align="center">exclusively</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">discard</td>
+<td align="center"></td>
+<td align="center">exploit</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">simulate</td>
+<td align="center"></td>
+<td align="center">geometric</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">substantial</td>
+<td align="center"></td>
+<td align="center">demonstrated</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">proliferation</td>
+<td align="center"></td>
+<td align="center">Emerging techniques</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">authorities</td>
+<td align="center"></td>
+<td align="center">harassment</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">comprehensive</td>
+<td align="center"></td>
+<td align="center">deception</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">countermeasure</td>
+<td align="center"></td>
+<td align="center">spoof</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">unrestricted</td>
+<td align="center"></td>
+<td align="center">impersonation</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">promote</td>
+<td align="center"></td>
+<td align="center">Given that</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">potential</td>
+<td align="center"></td>
+<td align="center">simultaneously</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">extensive</td>
+<td align="center"></td>
+<td align="center">massive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Continuing advances</td>
+<td align="center"></td>
+<td align="center">infinite</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><strong>句式：</strong></p>
+<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3>
           
         
       
@@ -981,125 +1329,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/28/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Qsc's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/28/test/" itemprop="url">test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-28T22:29:15+08:00">
-                2021-07-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1298,7 +1527,7 @@ def tpfp_fun(gt_bbox, det_bbox, iou_thr=0.5):
 <h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><p>一个对数据集良好的清洗，可在训练的过程中，提升一些，因此我用太赫兹的数据集为例，总结一些常用的数据清洗。</p>
 <p><strong>图像大小分布：</strong>对图像的大小进行统计，在太赫兹数据集中，图像均为<code>(400, 760)</code></p>
 <p><strong>GT_BBox的大小分布：</strong>对真实<code>bbox</code>的大小进行统计，有利于设定<code>anchor</code>，例如在本数据集中，<code>gt_bbox</code>的大小分布如下：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627713419843.png" alt="1627713419843"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627713419843.png" alt="1627713419843"></p>
 <p>可以看到基本上在<code>(20, 80)</code>之间，因此在设计<code>anchor</code>时，可以进一步考虑</p>
 <p><strong>每类目标数统计：</strong>有利于直观看到每类的数量，判断是否存在类间不平衡的情况</p>
 <p><strong>每张图片目标数量统计：</strong>直观观察每张图片的目标数量，判断是否在图片中存在着极其不平衡的现象</p>
@@ -1329,7 +1558,7 @@ pip install -v -e .
 <h3 id="3-2-使用教程"><a href="#3-2-使用教程" class="headerlink" title="3.2 使用教程"></a>3.2 使用教程</h3><p>这个框架其实使用起来非常方便，你只需要将你的数据集格式修改成<code>VOC</code>或者<code>COCO</code>的格式，然后放到文件夹中，接着修改一些信息即可，主要按照如下步骤：</p>
 <ol>
 <li><p>上传数据集，在主文件夹下创建<code>data</code>文件夹，然后将自己的数据按照对应格式放入，如图所示：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627715134388.png" alt="1627715134388"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627715134388.png" alt="1627715134388"></p>
 </li>
 <li><p>修改<code>mmdet/evaluation/mean_ap.py</code>文件，可以加上你需要的<code>precision</code>、<code>F1</code>指标</p>
 </li>
@@ -1353,7 +1582,7 @@ pip install -v -e .
 <li><p><code>batch/lr/step</code>：最初始的是<code>16</code>张图片的学习率，你根据自己的<code>batch</code>然后对学习率进行成倍数的缩小</p>
 </li>
 <li><p>数据路径：修改成如下格式：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627716105341.png" alt="1627716105341"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627716105341.png" alt="1627716105341"></p>
 </li>
 <li><p><code>metric</code>：如果是<code>VOC</code>格式，需要改成<code>mAP</code></p>
 </li>
@@ -1396,177 +1625,6 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
 </li>
 </ol>
 <p>**肯定还有许多tricks我没有用到, 这是一个经验积累的过程, 慢慢将遇到的方法在此记录就好了. **</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/09/TaiHezi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Qsc's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/07/09/TaiHezi/" itemprop="url">TaiHezi</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-09T10:10:30+08:00">
-                2021-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一、太赫兹项目"><a href="#一、太赫兹项目" class="headerlink" title="一、太赫兹项目"></a>一、太赫兹项目</h2><p>属于一个目标检测的项目，也是一个类似于自动驾驶领域的多模态项目。</p>
-<h2 id="二、项目介绍"><a href="#二、项目介绍" class="headerlink" title="二、项目介绍"></a>二、项目介绍</h2><p>这是一个目标检测任务，其主要需求如下：</p>
-<ul>
-<li>检测出每张图片中的违禁物品</li>
-<li>通过五张正面/背面角度的图片，将最终的结果全部汇总到正面或者背面上去</li>
-</ul>
-<p>其验收准则有三：</p>
-<ul>
-<li><p>速度：单人检测不超过<code>1s</code>，其中包括单张检测与汇总结果</p>
-</li>
-<li><p>准确率不低于<code>95%</code></p>
-</li>
-<li><p>误检率不高于<code>5%</code></p>
-</li>
-</ul>
-<h2 id="三、当下甲方存在的问题"><a href="#三、当下甲方存在的问题" class="headerlink" title="三、当下甲方存在的问题"></a>三、当下甲方存在的问题</h2><ul>
-<li>误检率比较高，个人感觉这是数据集的问题，也有可能是模型本身的问题。</li>
-<li>对于多模态，甲方没有任何想法</li>
-</ul>
-<h2 id="四、阶段发展总结"><a href="#四、阶段发展总结" class="headerlink" title="四、阶段发展总结"></a>四、阶段发展总结</h2><h3 id="4-1-2021-7-12-第一次交流"><a href="#4-1-2021-7-12-第一次交流" class="headerlink" title="4.1 2021.7.12 第一次交流"></a>4.1 2021.7.12 第一次交流</h3><ul>
-<li><p>问题：数据量少，标注差</p>
-</li>
-<li><p>算法：<code>Faster RCNN、ATSS、Deformerable DETR</code>，师兄自己的<code>paper</code></p>
-</li>
-<li><p>效果：</p>
-<ul>
-<li>准确率在<code>90%</code>以上</li>
-<li>误检率在<code>10</code>以下</li>
-</ul>
-</li>
-<li><p>交流结果：</p>
-<ul>
-<li>甲方出一个大一点、标注效果好一点的数据集</li>
-<li>我们自己重新实验，对比精确率与召回率</li>
-</ul>
-</li>
-</ul>
-<h3 id="4-2-2021-7-30-第一阶段结束"><a href="#4-2-2021-7-30-第一阶段结束" class="headerlink" title="4.2 2021.7.30 第一阶段结束"></a>4.2 2021.7.30 第一阶段结束</h3><ul>
-<li><p>算法：<code>Deformerable DETR</code>与师兄自己的<code>paper</code></p>
-</li>
-<li><p>效果：</p>
-<ul>
-<li>准确率<code>96%</code></li>
-<li>误检率<code>4.4%</code></li>
-</ul>
-</li>
-<li><p>下一步计划：</p>
-<ul>
-<li>借鉴自动驾驶中的多模态思想，先看一些论文，再考虑后面的事情</li>
-</ul>
-</li>
-</ul>
 
           
         
@@ -1763,128 +1821,6 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
 <li>行动力太差。一年了，所有的事情也该结束结束了，你的行动力太差，脑子里想的东西太杂，应该脚踏实地，踏踏实实的，一周读3篇文章，一点点的积累，积少成多开始吧。</li>
 </ul>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Qsc's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/02/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-win10%E3%80%81linux/" itemprop="url">深度学习环境搭建(win10、linux)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T15:26:40+08:00">
-                2021-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>写在前面：</strong></p>
-<p>​    这篇文章主要是介绍深度学习环境的搭建，本来是打算写<code>windows/Linux</code>两个版本的，但是<code>Linux</code>用习惯之后，也就摒弃了<code>windows</code>版本，这里只介绍<code>Linux</code>版本，其<code>OS</code>为<code>Ubuntu</code>。</p>
-<h2 id="一、Anaconda环境准备"><a href="#一、Anaconda环境准备" class="headerlink" title="一、Anaconda环境准备"></a>一、Anaconda环境准备</h2><p>​    在深度学习的环境中，少不了的是<code>conda</code>，有了这个东西，就可以创建多个深度学习环境，其不会相互干扰，需要用哪个就切换就可以了，这里就首先介绍<code>Anaconda</code>的环境准备。</p>
-<h2 id="二、Python环境准备"><a href="#二、Python环境准备" class="headerlink" title="二、Python环境准备"></a>二、Python环境准备</h2><h2 id="三、CUDA环境准备"><a href="#三、CUDA环境准备" class="headerlink" title="三、CUDA环境准备"></a>三、CUDA环境准备</h2><h2 id="四、Pytorch安装"><a href="#四、Pytorch安装" class="headerlink" title="四、Pytorch安装"></a>四、Pytorch安装</h2><h2 id="五、Tensorflow-gpu安装"><a href="#五、Tensorflow-gpu安装" class="headerlink" title="五、Tensorflow-gpu安装"></a>五、Tensorflow-gpu安装</h2>
           
         
       
@@ -2175,13 +2111,177 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/24/DeepFaceLab%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/03/24/DeepFaceLab%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" itemprop="url">DeepFaceLab使用教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-24T00:00:00+08:00">
+                2021-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong>本篇文章旨在帮助大家快速搭建<code>Linux</code>版本的<code>DeepFaceLab</code>，不注意调参等细节。</p>
+<h2 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h2><h3 id="1-1-基本环境配置"><a href="#1-1-基本环境配置" class="headerlink" title="1.1 基本环境配置"></a>1.1 基本环境配置</h3><p><strong>python=3.7</strong></p>
+<p><strong>FFMpeg</strong></p>
+<p><strong>Git</strong></p>
+<p>最新的<code>Nvidia</code>显卡，这里是<code>CUDA 11</code>，因为代码用的是<code>tensorflow-gpu==2.4.0</code>。</p>
+<h3 id="1-2-环境搭建步骤"><a href="#1-2-环境搭建步骤" class="headerlink" title="1.2 环境搭建步骤"></a>1.2 环境搭建步骤</h3><p>采用以下命令行：</p>
+<pre><code># 利用conda创建环境
+conda create -n deepfacelab -c main python=3.7 cudnn=7.6.5 cudatoolkit=10.1.243
+conda activate deepfacelab
+# 将linux版本的脚本拷贝
+git clone https://github.com/nagadit/DeepFaceLab_Linux.git
+cd DeepFaceLab_Linux
+# 将整个项目拷贝
+git clone --depth 1 https://github.com/iperov/DeepFaceLab.git
+# 安装所需要的环境
+pip install -r ./DeepFaceLab/requirements-cuda.txt
+</code></pre>
+<p>其中在安装<code>h5py</code>时，要求版本为<code>2.10.0</code>，这里需要自行修改。</p>
+<p>最终的文件目录结构如下：</p>
+<pre><code>/DeepFaceLab_Linux：
+    /DeepFaceLab：#DeepFaceLab代码
+    /scripts：     #Linux运行版本脚本
+    /workspace：  #视频处理
+</code></pre>
+<h3 id="1-3-Workshop准备"><a href="#1-3-Workshop准备" class="headerlink" title="1.3 Workshop准备"></a>1.3 Workshop准备</h3><p>准备两个视频，分别命名为：<code>data_dst.mp4/data_src.mp4</code>。</p>
+<p>之后就可以开始我们的<code>DeepFaceLab</code>之旅！</p>
+<p>​</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
-  </nav>
-
 
 
           </div>
@@ -2229,7 +2329,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2240,7 +2340,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2251,7 +2351,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

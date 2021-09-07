@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="科研,Paper," />
+  <meta name="keywords" content="Paper," />
 
 
 
@@ -79,19 +79,21 @@
 
 
 
-<meta name="description" content="写在前面：经过前面一年的填坑，我打算重新开始读论文，想实验，做实验，提出新的idea，这个博客作为我的论文阅读总结">
+<meta name="description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文积累总结">
-<meta property="og:url" content="http://example.com/2021/08/23/%E8%AE%BA%E6%96%87%E7%A7%AF%E7%B4%AF%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:title" content="OpenForensics">
+<meta property="og:url" content="http://example.com/2021/08/23/OpenForensics/index.html">
 <meta property="og:site_name" content="Qsc&#39;s Blog">
-<meta property="og:description" content="写在前面：经过前面一年的填坑，我打算重新开始读论文，想实验，做实验，提出新的idea，这个博客作为我的论文阅读总结">
+<meta property="og:description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/Blog/blog/source_posts/OpenForensics/iccv_nii_methods.png">
+<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/Blog/blog/source_posts/OpenForensics/iccv_nii_experiment.png">
 <meta property="article:published_time" content="2021-08-23T07:21:33.000Z">
-<meta property="article:modified_time" content="2021-08-23T07:23:32.652Z">
+<meta property="article:modified_time" content="2021-09-07T14:35:59.887Z">
 <meta property="article:author" content="qishicheng">
-<meta property="article:tag" content="科研">
 <meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/08/23/OpenForensics/Blog/blog/source_posts/OpenForensics/iccv_nii_methods.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/08/23/论文积累总结/"/>
+  <link rel="canonical" href="http://example.com/2021/08/23/OpenForensics/"/>
 
 
 
 
 
-  <title>论文积累总结 | Qsc's Blog</title>
+  <title>OpenForensics | Qsc's Blog</title>
   
 
 
@@ -264,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/%E8%AE%BA%E6%96%87%E7%A7%AF%E7%B4%AF%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/OpenForensics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -281,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文积累总结</h1>
+          <h1 class="post-title" itemprop="name headline">OpenForensics</h1>
         
 
         <div class="post-meta">
@@ -353,8 +355,185 @@
       
 
       
-        <p><strong>写在前面：</strong>经过前面一年的填坑，我打算重新开始读论文，想实验，做实验，提出新的<code>idea</code>，这个博客作为我的论文阅读总结</p>
-
+        <h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><ul>
+<li>针对问题：<ul>
+<li>目前的研究大多都是<code>deepfake</code>二分类人物，对检测与分割的任务很少</li>
+<li>其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测</li>
+<li>最后，针对<code>Face-swap GAN</code>这种网络来说，需要成对单独训练，耗费大量的时间</li>
+</ul>
+</li>
+<li>解决方案：<ul>
+<li>提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间</li>
+<li>其次，制作了一个多样世界下的数据集，其中包括对数据集进行了大量的标注，从而可以应用到检测、分割领域</li>
+<li>最后提出了一个<code>benchmark</code>，为后续的学者提供对比实验以及评价指标，同时还对鲁棒性问题做了一点自己的看法</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-具体方法"><a href="#1-2-具体方法" class="headerlink" title="1.2 具体方法"></a>1.2 具体方法</h3><p><strong>方法流程：</strong></p>
+<p><img src="/2021/08/23/OpenForensics/Blog\blog\source_posts\OpenForensics\iccv_nii_methods.png"></p>
+<ul>
+<li><p>首先从<code>Google Open Images</code>中获取大量图片， 接着剔除没有人的图片，其中包括一系列不属于人的东西</p>
+</li>
+<li><p>接着对面部进行篡改，首先对图片中的对脸部进行提取，然后放入一个是否可操作的判别器中进行判断，如果可以进行篡改，那么提取脸部的潜在向量，放入<code>GAN</code>模型中，生成新的面孔。将新面孔替换到原脸上去，其中细节采用泊松融合和<code>Face Swapping</code>的颜色自适应模块。接着新生成的图片会放入一个二分类的<code>Xception</code>网络进行判断，如果可以骗过该网络，那么进行下一步，否则丢弃。</p>
+</li>
+<li><p>但是之后的<code>Face Embedding</code>这个东西，它没有好好讲。</p>
+</li>
+<li><p>采用此方法带来的好处是：</p>
+<ul>
+<li>省时间</li>
+<li>可以生成高分辨率图像</li>
+<li>可以生成多任务的标注</li>
+</ul>
+</li>
+<li><p>最后采用了一系列数据增广方式，对数据集进一步提高其挑战性。</p>
+</li>
+</ul>
+<p><strong>数据集介绍：</strong></p>
+<ul>
+<li>任务多样性，每一张<code>face</code>有各种各样的标注，其中有分类、检测框、分割掩码、伪造边界、脸部特征点</li>
+<li>场景多样性，但比<code>DFDC</code>还少一点</li>
+<li>图片多样性，其中户外包含了<code>36.3%</code></li>
+<li>图片分辨率，其中主要集中于<code>680-720/720-1024</code>，是高分辨率数据集</li>
+<li>一张图片包括了<code>1~n</code>张<code>face</code></li>
+<li>人物属性，主要是<code>bounding box</code>和<code>mask size</code>的分布</li>
+<li>数据增广，这个在方法中已经有介绍</li>
+</ul>
+<p><strong>用户调研：</strong></p>
+<p>这个是数据集经典的一部分，从用户调研的角度来证明自己的数据集有多好，其中包括如下调研：</p>
+<ul>
+<li>首先是数据的真实性，真实等级从<code>1-5</code>，可以证明自己的数据集有较高的真实性</li>
+<li>其次是用户伪造检测的准确度问题，这里又提到个新的指标叫<code>BRISQUE</code>，这个指标越高，图片质量越差</li>
+<li>最后是用户在多人物人脸伪造检测中的能力问题，从而证明自己的数据集有很大的挑战性</li>
+</ul>
+<h3 id="1-3-实验细节"><a href="#1-3-实验细节" class="headerlink" title="1.3 实验细节"></a>1.3 实验细节</h3><p>这个是这种类型的论文也是常用的方法，提出一系列<code>benchmark</code>，为了后续学者对比实验，用了目前主流的检测、分割网络框架。其中评价指标为<code>MSCOCO AP、LPR</code>。</p>
+<p><code>localization recall precision (LRP) error</code>：一种新的目标检测领域的评价指标</p>
+<p>最后其主要实验针对测试集、未知场景测试集，从检测与分割两个任务入手做了对比实验：</p>
+<p><img src="/2021/08/23/OpenForensics/Blog\blog\source_posts\OpenForensics\iccv_nii_experiment.png"></p>
+<h3 id="1-4-论文收获"><a href="#1-4-论文收获" class="headerlink" title="1.4 论文收获"></a>1.4 论文收获</h3><p><strong>整体评价：</strong>这篇论文是经典的<code>Deepfake</code>生成方向中一类论文。它对<code>Deepfake</code>生成技术没有创新，但是对<code>Deepfake</code>任务提出了新的方向，从而开辟了新的点。我觉得最重要的贡献点是真实世界下，引导的不同任务的数据集和一个<code>benchmark</code>，其实我们可以根据领导人这一个方向，出一个数据集。</p>
+<p><strong>方法：</strong>方法层面上，没有很突出的贡献点，不具有参考价值</p>
+<p><strong>实验：</strong>其实实验也很少，主要就是两个常用的指标，其实我觉得<code>LPR</code>的引入也是为了充实内容</p>
+<p><strong>写作：</strong>这个写作我觉得还是非常严谨的，值得学习词汇、句式、思路</p>
+<p><strong>词汇：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">morph</td>
+<td align="center"></td>
+<td align="center">emergence</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">interpretable attributes</td>
+<td align="center"></td>
+<td align="center">sketches</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">subsequently</td>
+<td align="center"></td>
+<td align="center">sculptures</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">be oriented to the front</td>
+<td align="center"></td>
+<td align="center">feasibility</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">inspection</td>
+<td align="center"></td>
+<td align="center">intensity</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">undergo</td>
+<td align="center"></td>
+<td align="center">exclusively</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">discard</td>
+<td align="center"></td>
+<td align="center">exploit</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">simulate</td>
+<td align="center"></td>
+<td align="center">geometric</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">substantial</td>
+<td align="center"></td>
+<td align="center">demonstrated</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">proliferation</td>
+<td align="center"></td>
+<td align="center">Emerging techniques</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">authorities</td>
+<td align="center"></td>
+<td align="center">harassment</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">comprehensive</td>
+<td align="center"></td>
+<td align="center">deception</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">countermeasure</td>
+<td align="center"></td>
+<td align="center">spoof</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">unrestricted</td>
+<td align="center"></td>
+<td align="center">impersonation</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">promote</td>
+<td align="center"></td>
+<td align="center">Given that</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">potential</td>
+<td align="center"></td>
+<td align="center">simultaneously</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">extensive</td>
+<td align="center"></td>
+<td align="center">massive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Continuing advances</td>
+<td align="center"></td>
+<td align="center">infinite</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><strong>句式：</strong></p>
+<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3>
       
     </div>
     
@@ -370,8 +549,6 @@
     <footer class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/%E7%A7%91%E7%A0%94/" rel="tag"># 科研</a>
           
             <a href="/tags/Paper/" rel="tag"># Paper</a>
           
@@ -395,6 +572,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="prev" title="Deepfake论文总结">
+                Deepfake论文总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -446,8 +627,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -466,7 +656,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -477,7 +667,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -488,7 +678,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -511,6 +701,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">1.2 具体方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">1.3 实验细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">1.4 论文收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%86%99%E4%BD%9C%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">1.5 写作思路</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="项目,detection," />
+  <meta name="keywords" content="Paper,Coding," />
 
 
 
@@ -88,14 +88,14 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627523370794.png">
 <meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627525303190.png">
-<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627713419843.png">
-<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627715134388.png">
-<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users/www11/AppData/Roaming/Typora/typora-user-images/1627716105341.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627713419843.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627715134388.png">
+<meta property="og:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627716105341.png">
 <meta property="article:published_time" content="2021-07-17T08:35:32.000Z">
-<meta property="article:modified_time" content="2021-08-04T08:11:23.158Z">
+<meta property="article:modified_time" content="2021-08-30T01:19:18.359Z">
 <meta property="article:author" content="qishicheng">
-<meta property="article:tag" content="项目">
-<meta property="article:tag" content="detection">
+<meta property="article:tag" content="Paper">
+<meta property="article:tag" content="Coding">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627523370794.png">
 
@@ -464,7 +464,7 @@ def tpfp_fun(gt_bbox, det_bbox, iou_thr=0.5):
 <h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><p>一个对数据集良好的清洗，可在训练的过程中，提升一些，因此我用太赫兹的数据集为例，总结一些常用的数据清洗。</p>
 <p><strong>图像大小分布：</strong>对图像的大小进行统计，在太赫兹数据集中，图像均为<code>(400, 760)</code></p>
 <p><strong>GT_BBox的大小分布：</strong>对真实<code>bbox</code>的大小进行统计，有利于设定<code>anchor</code>，例如在本数据集中，<code>gt_bbox</code>的大小分布如下：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627713419843.png" alt="1627713419843"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627713419843.png" alt="1627713419843"></p>
 <p>可以看到基本上在<code>(20, 80)</code>之间，因此在设计<code>anchor</code>时，可以进一步考虑</p>
 <p><strong>每类目标数统计：</strong>有利于直观看到每类的数量，判断是否存在类间不平衡的情况</p>
 <p><strong>每张图片目标数量统计：</strong>直观观察每张图片的目标数量，判断是否在图片中存在着极其不平衡的现象</p>
@@ -495,7 +495,7 @@ pip install -v -e .
 <h3 id="3-2-使用教程"><a href="#3-2-使用教程" class="headerlink" title="3.2 使用教程"></a>3.2 使用教程</h3><p>这个框架其实使用起来非常方便，你只需要将你的数据集格式修改成<code>VOC</code>或者<code>COCO</code>的格式，然后放到文件夹中，接着修改一些信息即可，主要按照如下步骤：</p>
 <ol>
 <li><p>上传数据集，在主文件夹下创建<code>data</code>文件夹，然后将自己的数据按照对应格式放入，如图所示：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627715134388.png" alt="1627715134388"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627715134388.png" alt="1627715134388"></p>
 </li>
 <li><p>修改<code>mmdet/evaluation/mean_ap.py</code>文件，可以加上你需要的<code>precision</code>、<code>F1</code>指标</p>
 </li>
@@ -519,7 +519,7 @@ pip install -v -e .
 <li><p><code>batch/lr/step</code>：最初始的是<code>16</code>张图片的学习率，你根据自己的<code>batch</code>然后对学习率进行成倍数的缩小</p>
 </li>
 <li><p>数据路径：修改成如下格式：</p>
-<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/Users\www11\AppData\Roaming\Typora\typora-user-images\1627716105341.png" alt="1627716105341"></p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627716105341.png" alt="1627716105341"></p>
 </li>
 <li><p><code>metric</code>：如果是<code>VOC</code>格式，需要改成<code>mAP</code></p>
 </li>
@@ -579,9 +579,9 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
       
         <div class="post-tags">
           
-            <a href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag"># 项目</a>
+            <a href="/tags/Paper/" rel="tag"># Paper</a>
           
-            <a href="/tags/detection/" rel="tag"># detection</a>
+            <a href="/tags/Coding/" rel="tag"># Coding</a>
           
         </div>
       
@@ -594,8 +594,8 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/07/09/TaiHezi/" rel="next" title="TaiHezi">
-                <i class="fa fa-chevron-left"></i> TaiHezi
+              <a href="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" rel="next" title="第一篇论文记录">
+                <i class="fa fa-chevron-left"></i> 第一篇论文记录
               </a>
             
           </div>
@@ -604,8 +604,8 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/07/28/test/" rel="prev" title="test">
-                test <i class="fa fa-chevron-right"></i>
+              <a href="/2021/07/29/%E6%AF%8F%E6%97%A5%E6%80%BB%E7%BB%93/" rel="prev" title="每日总结">
+                每日总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -687,7 +687,7 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -698,7 +698,7 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

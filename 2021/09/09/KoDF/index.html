@@ -86,13 +86,14 @@
 <meta property="og:site_name" content="Qsc&#39;s Blog">
 <meta property="og:description" content="1. 概述​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上ICCV。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比DFDC数据集还大的韩国人数据集。我觉得这个是它能上ICCV最大的原因。  针对问题：  为了促进Deepfake的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题 对未知领域的模型存在着明显鲁棒性下降的问题   解决方法：  采用6种开源的技术">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/2021/09/09/KoDF/adversarial_attack.png">
 <meta property="og:image" content="http://example.com/2021/09/09/KoDF/experiment.png">
 <meta property="article:published_time" content="2021-09-09T01:45:06.000Z">
-<meta property="article:modified_time" content="2021-09-09T02:46:56.409Z">
+<meta property="article:modified_time" content="2021-09-09T02:50:37.122Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/09/09/KoDF/experiment.png">
+<meta name="twitter:image" content="http://example.com/2021/09/09/KoDF/adversarial_attack.png">
 
 
 
@@ -371,7 +372,7 @@
 </ul>
 <h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p>​    本文的重点不在于方法上的创新，或者是挖了一个新坑。而是在工作量上是巨大的，从真实数据的录制开始就花费了巨大的心思，而且数据增强也不是流程化的，是制作者一个一个视频修改的。</p>
 <p>​    本文唯一新颖的地方在于，在数据集中，加入了对抗攻击的思想，从而使检测模型失效，其中具体方法如下：</p>
-<p>![](./KoDF/adversarial attack.png)</p>
+<p><img src="/2021/09/09/KoDF/adversarial_attack.png"></p>
 <p>​    从后面的实验来看，确实将检测模型的效果下降了十个百分点。</p>
 <h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>​    本文的实验做的比较简单，其实就是对几个数据集做交叉测试，从而说明，在训练时，使用多种数据集一起训练会让模型的鲁棒性更好。但是观察下面的实验，就发现一个很大的问题，明明是<code>AUC</code>，但写成了<code>ACC</code>，可见<code>ICCV</code>的水分还是有的。</p>
 <p><img src="/2021/09/09/KoDF/experiment.png"></p>

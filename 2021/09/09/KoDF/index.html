@@ -79,21 +79,20 @@
 
 
 
-<meta name="description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
+<meta name="description" content="1. 概述​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上ICCV。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比DFDC数据集还大的韩国人数据集。我觉得这个是它能上ICCV最大的原因。  针对问题：  为了促进Deepfake的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题 对未知领域的模型存在着明显鲁棒性下降的问题   解决方法：  采用6种开源的技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OpenForensics">
-<meta property="og:url" content="http://example.com/2021/08/23/OpenForensics/index.html">
+<meta property="og:title" content="KoDF">
+<meta property="og:url" content="http://example.com/2021/09/09/KoDF/index.html">
 <meta property="og:site_name" content="Qsc&#39;s Blog">
-<meta property="og:description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
+<meta property="og:description" content="1. 概述​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上ICCV。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比DFDC数据集还大的韩国人数据集。我觉得这个是它能上ICCV最大的原因。  针对问题：  为了促进Deepfake的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题 对未知领域的模型存在着明显鲁棒性下降的问题   解决方法：  采用6种开源的技术">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_methods.png">
-<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_experiment.png">
-<meta property="article:published_time" content="2021-08-23T07:21:33.000Z">
-<meta property="article:modified_time" content="2021-09-09T01:43:59.600Z">
+<meta property="og:image" content="http://example.com/2021/09/09/KoDF/experiment.png">
+<meta property="article:published_time" content="2021-09-09T01:45:06.000Z">
+<meta property="article:modified_time" content="2021-09-09T02:46:56.409Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_methods.png">
+<meta name="twitter:image" content="http://example.com/2021/09/09/KoDF/experiment.png">
 
 
 
@@ -123,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/08/23/OpenForensics/"/>
+  <link rel="canonical" href="http://example.com/2021/09/09/KoDF/"/>
 
 
 
 
 
-  <title>OpenForensics | Qsc's Blog</title>
+  <title>KoDF | Qsc's Blog</title>
   
 
 
@@ -266,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/OpenForensics/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/KoDF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -283,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">OpenForensics</h1>
+          <h1 class="post-title" itemprop="name headline">KoDF</h1>
         
 
         <div class="post-meta">
@@ -295,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-23T15:21:33+08:00">
-                2021-08-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-09T09:45:06+08:00">
+                2021-09-09
               </time>
             
 
@@ -355,64 +354,31 @@
       
 
       
-        <h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><ul>
-<li>针对问题：<ul>
-<li>目前的研究大多都是<code>deepfake</code>二分类人物，对检测与分割的任务很少</li>
-<li>其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测</li>
-<li>最后，针对<code>Face-swap GAN</code>这种网络来说，需要成对单独训练，耗费大量的时间</li>
-</ul>
-</li>
-<li>解决方案：<ul>
-<li>提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间</li>
-<li>其次，制作了一个多样世界下的数据集，其中包括对数据集进行了大量的标注，从而可以应用到检测、分割领域</li>
-<li>最后提出了一个<code>benchmark</code>，为后续的学者提供对比实验以及评价指标，同时还对鲁棒性问题做了一点自己的看法</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-2-具体方法"><a href="#1-2-具体方法" class="headerlink" title="1.2 具体方法"></a>1.2 具体方法</h3><p><strong>方法流程：</strong></p>
-<p><img src="/2021/08/23/OpenForensics/iccv_nii_methods.png"></p>
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上<code>ICCV</code>。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比<code>DFDC</code>数据集还大的韩国人数据集。我觉得这个是它能上<code>ICCV</code>最大的原因。</p>
 <ul>
-<li><p>首先从<code>Google Open Images</code>中获取大量图片， 接着剔除没有人的图片，其中包括一系列不属于人的东西</p>
-</li>
-<li><p>接着对面部进行篡改，首先对图片中的对脸部进行提取，然后放入一个是否可操作的判别器中进行判断，如果可以进行篡改，那么提取脸部的潜在向量，放入<code>GAN</code>模型中，生成新的面孔。将新面孔替换到原脸上去，其中细节采用泊松融合和<code>Face Swapping</code>的颜色自适应模块。接着新生成的图片会放入一个二分类的<code>Xception</code>网络进行判断，如果可以骗过该网络，那么进行下一步，否则丢弃。</p>
-</li>
-<li><p>但是之后的<code>Face Embedding</code>这个东西，它没有好好讲。</p>
-</li>
-<li><p>采用此方法带来的好处是：</p>
+<li><p>针对问题：</p>
 <ul>
-<li>省时间</li>
-<li>可以生成高分辨率图像</li>
-<li>可以生成多任务的标注</li>
+<li>为了促进<code>Deepfake</code>的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题</li>
+<li>对未知领域的模型存在着明显鲁棒性下降的问题</li>
 </ul>
 </li>
-<li><p>最后采用了一系列数据增广方式，对数据集进一步提高其挑战性。</p>
+<li><p>解决方法：</p>
+<ul>
+<li>采用<code>6</code>种开源的技术，制作了一个比<code>DFDC</code>还大的数据集</li>
+<li>提出了一种新的训练方法，将数据集合并训练，从而提高模型的迁移能力与鲁棒性问题</li>
+</ul>
 </li>
 </ul>
-<p><strong>数据集介绍：</strong></p>
-<ul>
-<li>任务多样性，每一张<code>face</code>有各种各样的标注，其中有分类、检测框、分割掩码、伪造边界、脸部特征点</li>
-<li>场景多样性，但比<code>DFDC</code>还少一点</li>
-<li>图片多样性，其中户外包含了<code>36.3%</code></li>
-<li>图片分辨率，其中主要集中于<code>680-720/720-1024</code>，是高分辨率数据集</li>
-<li>一张图片包括了<code>1~n</code>张<code>face</code></li>
-<li>人物属性，主要是<code>bounding box</code>和<code>mask size</code>的分布</li>
-<li>数据增广，这个在方法中已经有介绍</li>
-</ul>
-<p><strong>用户调研：</strong></p>
-<p>这个是数据集经典的一部分，从用户调研的角度来证明自己的数据集有多好，其中包括如下调研：</p>
-<ul>
-<li>首先是数据的真实性，真实等级从<code>1-5</code>，可以证明自己的数据集有较高的真实性</li>
-<li>其次是用户伪造检测的准确度问题，这里又提到个新的指标叫<code>BRISQUE</code>，这个指标越高，图片质量越差</li>
-<li>最后是用户在多人物人脸伪造检测中的能力问题，从而证明自己的数据集有很大的挑战性</li>
-</ul>
-<h3 id="1-3-实验细节"><a href="#1-3-实验细节" class="headerlink" title="1.3 实验细节"></a>1.3 实验细节</h3><p>这个是这种类型的论文也是常用的方法，提出一系列<code>benchmark</code>，为了后续学者对比实验，用了目前主流的检测、分割网络框架。其中评价指标为<code>MSCOCO AP、LPR</code>。</p>
-<p><code>localization recall precision (LRP) error</code>：一种新的目标检测领域的评价指标</p>
-<p>最后其主要实验针对测试集、未知场景测试集，从检测与分割两个任务入手做了对比实验：</p>
-<p><img src="/2021/08/23/OpenForensics/iccv_nii_experiment.png"></p>
-<h3 id="1-4-论文收获"><a href="#1-4-论文收获" class="headerlink" title="1.4 论文收获"></a>1.4 论文收获</h3><p><strong>整体评价：</strong>这篇论文是经典的<code>Deepfake</code>生成方向中一类论文。它对<code>Deepfake</code>生成技术没有创新，但是对<code>Deepfake</code>任务提出了新的方向，从而开辟了新的点。我觉得最重要的贡献点是真实世界下，引导的不同任务的数据集和一个<code>benchmark</code>，其实我们可以根据领导人这一个方向，出一个数据集。</p>
-<p><strong>方法：</strong>方法层面上，没有很突出的贡献点，不具有参考价值</p>
-<p><strong>实验：</strong>其实实验也很少，主要就是两个常用的指标，其实我觉得<code>LPR</code>的引入也是为了充实内容</p>
-<p><strong>写作：</strong>这个写作我觉得还是非常严谨的，值得学习词汇、句式、思路</p>
+<h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p>​    本文的重点不在于方法上的创新，或者是挖了一个新坑。而是在工作量上是巨大的，从真实数据的录制开始就花费了巨大的心思，而且数据增强也不是流程化的，是制作者一个一个视频修改的。</p>
+<p>​    本文唯一新颖的地方在于，在数据集中，加入了对抗攻击的思想，从而使检测模型失效，其中具体方法如下：</p>
+<p>![](./KoDF/adversarial attack.png)</p>
+<p>​    从后面的实验来看，确实将检测模型的效果下降了十个百分点。</p>
+<h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>​    本文的实验做的比较简单，其实就是对几个数据集做交叉测试，从而说明，在训练时，使用多种数据集一起训练会让模型的鲁棒性更好。但是观察下面的实验，就发现一个很大的问题，明明是<code>AUC</code>，但写成了<code>ACC</code>，可见<code>ICCV</code>的水分还是有的。</p>
+<p><img src="/2021/09/09/KoDF/experiment.png"></p>
+<h2 id="4-论文收获"><a href="#4-论文收获" class="headerlink" title="4. 论文收获"></a>4. 论文收获</h2><p><strong>整体评价：</strong>这篇论文虽然创新点不足，但是分析它为什么可以发在<code>ICCV</code>，其实整个数据集的制作流程是讲述的非常清楚的，而且在这个生产线下，数据集做的非常的庞大，这是最值得学习的地方。</p>
+<p><strong>方法：</strong>没有创新点，但对抗样本是个小新颖的地方</p>
+<p><strong>实验：</strong>存在漏洞，不具有参考</p>
+<p><strong>写作：</strong>这篇文章读起来的印象就是特别拗口，而且文章很多存在着废话，思路上不清晰，不具有参考价值。</p>
 <p><strong>词汇：</strong></p>
 <table>
 <thead>
@@ -424,122 +390,162 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">morph</td>
+<td align="center">democratize</td>
 <td align="center"></td>
-<td align="center">emergence</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">interpretable attributes</td>
-<td align="center"></td>
-<td align="center">sketches</td>
+<td align="center">connotation</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">subsequently</td>
+<td align="center">discrepancy</td>
 <td align="center"></td>
-<td align="center">sculptures</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">be oriented to the front</td>
-<td align="center"></td>
-<td align="center">feasibility</td>
+<td align="center">underline</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">inspection</td>
+<td align="center">fabrication</td>
 <td align="center"></td>
-<td align="center">intensity</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">undergo</td>
-<td align="center"></td>
-<td align="center">exclusively</td>
+<td align="center">surpass</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">discard</td>
+<td align="center">innocuous</td>
 <td align="center"></td>
-<td align="center">exploit</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">simulate</td>
-<td align="center"></td>
-<td align="center">geometric</td>
+<td align="center">resort</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">substantial</td>
+<td align="center">maliciously</td>
 <td align="center"></td>
-<td align="center">demonstrated</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">proliferation</td>
-<td align="center"></td>
-<td align="center">Emerging techniques</td>
+<td align="center">inference</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">authorities</td>
+<td align="center">defame</td>
 <td align="center"></td>
-<td align="center">harassment</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">comprehensive</td>
-<td align="center"></td>
-<td align="center">deception</td>
+<td align="center">situation</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">countermeasure</td>
+<td align="center">propagate</td>
 <td align="center"></td>
-<td align="center">spoof</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">unrestricted</td>
-<td align="center"></td>
-<td align="center">impersonation</td>
+<td align="center">vulnerable</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">promote</td>
+<td align="center">fraud</td>
 <td align="center"></td>
-<td align="center">Given that</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">potential</td>
-<td align="center"></td>
-<td align="center">simultaneously</td>
+<td align="center">frequently</td>
 <td align="center"></td>
 </tr>
 <tr>
+<td align="center">facilitate</td>
+<td align="center"></td>
+<td align="center">exclude</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">conjunction</td>
+<td align="center"></td>
+<td align="center">trivial</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">exceed</td>
+<td align="center"></td>
+<td align="center">countless</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">insufficient</td>
+<td align="center"></td>
+<td align="center">posterior</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">incorporate</td>
+<td align="center"></td>
+<td align="center">equivalent</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">incorporate</td>
+<td align="center"></td>
+<td align="center">resilient</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">complementary</td>
+<td align="center"></td>
+<td align="center">occurrence</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">constitute</td>
+<td align="center"></td>
+<td align="center">ratio</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">defective</td>
+<td align="center"></td>
+<td align="center">excessive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">tactics</td>
+<td align="center"></td>
+<td align="center">utterances</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">comprise</td>
+<td align="center"></td>
+<td align="center">interven</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">correspond</td>
+<td align="center"></td>
+<td align="center">burgeoning</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">approval</td>
+<td align="center"></td>
+<td align="center">disruptive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">preliminary</td>
+<td align="center"></td>
+<td align="center">premise</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">portion</td>
+<td align="center"></td>
+<td align="center">deduce</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ultimate</td>
+<td align="center"></td>
+<td align="center">inevitably</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">compensate</td>
+<td align="center"></td>
 <td align="center">extensive</td>
 <td align="center"></td>
-<td align="center">massive</td>
-<td align="center"></td>
 </tr>
 <tr>
-<td align="center">Continuing advances</td>
+<td align="center">regulate</td>
 <td align="center"></td>
-<td align="center">infinite</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3><p>​    本来是想把句式也总结一下子，但是好句子太多了，不方便总结，因此就利用论文积累索引，直接点开看吧。</p>
-<p>​    我个人觉得这篇文章写的是非常亲民的 ，因此很具有在写作思路上的学习价值。针对这一类型、方向的论文，大致的写作思路如下：</p>
-<p><strong>Abstract：</strong>短小精悍。第一句现状， 第二句存在的问题。后面几句话分开阐述自己的创新点。</p>
-<p><strong>Introduction：</strong>将摘要中的现状和问题分别阐述，成为三段话。接着针对目前的现状以及存在的问题，罗列出自己的贡献点。可以说，这一部分是摘要的扩充。</p>
-<p><strong>Related Work：</strong>这一部分的相关工作，基本上是从三个方面讲述的，换脸数据集、换脸方法、检测方法。本文就是针对这三个方面进行了分别的说明。这一部分虽然是在讲述别人的工作，但是这篇文章非常巧妙，在讲述的同时扬长避短，又一次地突出了自己的贡献。</p>
-<p><strong>Large-Scale OpenForensics Dataset(Methods)：</strong>这一部分在这种类型的文章中，是数据集的介绍。其中按照制作流程、数据集说明、用户调研来展开。或者按照另一篇文章的思路，可以从真实数据介绍、造假方法介绍、数据集评估来展开。其中对数据集优良的判定，经典的做法就是用户的调研与几个评价指标。</p>
-<p><strong>Experiment：</strong>实验部分对于数据集类的文章而言，主要是如下流程：<code>Baseline methods</code>、<code>evaluation metric</code>、<code>experiment</code>。在实验中，不仅仅是实验要做的充分，而且还要做到表格、图表的清晰，更重要的是表达出，你所做的实验背后的分析道理，从而使整篇文章更具有说服力。</p>
-<p><strong>Conclusion：</strong>最后表达致谢，以及两三句展望。</p>
 
       
     </div>
@@ -570,8 +576,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/08/04/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%A6%82%E8%BF%B0/" rel="next" title="多模态融合概述">
-                <i class="fa fa-chevron-left"></i> 多模态融合概述
+              <a href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="next" title="Deepfake论文总结">
+                <i class="fa fa-chevron-left"></i> Deepfake论文总结
               </a>
             
           </div>
@@ -579,10 +585,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="prev" title="Deepfake论文总结">
-                Deepfake论文总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -718,7 +720,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">1.2 具体方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">1.3 实验细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">1.4 论文收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%86%99%E4%BD%9C%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">1.5 写作思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. 具体方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">3. 实验细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">4. 论文收获</span></a></li></ol></div>
             
 
           </div>

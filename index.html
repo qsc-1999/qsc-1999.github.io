@@ -261,6 +261,339 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/KoDF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/09/KoDF/" itemprop="url">KoDF</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-09T09:45:06+08:00">
+                2021-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上<code>ICCV</code>。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比<code>DFDC</code>数据集还大的韩国人数据集。我觉得这个是它能上<code>ICCV</code>最大的原因。</p>
+<ul>
+<li><p>针对问题：</p>
+<ul>
+<li>为了促进<code>Deepfake</code>的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题</li>
+<li>对未知领域的模型存在着明显鲁棒性下降的问题</li>
+</ul>
+</li>
+<li><p>解决方法：</p>
+<ul>
+<li>采用<code>6</code>种开源的技术，制作了一个比<code>DFDC</code>还大的数据集</li>
+<li>提出了一种新的训练方法，将数据集合并训练，从而提高模型的迁移能力与鲁棒性问题</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p>​    本文的重点不在于方法上的创新，或者是挖了一个新坑。而是在工作量上是巨大的，从真实数据的录制开始就花费了巨大的心思，而且数据增强也不是流程化的，是制作者一个一个视频修改的。</p>
+<p>​    本文唯一新颖的地方在于，在数据集中，加入了对抗攻击的思想，从而使检测模型失效，其中具体方法如下：</p>
+<p>![](./KoDF/adversarial attack.png)</p>
+<p>​    从后面的实验来看，确实将检测模型的效果下降了十个百分点。</p>
+<h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>​    本文的实验做的比较简单，其实就是对几个数据集做交叉测试，从而说明，在训练时，使用多种数据集一起训练会让模型的鲁棒性更好。但是观察下面的实验，就发现一个很大的问题，明明是<code>AUC</code>，但写成了<code>ACC</code>，可见<code>ICCV</code>的水分还是有的。</p>
+<p><img src="/2021/09/09/KoDF/experiment.png"></p>
+<h2 id="4-论文收获"><a href="#4-论文收获" class="headerlink" title="4. 论文收获"></a>4. 论文收获</h2><p><strong>整体评价：</strong>这篇论文虽然创新点不足，但是分析它为什么可以发在<code>ICCV</code>，其实整个数据集的制作流程是讲述的非常清楚的，而且在这个生产线下，数据集做的非常的庞大，这是最值得学习的地方。</p>
+<p><strong>方法：</strong>没有创新点，但对抗样本是个小新颖的地方</p>
+<p><strong>实验：</strong>存在漏洞，不具有参考</p>
+<p><strong>写作：</strong>这篇文章读起来的印象就是特别拗口，而且文章很多存在着废话，思路上不清晰，不具有参考价值。</p>
+<p><strong>词汇：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">democratize</td>
+<td align="center"></td>
+<td align="center">connotation</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">discrepancy</td>
+<td align="center"></td>
+<td align="center">underline</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">fabrication</td>
+<td align="center"></td>
+<td align="center">surpass</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">innocuous</td>
+<td align="center"></td>
+<td align="center">resort</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">maliciously</td>
+<td align="center"></td>
+<td align="center">inference</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">defame</td>
+<td align="center"></td>
+<td align="center">situation</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">propagate</td>
+<td align="center"></td>
+<td align="center">vulnerable</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">fraud</td>
+<td align="center"></td>
+<td align="center">frequently</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">facilitate</td>
+<td align="center"></td>
+<td align="center">exclude</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">conjunction</td>
+<td align="center"></td>
+<td align="center">trivial</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">exceed</td>
+<td align="center"></td>
+<td align="center">countless</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">insufficient</td>
+<td align="center"></td>
+<td align="center">posterior</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">incorporate</td>
+<td align="center"></td>
+<td align="center">equivalent</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">incorporate</td>
+<td align="center"></td>
+<td align="center">resilient</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">complementary</td>
+<td align="center"></td>
+<td align="center">occurrence</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">constitute</td>
+<td align="center"></td>
+<td align="center">ratio</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">defective</td>
+<td align="center"></td>
+<td align="center">excessive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">tactics</td>
+<td align="center"></td>
+<td align="center">utterances</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">comprise</td>
+<td align="center"></td>
+<td align="center">interven</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">correspond</td>
+<td align="center"></td>
+<td align="center">burgeoning</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">approval</td>
+<td align="center"></td>
+<td align="center">disruptive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">preliminary</td>
+<td align="center"></td>
+<td align="center">premise</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">portion</td>
+<td align="center"></td>
+<td align="center">deduce</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ultimate</td>
+<td align="center"></td>
+<td align="center">inevitably</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">compensate</td>
+<td align="center"></td>
+<td align="center">extensive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">regulate</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -361,7 +694,10 @@
 <p>作者：日本<code>NII</code>机构，<code>Trung-Nghia Le</code> </p>
 <p>发表刊物/会议：<code>ICCV 2021</code></p>
 </li>
-<li></li>
+<li><p><code>KoDF: A Large-scale Korean DeepFake Detection Dataset</code></p>
+<p>作者：韩国明芒科技</p>
+<p>发表刊物/会议：<code>ICCV 2021</code></p>
+</li>
 </ol>
 
           
@@ -681,8 +1017,15 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
-<p><strong>句式：</strong></p>
-<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3>
+<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3><p>​    本来是想把句式也总结一下子，但是好句子太多了，不方便总结，因此就利用论文积累索引，直接点开看吧。</p>
+<p>​    我个人觉得这篇文章写的是非常亲民的 ，因此很具有在写作思路上的学习价值。针对这一类型、方向的论文，大致的写作思路如下：</p>
+<p><strong>Abstract：</strong>短小精悍。第一句现状， 第二句存在的问题。后面几句话分开阐述自己的创新点。</p>
+<p><strong>Introduction：</strong>将摘要中的现状和问题分别阐述，成为三段话。接着针对目前的现状以及存在的问题，罗列出自己的贡献点。可以说，这一部分是摘要的扩充。</p>
+<p><strong>Related Work：</strong>这一部分的相关工作，基本上是从三个方面讲述的，换脸数据集、换脸方法、检测方法。本文就是针对这三个方面进行了分别的说明。这一部分虽然是在讲述别人的工作，但是这篇文章非常巧妙，在讲述的同时扬长避短，又一次地突出了自己的贡献。</p>
+<p><strong>Large-Scale OpenForensics Dataset(Methods)：</strong>这一部分在这种类型的文章中，是数据集的介绍。其中按照制作流程、数据集说明、用户调研来展开。或者按照另一篇文章的思路，可以从真实数据介绍、造假方法介绍、数据集评估来展开。其中对数据集优良的判定，经典的做法就是用户的调研与几个评价指标。</p>
+<p><strong>Experiment：</strong>实验部分对于数据集类的文章而言，主要是如下流程：<code>Baseline methods</code>、<code>evaluation metric</code>、<code>experiment</code>。在实验中，不仅仅是实验要做的充分，而且还要做到表格、图表的清晰，更重要的是表达出，你所做的实验背后的分析道理，从而使整篇文章更具有说服力。</p>
+<p><strong>Conclusion：</strong>最后表达致谢，以及两三句展望。</p>
+
           
         
       
@@ -1260,6 +1603,30 @@
 <li>看看太赫兹的问题到底是什么</li>
 <li>学习<code>pytorch</code>框架</li>
 </ul>
+<h2 id="2021-9-7"><a href="#2021-9-7" class="headerlink" title="2021.9.7"></a>2021.9.7</h2><p>今日完成：</p>
+<ul>
+<li><code>iccv</code>一篇论文精读</li>
+<li>论文博客总结，但写了<code>80%</code>了</li>
+</ul>
+<p>明日计划：</p>
+<ul>
+<li><code>iccv</code>一篇论文精读</li>
+<li>完成上一篇博客总结</li>
+<li>观看一个小时的积极心理学</li>
+<li>俯卧撑<code>60</code>，仰卧起坐<code>80</code></li>
+</ul>
+<h2 id="2021-9-8"><a href="#2021-9-8" class="headerlink" title="2021.9.8"></a>2021.9.8</h2><p>今日完成：</p>
+<ul>
+<li><code>iccv</code>一篇论文精读</li>
+<li>打球</li>
+</ul>
+<p>明日计划：</p>
+<ul>
+<li>两篇论文总结</li>
+<li>这周把<code>ACM MM</code>的<code>Transformer</code>与增量学习结合的文章</li>
+<li>上午俯卧撑<code>60</code>，仰卧起坐<code>80</code></li>
+</ul>
+<p><strong>最近这两天还是没有全身心投入学习，这个星期相当于收心进入状态，下周继续冲冲冲！</strong></p>
 
           
         
@@ -2308,7 +2675,7 @@ pip install -r ./DeepFaceLab/requirements-cuda.txt
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

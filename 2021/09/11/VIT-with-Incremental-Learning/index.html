@@ -79,21 +79,23 @@
 
 
 
-<meta name="description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
+<meta name="description" content="1. 概述问题描述：  当下大多数的模型使用CNN来捕捉伪影，同时通过单帧来预测整个视频，丢失了时间域信息 非正面的脸部，会有很多的信息丢失 当下模型的鲁棒性是很大的问题  解决方法：  提出用VIT解决 使用开源的脸部对齐模型，提取UV textures maps，同时与face image做fusion 引入增量学习的思想  2. 具体方法 本文的方法主要分为了三个部分：  第一部分是back">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OpenForensics">
-<meta property="og:url" content="http://example.com/2021/08/23/OpenForensics/index.html">
+<meta property="og:title" content="VIT with Incremental Learning">
+<meta property="og:url" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/index.html">
 <meta property="og:site_name" content="Qsc&#39;s Blog">
-<meta property="og:description" content="1.1 概述 针对问题： 目前的研究大多都是deepfake二分类人物，对检测与分割的任务很少 其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测 最后，针对Face-swap GAN这种网络来说，需要成对单独训练，耗费大量的时间   解决方案： 提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间 其次，制作了一个多样世界下的数据集，其中包括">
+<meta property="og:description" content="1. 概述问题描述：  当下大多数的模型使用CNN来捕捉伪影，同时通过单帧来预测整个视频，丢失了时间域信息 非正面的脸部，会有很多的信息丢失 当下模型的鲁棒性是很大的问题  解决方法：  提出用VIT解决 使用开源的脸部对齐模型，提取UV textures maps，同时与face image做fusion 引入增量学习的思想  2. 具体方法 本文的方法主要分为了三个部分：  第一部分是back">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_methods.png">
-<meta property="og:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_experiment.png">
-<meta property="article:published_time" content="2021-08-23T07:21:33.000Z">
-<meta property="article:modified_time" content="2021-09-09T01:43:59.600Z">
+<meta property="og:image" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/methods.png">
+<meta property="og:image" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/abslutaly1.png">
+<meta property="og:image" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/table2.png">
+<meta property="og:image" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/table3.png">
+<meta property="article:published_time" content="2021-09-11T08:20:31.000Z">
+<meta property="article:modified_time" content="2021-09-11T09:16:13.713Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/08/23/OpenForensics/iccv_nii_methods.png">
+<meta name="twitter:image" content="http://example.com/2021/09/11/VIT-with-Incremental-Learning/methods.png">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/08/23/OpenForensics/"/>
+  <link rel="canonical" href="http://example.com/2021/09/11/VIT-with-Incremental-Learning/"/>
 
 
 
 
 
-  <title>OpenForensics | Qsc's Blog</title>
+  <title>VIT with Incremental Learning | Qsc's Blog</title>
   
 
 
@@ -266,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/OpenForensics/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/11/VIT-with-Incremental-Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -283,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">OpenForensics</h1>
+          <h1 class="post-title" itemprop="name headline">VIT with Incremental Learning</h1>
         
 
         <div class="post-meta">
@@ -295,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-23T15:21:33+08:00">
-                2021-08-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-11T16:20:31+08:00">
+                2021-09-11
               </time>
             
 
@@ -355,64 +357,47 @@
       
 
       
-        <h3 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h3><ul>
-<li>针对问题：<ul>
-<li>目前的研究大多都是<code>deepfake</code>二分类人物，对检测与分割的任务很少</li>
-<li>其次，当下的数据集主要是视频截出来的片段，背景比较单一，无法很好地应用于真实世界中的检测</li>
-<li>最后，针对<code>Face-swap GAN</code>这种网络来说，需要成对单独训练，耗费大量的时间</li>
-</ul>
-</li>
-<li>解决方案：<ul>
-<li>提出一个伪造数据制作流程，可以实现无限张换脸图片，从而省下了大量时间</li>
-<li>其次，制作了一个多样世界下的数据集，其中包括对数据集进行了大量的标注，从而可以应用到检测、分割领域</li>
-<li>最后提出了一个<code>benchmark</code>，为后续的学者提供对比实验以及评价指标，同时还对鲁棒性问题做了一点自己的看法</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-2-具体方法"><a href="#1-2-具体方法" class="headerlink" title="1.2 具体方法"></a>1.2 具体方法</h3><p><strong>方法流程：</strong></p>
-<p><img src="/2021/08/23/OpenForensics/iccv_nii_methods.png"></p>
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>问题描述：</p>
 <ul>
-<li><p>首先从<code>Google Open Images</code>中获取大量图片， 接着剔除没有人的图片，其中包括一系列不属于人的东西</p>
-</li>
-<li><p>接着对面部进行篡改，首先对图片中的对脸部进行提取，然后放入一个是否可操作的判别器中进行判断，如果可以进行篡改，那么提取脸部的潜在向量，放入<code>GAN</code>模型中，生成新的面孔。将新面孔替换到原脸上去，其中细节采用泊松融合和<code>Face Swapping</code>的颜色自适应模块。接着新生成的图片会放入一个二分类的<code>Xception</code>网络进行判断，如果可以骗过该网络，那么进行下一步，否则丢弃。</p>
-</li>
-<li><p>但是之后的<code>Face Embedding</code>这个东西，它没有好好讲。</p>
-</li>
-<li><p>采用此方法带来的好处是：</p>
+<li>当下大多数的模型使用<code>CNN</code>来捕捉伪影，同时通过单帧来预测整个视频，丢失了时间域信息</li>
+<li>非正面的脸部，会有很多的信息丢失</li>
+<li>当下模型的鲁棒性是很大的问题</li>
+</ul>
+<p>解决方法：</p>
 <ul>
-<li>省时间</li>
-<li>可以生成高分辨率图像</li>
-<li>可以生成多任务的标注</li>
+<li>提出用<code>VIT</code>解决</li>
+<li>使用开源的脸部对齐模型，提取<code>UV textures maps</code>，同时与<code>face image</code>做<code>fusion</code></li>
+<li>引入增量学习的思想</li>
 </ul>
-</li>
-<li><p>最后采用了一系列数据增广方式，对数据集进一步提高其挑战性。</p>
-</li>
-</ul>
-<p><strong>数据集介绍：</strong></p>
+<h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p><img src="/2021/09/11/VIT-with-Incremental-Learning/methods.png"></p>
+<p>本文的方法主要分为了三个部分：</p>
 <ul>
-<li>任务多样性，每一张<code>face</code>有各种各样的标注，其中有分类、检测框、分割掩码、伪造边界、脸部特征点</li>
-<li>场景多样性，但比<code>DFDC</code>还少一点</li>
-<li>图片多样性，其中户外包含了<code>36.3%</code></li>
-<li>图片分辨率，其中主要集中于<code>680-720/720-1024</code>，是高分辨率数据集</li>
-<li>一张图片包括了<code>1~n</code>张<code>face</code></li>
-<li>人物属性，主要是<code>bounding box</code>和<code>mask size</code>的分布</li>
-<li>数据增广，这个在方法中已经有介绍</li>
+<li>第一部分是<code>backbone</code>，主要是脸部检测、脸部对齐、特征提取等操作</li>
+<li>第二部分主要是<code>VIT</code>，但引入了 一个<code>segment embedding</code>模块，其实这部分和我之前的<code>idea</code>很相似，但是人家的代码能力强，实验效果比我好得多</li>
+<li>第三部分是增量学习，其中关注两个点，一个是新旧数据集的相似性，另一个是新数据集的检测能力</li>
 </ul>
-<p><strong>用户调研：</strong></p>
-<p>这个是数据集经典的一部分，从用户调研的角度来证明自己的数据集有多好，其中包括如下调研：</p>
+<h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>这篇文章在实验部分中有几个点需要注意：</p>
 <ul>
-<li>首先是数据的真实性，真实等级从<code>1-5</code>，可以证明自己的数据集有较高的真实性</li>
-<li>其次是用户伪造检测的准确度问题，这里又提到个新的指标叫<code>BRISQUE</code>，这个指标越高，图片质量越差</li>
-<li>最后是用户在多人物人脸伪造检测中的能力问题，从而证明自己的数据集有很大的挑战性</li>
+<li>都是视频级别的<code>ACC</code></li>
+<li>主要还是就精度与跨库性能进行对比</li>
+<li>消融实验做的很充分</li>
+<li>实验部分缺少图类，只有表类</li>
 </ul>
-<h3 id="1-3-实验细节"><a href="#1-3-实验细节" class="headerlink" title="1.3 实验细节"></a>1.3 实验细节</h3><p>这个是这种类型的论文也是常用的方法，提出一系列<code>benchmark</code>，为了后续学者对比实验，用了目前主流的检测、分割网络框架。其中评价指标为<code>MSCOCO AP、LPR</code>。</p>
-<p><code>localization recall precision (LRP) error</code>：一种新的目标检测领域的评价指标</p>
-<p>最后其主要实验针对测试集、未知场景测试集，从检测与分割两个任务入手做了对比实验：</p>
-<p><img src="/2021/08/23/OpenForensics/iccv_nii_experiment.png"></p>
-<h3 id="1-4-论文收获"><a href="#1-4-论文收获" class="headerlink" title="1.4 论文收获"></a>1.4 论文收获</h3><p><strong>整体评价：</strong>这篇论文是经典的<code>Deepfake</code>生成方向中一类论文。它对<code>Deepfake</code>生成技术没有创新，但是对<code>Deepfake</code>任务提出了新的方向，从而开辟了新的点。我觉得最重要的贡献点是真实世界下，引导的不同任务的数据集和一个<code>benchmark</code>，其实我们可以根据领导人这一个方向，出一个数据集。</p>
-<p><strong>方法：</strong>方法层面上，没有很突出的贡献点，不具有参考价值</p>
-<p><strong>实验：</strong>其实实验也很少，主要就是两个常用的指标，其实我觉得<code>LPR</code>的引入也是为了充实内容</p>
-<p><strong>写作：</strong>这个写作我觉得还是非常严谨的，值得学习词汇、句式、思路</p>
+<p>首先做了详细的消融实验，从而证明自己每个组件的有效性，这一部分主要针对库内性能检测：</p>
+<p><img src="/2021/09/11/VIT-with-Incremental-Learning/abslutaly1.png"></p>
+<p>接着对最好情况的实验进行鲁棒性实验探究，这一部分没有对比、没有消融，只是做了一个实验：</p>
+<p><img src="/2021/09/11/VIT-with-Incremental-Learning/table2.png"></p>
+<p>之后进行了一定的对比实验，从而证明自己实验的性能良好：</p>
+<p><img src="/2021/09/11/VIT-with-Incremental-Learning/table3.png"></p>
+<p>总体来说实验给我的感觉是中规中矩，没有眼前一亮的地方，但也没有任何毛病。</p>
+<h2 id="4-论文收获"><a href="#4-论文收获" class="headerlink" title="4. 论文收获"></a>4. 论文收获</h2><p><strong>整体评价：</strong>这篇论文和我对他的实验评价一样，中规中矩。其中让我印象最深的两个点在于：</p>
+<ul>
+<li>我们都用的是不同特征进行融合放入<code>VIT</code>，但我的性能就很差，可以看出我的代码能力还有很大的问题，当然也可能语义分割模块有很大的问题</li>
+<li>增量学习的引入，我觉得这是新的学习任务，从而应对<code>Deepfake</code>，这一点对增强鲁棒性很有帮助，尽管我们不能一次性的提高模型鲁棒性，但是我们可以用很少的数据，在不丢失源数据集精度的同时提高新数据集的精度</li>
+</ul>
+<p><strong>方法：</strong>增量学习是最重要的，<code>VIT</code>读起来有一种似曾相识的感觉</p>
+<p><strong>实验：</strong>目前来看，<code>deepfake</code>任务的实验格式很固定，在新的一年中仍没有变化</p>
+<p><strong>写作：</strong>这篇论文读起来非常顺畅，语句用的恰到好处，但是唯一一点缺陷在于，我读到了很多的重复句子。</p>
 <p><strong>词汇：</strong></p>
 <table>
 <thead>
@@ -424,121 +409,48 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">morph</td>
+<td align="center">perceived</td>
 <td align="center"></td>
-<td align="center">emergence</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">interpretable attributes</td>
-<td align="center"></td>
-<td align="center">sketches</td>
+<td align="center">intentionally</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">subsequently</td>
+<td align="center">have evolved to an extent that</td>
 <td align="center"></td>
-<td align="center">sculptures</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">be oriented to the front</td>
-<td align="center"></td>
-<td align="center">feasibility</td>
+<td align="center">portrait</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">inspection</td>
+<td align="center">unethical</td>
 <td align="center"></td>
-<td align="center">intensity</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">undergo</td>
-<td align="center"></td>
-<td align="center">exclusively</td>
+<td align="center">mechanism</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">discard</td>
+<td align="center">accommodate</td>
 <td align="center"></td>
-<td align="center">exploit</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">simulate</td>
-<td align="center"></td>
-<td align="center">geometric</td>
+<td align="center">gigantic</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">substantial</td>
+<td align="center">quadratically</td>
 <td align="center"></td>
-<td align="center">demonstrated</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">proliferation</td>
-<td align="center"></td>
-<td align="center">Emerging techniques</td>
+<td align="center">concatenate</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">authorities</td>
+<td align="center">sacrifice</td>
 <td align="center"></td>
-<td align="center">harassment</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">comprehensive</td>
-<td align="center"></td>
-<td align="center">deception</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">countermeasure</td>
-<td align="center"></td>
-<td align="center">spoof</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">unrestricted</td>
-<td align="center"></td>
-<td align="center">impersonation</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">promote</td>
-<td align="center"></td>
-<td align="center">Given that</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">potential</td>
-<td align="center"></td>
-<td align="center">simultaneously</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">extensive</td>
-<td align="center"></td>
-<td align="center">massive</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">Continuing advances</td>
-<td align="center"></td>
-<td align="center">infinite</td>
+<td align="center">component</td>
 <td align="center"></td>
 </tr>
 </tbody></table>
-<h3 id="1-5-写作思路"><a href="#1-5-写作思路" class="headerlink" title="1.5 写作思路"></a>1.5 写作思路</h3><p>​    本来是想把句式也总结一下子，但是好句子太多了，不方便总结，因此就利用论文积累索引，直接点开看吧。</p>
-<p>​    我个人觉得这篇文章写的是非常亲民的 ，因此很具有在写作思路上的学习价值。针对这一类型、方向的论文，大致的写作思路如下：</p>
-<p><strong>Abstract：</strong>短小精悍。第一句现状， 第二句存在的问题。后面几句话分开阐述自己的创新点。</p>
-<p><strong>Introduction：</strong>将摘要中的现状和问题分别阐述，成为三段话。接着针对目前的现状以及存在的问题，罗列出自己的贡献点。可以说，这一部分是摘要的扩充。</p>
-<p><strong>Related Work：</strong>这一部分的相关工作，基本上是从三个方面讲述的，换脸数据集、换脸方法、检测方法。本文就是针对这三个方面进行了分别的说明。这一部分虽然是在讲述别人的工作，但是这篇文章非常巧妙，在讲述的同时扬长避短，又一次地突出了自己的贡献。</p>
-<p><strong>Large-Scale OpenForensics Dataset(Methods)：</strong>这一部分在这种类型的文章中，是数据集的介绍。其中按照制作流程、数据集说明、用户调研来展开。或者按照另一篇文章的思路，可以从真实数据介绍、造假方法介绍、数据集评估来展开。其中对数据集优良的判定，经典的做法就是用户的调研与几个评价指标。</p>
-<p><strong>Experiment：</strong>实验部分对于数据集类的文章而言，主要是如下流程：<code>Baseline methods</code>、<code>evaluation metric</code>、<code>experiment</code>。在实验中，不仅仅是实验要做的充分，而且还要做到表格、图表的清晰，更重要的是表达出，你所做的实验背后的分析道理，从而使整篇文章更具有说服力。</p>
+<h2 id="5-写作思路"><a href="#5-写作思路" class="headerlink" title="5. 写作思路"></a>5. 写作思路</h2><p>这篇文章写的中规中矩，还是很具有写作上的参考价值的。</p>
+<p><strong>Abstract：</strong>一句现状。剩下简明扼要地概括自己的创新与贡献</p>
+<p><strong>Introduction：</strong>我之前说过这一部分是<code>abstract</code>的扩充，但在描述问题的同时，另一个把握的思路是<code>motivation</code>，进而阐述清楚针对问题的创新点、贡献点在哪里。</p>
+<p><strong>Related Work：</strong>对于检测方面的东西，主要就是数据集、检测模型、自己方法所涉及到的领域相关。但在介绍相关工作时，可以含蓄地佐证自己的方法的优势与突出点</p>
+<p><strong>Methods：</strong>这一部分将自己的方法详细讲清楚。针对每一个组件，是什么样子的组件、为什么要提出这样的组件、具体是如何做的，讲的清清楚楚明明白白。</p>
+<p><strong>Experiment：</strong>实验部分，可以先提一下数据集与实现细节。接着针对对比试验和消融实验，分别进行、阐述、分析、论证等自己的方法优势。这里要注意图表的结合，我个人觉得这点很关键。</p>
 <p><strong>Conclusion：</strong>最后表达致谢，以及两三句展望。</p>
 
       
@@ -570,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/08/04/%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%A6%82%E8%BF%B0/" rel="next" title="多模态融合概述">
-                <i class="fa fa-chevron-left"></i> 多模态融合概述
+              <a href="/2021/09/09/KoDF/" rel="next" title="KoDF">
+                <i class="fa fa-chevron-left"></i> KoDF
               </a>
             
           </div>
@@ -579,10 +491,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="prev" title="Deepfake论文总结">
-                Deepfake论文总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -718,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">1.2 具体方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">1.3 实验细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">1.4 论文收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E5%86%99%E4%BD%9C%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">1.5 写作思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. 具体方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">3. 实验细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">4. 论文收获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%86%99%E4%BD%9C%E6%80%9D%E8%B7%AF"><span class="nav-number">5.</span> <span class="nav-text">5. 写作思路</span></a></li></ol></div>
             
 
           </div>

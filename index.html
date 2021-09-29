@@ -261,6 +261,225 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/29/Temporal-Dropout-3DCNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/29/Temporal-Dropout-3DCNN/" itemprop="url">Temporal Dropout 3DCNN</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-29T20:36:38+08:00">
+                2021-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>主要创新点：</p>
+<ul>
+<li>由于视频帧间存在着不一致性问题，为了获取时域信息，采用<code>3DCNN</code>网络</li>
+<li>提出了一种采样的数据增强方式，从而提高模型的表征能力与泛化能力</li>
+<li>在主流的数据集的<code>benchmark</code>上达到了很好的效果</li>
+</ul>
+<h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p>本文的方法其实是比较简单的，其中网络结构图如下：</p>
+<p><img src="/2021/09/29/Temporal-Dropout-3DCNN/methods.png"></p>
+<p>其中有几个模块需要注意：</p>
+<ol>
+<li><code>Temporal Dropout</code>：</li>
+</ol>
+<p>这个模块是一个数据增广的方法，就是对采样的帧进行一定概率的<code>dropout</code>，从而对<code>global/local</code>的信息都可以获取到。这个模块的思路是非常简单的，但其实是可以借鉴的。</p>
+<ol start="2">
+<li><code>3D Inception Module</code>：</li>
+</ol>
+<p>这个模块见闻知意，其实就是在模仿<code>2D InceptionNet</code>，从而做出了一点小的改进。</p>
+<p>这篇论文的方法其实是很简单的，<strong>从这篇文章中，其实可以考虑利用VIT来捕捉不一致性的问题，是一个值得思考的点，可以尝试去做，然后发在TCSVT这样的期刊上。</strong></p>
+<h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>这篇文章的方法虽然简单，但是实验细节是做的不错的，通过对比与消融实验，很流畅地说明了自身模块的优势，<strong>但唯一的缺点在于对比实验的方法太老了，这个不是很好。</strong></p>
+<p>首先是数据集内的检测性能，这个有一点没说清楚，但我估计是视频级别的预测：</p>
+<p><img src="/2021/09/29/Temporal-Dropout-3DCNN/table1.png"></p>
+<p>还是那句话，虽然有效果提升，但对比的方法都太老了。接着是跨库的性能展示，但是这里面居然没有对比实验，这也让人匪夷所思：</p>
+<p><img src="/2021/09/29/Temporal-Dropout-3DCNN/table2.png"></p>
+<p>之后为了证明自己<code>TD Dropout</code>的优势，做了一个对比实验：</p>
+<p><img src="/2021/09/29/Temporal-Dropout-3DCNN/table3.png"></p>
+<p>最后为了展现一致性的问题，作者进行了一个实验，采取<code>m</code>次测试，从而证明自己的模块有效。</p>
+<p><img src="/2021/09/29/Temporal-Dropout-3DCNN/table4.png"></p>
+<p>这篇论文中还有两个细节是值得注意的：</p>
+<ul>
+<li><code>IJCAI</code>的论文中，公式一定要有</li>
+<li>还有一个很典型的论文写作技巧，在实验中，不能仅有表格，一定要有图，无论是什么图，要给一张</li>
+</ul>
+<h2 id="4-论文收获"><a href="#4-论文收获" class="headerlink" title="4. 论文收获"></a>4. 论文收获</h2><p><strong>整体评价：</strong>这篇论文其实很接地气，是一个学生党的手法，方法上没有本质上的突破，虽然实验对比不好，但很扎实，该有的东西都有，该说清楚的事情说的都很清楚，这篇文章最大的亮点在于：</p>
+<ul>
+<li>对于捕捉时间域上的不一致性，<code>3DCNN</code>与<code>Transformer</code>是不是都可以使用</li>
+<li>文章整体用词、思路<code>motivation</code>的阐述、实验的进行非常工整而且平民</li>
+</ul>
+<p>这篇论文的思路就不总结了，总结一些词汇就好了 ：</p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">leverage</td>
+<td align="center"></td>
+<td align="center">sabotage</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">tampering</td>
+<td align="center"></td>
+<td align="center">falsify</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">legislation</td>
+<td align="center"></td>
+<td align="center">Deviating from</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">facilitate</td>
+<td align="center"></td>
+<td align="center">discrete</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">sacrificed</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/11/VIT-with-Incremental-Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,6 +1156,10 @@
 <li><p><code>Video Transformer for Deepfake Detection with Incremental Learning</code></p>
 <p>作者：<code>mbzuai</code>大学，阿联酋默罕默德本扎伊德人工智能学院</p>
 <p>发表刊物/会议：<code>ACM MM 2021</code></p>
+</li>
+<li><p><code>Detecting Deepfake Videos with Temporal Dropout 3DCNN</code></p>
+<p>作者：中科院信工所</p>
+<p>发表刊物/会议：<code>IJCAI 2021</code></p>
 </li>
 </ol>
 
@@ -2450,262 +2673,6 @@ loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Qsc's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/" itemprop="url">调参技巧/Linux命令行使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T15:11:06+08:00">
-                2021-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>写在前面：</strong></p>
-<p>​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、<code>linux</code>命令行使用过程中的一点心得体会。</p>
-<h2 id="一、调参技巧"><a href="#一、调参技巧" class="headerlink" title="一、调参技巧"></a>一、调参技巧</h2><p><strong>pytorch多GPU训练：</strong></p>
-<p>多<code>GPU</code>训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡：</p>
-<pre><code>model = Net()
-model = torch.nn.DataParallel(model, device_ids=[0,1,2,3])
-model.cuda()
-</code></pre>
-<p>没错，正如你所看到的一样，就是这么简单。</p>
-<p><strong>tensorboard启动：</strong></p>
-<p>具体<code>tensorboard</code>使用教程请参照另一篇博客，这里只介绍启动技巧：</p>
-<pre><code>tensorboard --logdir=./runs
-</code></pre>
-<p><strong>pip安装包时换源：</strong></p>
-<pre><code>pip install xxx -r https://pypi.douban.com/simple/
-</code></pre>
-<p><strong>ToTensor：</strong></p>
-<p>该函数有自动更改维度的功能，调用前是：<code>(H,W,C)</code>，调用后是<code>(C,H,W)</code></p>
-<p><strong>图片出错：</strong></p>
-<p>首先先加载一轮，输出图片的<code>path</code></p>
-<p><strong>常用的防止过拟合方法：</strong></p>
-<pre><code># 优化器层面：
-weight_decay
-    在每个batch跑完之后，optimizer.step()
-lr_scheduler
-    在一轮结束之后，lr.step()
-# 网络方面：
-正则化
-Droupout
-</code></pre>
-<p><strong>给不同网络层设置不同的学习参数：</strong></p>
-<pre><code>dense_block1_params = list(map(id, model.patch_embed.backbone.block1.parameters()))
-dense_block2_params = list(map(id, model.patch_embed.backbone.block2.parameters()))
-dense_block3_params = list(map(id, model.patch_embed.backbone.block3.parameters()))
-base_params = filter(lambda p: id(p) not in dense_block1_params + dense_block2_params + dense_block3_params, model.parameters())
-params = [&#123;&#39;params&#39;: base_params&#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block1.parameters(), &#39;lr&#39;: lr * 0.125 &#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block2.parameters(), &#39;lr&#39;: lr * 0.25&#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block3.parameters(), &#39;lr&#39;: lr * 0.5&#125;
-]
-</code></pre>
-<p><strong>pytorch最简单的方式自定义网络：</strong></p>
-<pre><code>class Dense(nn.Module):
-
-    def __init__(self, conv0, norm0, pool0, block1, trans1, block2, trans2, block3):
-        super(Dense, self).__init__()
-        self.conv0 = conv0
-        self.norm0 = norm0
-        self.pool0 = pool0
-        self.block1 = block1
-        self.trans1 = trans1
-        self.block2 = block2
-        self.trans2 = trans2
-        self.block3 = block3
-        self.BN = nn.BatchNorm2d(1280)
-        self.ACT = nn.ReLU(inplace=True)
-
-    def forward(self, x):
-        conv0 = self.conv0(x)
-        norm0 = self.norm0(conv0)
-        pool0 = self.pool0(norm0)
-        denseblock1 = self.block1(pool0)
-        transition1 = self.trans1(denseblock1)
-        denseblock2 = self.block2(transition1)
-        transition2 = self.trans2(denseblock2)
-        denseblock3 = self.block3(transition2)
-        bn = self.BN(denseblock3)
-        act = self.ACT(bn)
-        return act
-</code></pre>
-<h2 id="二、Linux命令行技巧"><a href="#二、Linux命令行技巧" class="headerlink" title="二、Linux命令行技巧"></a>二、Linux命令行技巧</h2><p><strong>Ubuntu统计文件个数：</strong></p>
-<p>1.统计当前文件夹内文件数量且包含子目录中的文件数量，命令如下：</p>
-<pre><code>ls -lR|grep &quot;^-&quot;| wc -l
-</code></pre>
-<p>2.统计当前文件夹内文件数量且不包含子目录文件数量，命令如下：</p>
-<pre><code>ls -l|grep &quot;^-&quot;| wc -l
-</code></pre>
-<p>3.统计当前文件夹下的目录个数且包含子目录，命令如下：</p>
-<pre><code>ls -lR|grep &quot;^d&quot;| wc -l
-</code></pre>
-<p>4.统计当前文件夹下的目录个数，命令如下：</p>
-<pre><code>ls -l |grep &quot;^d&quot;| wc -l
-</code></pre>
-<p>5.统计包含部分前缀，命令如下：</p>
-<pre><code>ls -lR data*/|grep &quot;^-&quot;| wc -l # data*/ 代表统计前缀为data的文件
-</code></pre>
-<p>6.查看当前目录下每个文件夹的大小，命令如下：</p>
-<pre><code>du -h --max-depth=1 
-</code></pre>
-<p><strong>unzip使用：</strong></p>
-<p>1.把文件解压到当前目录下：</p>
-<pre><code>unzip test.zip
-</code></pre>
-<p>2.如果要把文件解压到指定的目录下，需要用到<code>-d</code>参数：</p>
-<pre><code>unzip -d /temp test.zip
-</code></pre>
-<p>3.解压的时候，有时候不想覆盖已经存在的文件，那么可以加上<code>-n</code>参数：</p>
-<pre><code>unzip -n test.zip
-unzip -n -d /temp test.zip
-</code></pre>
-<p><strong>Ubuntu sudo python路径修改：</strong></p>
-<p>首先找到要更改后的<code>python</code>的安装路径，例如：<code>/home/anaconda3/envs/qsc/bin/python</code></p>
-<p>1.备份：</p>
-<pre><code>sudo cp /usr/bin/python /usr/bin/python_bak
-</code></pre>
-<p>2.删除指向：</p>
-<pre><code>sudo rm /usr/bin/python
-</code></pre>
-<p>3.修改路径：</p>
-<pre><code>sudo ln -s /home/sss/anaconda3/bin/python /usr/bin/python
-</code></pre>
-<p><strong>ubuntu给文件赋权限：</strong></p>
-<pre><code>sudo chmod 777 xxx.txt # 给一个文件赋权限
-sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2760,7 +2727,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -303,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/test/" itemprop="url" rel="index">
+                    <span itemprop="name">test</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -332,7 +354,108 @@
       
         
           
-            
+            <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><ul>
+<li><p>针对问题：</p>
+<ul>
+<li>当前主流的检测模型，虽然检测准确率很高，但很大程度上依赖于图片的<strong>频率伪影或low-level视觉伪影</strong>，这不是一个可持续的检测方法</li>
+</ul>
+</li>
+<li><p>解决办法：</p>
+<ul>
+<li>提出一个结合超分辨率的方法，从而融合了<code>high-level/low-level</code>视觉特征进行二分类任务</li>
+</ul>
+</li>
+<li><p>评价：</p>
+<ul>
+<li>优点在于方法比较新颖，通过<strong>超分辨率</strong>的方法来获取视觉伪影特征</li>
+<li>但缺点在于本文应该是着眼于<code>Deepfake</code>进行检测，但实验都是在于对<code>GAN</code>生成的图片进行检测，有些局限性</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、方法"><a href="#二、方法" class="headerlink" title="二、方法"></a>二、方法</h2><p>本文的主要方法如下：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/methods.png"></p>
+<p>在训练过程中：</p>
+<ul>
+<li>首先利用真实图像，进行四倍图像的下采样。</li>
+<li>接着对下采样后的图片可进行选择性操作：不动、灰度化、噪声化</li>
+<li>然后对图片进行一个超分重建，其中<code>loss</code>如下：</li>
+</ul>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/loss1.png"></p>
+<ul>
+<li>然后利用原图与重建后的图片做差，放入<code>CNN</code>分类器中，利用一个<code>soft-max loss</code></li>
+</ul>
+<p>接着文章又进一步利用了<code>high-level</code>的视觉特征，通过一个感知损失函数，进一步训练超分辨率重建器。所以最后的<code>loss</code>如下：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/loss2.png"></p>
+<p>即最后的输出概率公式为：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/output.png"></p>
+<p>为了更好地显示出该模型的效果，论文做了一个可视化的伪影特征图，从图中可以看出，感知损失可以很好地提取伪影特征：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/high-level.png"></p>
+<h2 id="三、实验细节"><a href="#三、实验细节" class="headerlink" title="三、实验细节"></a>三、实验细节</h2><p>本文在<code>CelebA-HQ/FFHQ/LSUN</code>三个数据集上，利用<code>ProGAN/StyleGAN</code>合成伪造图片，利用<code>ACC</code>数据集进行评估。同时对生成器在频域与图片域上进行不同的扰动：<code>+R/+E/+A/+P</code>。</p>
+<p>首先是在<code>CelebA-HQ</code>上的结果：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/table1.png"></p>
+<p>之后文章对该张表格进行了详细的论述与分析，接着又对模型的鲁棒性与特征可视化进行一定阐述：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/figure1.png"></p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/Figure2.png"></p>
+<p>接着在第二个数据集上进行实验：</p>
+<p><img src="/2021/10/19/Beyond-the-Spectrum-Detecting-Deepfakes-via-Re-Synthesis/table3.png"></p>
+<p>从而证明本文所提出的模型具有很好地泛化能力。</p>
+<p>最后一个数据集很少人用，不具有说服力，这里也不再细看。</p>
+<h2 id="四、论文收获"><a href="#四、论文收获" class="headerlink" title="四、论文收获"></a>四、论文收获</h2><p><strong>整体评价</strong>：这篇论文采用的超分辨率重建、感知损失获取高级特征等方法是比较新颖的，值得我们借鉴，同时实验进行地非常充分，图表搭配合理，值得参考。但美中不足的地方在于针对的点不太好，没有对<code>deepfake</code>数据集进行检测，是一个诟病。</p>
+<p><strong>写作：</strong>写作依旧是紧紧抓住<code>motivation</code>展开，使文章具有说服力。</p>
+<p><strong>词汇：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">spectrum</td>
+<td align="center"></td>
+<td align="center">foster</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">assess</td>
+<td align="center"></td>
+<td align="center">ubiquitous</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">authenticity</td>
+<td align="center"></td>
+<td align="center">sophisticated</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">sustainable</td>
+<td align="center"></td>
+<td align="center">conceal</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">evolving</td>
+<td align="center"></td>
+<td align="center">excessive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">incorporate</td>
+<td align="center"></td>
+<td align="center">explicitly</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">arguably</td>
+<td align="center"></td>
+<td align="center">incorporate</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+
           
         
       

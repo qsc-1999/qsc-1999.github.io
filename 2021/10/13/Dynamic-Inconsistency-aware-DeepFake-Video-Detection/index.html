@@ -79,21 +79,29 @@
 
 
 
-<meta name="description" content="1. 概述​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上ICCV。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比DFDC数据集还大的韩国人数据集。我觉得这个是它能上ICCV最大的原因。  针对问题：  为了促进Deepfake的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题 对未知领域的模型存在着明显鲁棒性下降的问题   解决方法：  采用6种开源的技术">
+<meta name="description" content="一、概述 针对问题：Deepfake的生成只是针对于单帧进行重建，然后合并成一个视频，这样就破坏了视频帧的不一致性，而当前的方法中，不一致性问题没有得到充分的利用。  解决办法：  本文设计了一个专门探索帧间不一致性的网络，从而对相邻的两帧进行一致性建模 在网络中提出一个比较新颖的模块，该模块捕捉了两帧之间global&#x2F;local的inconsistency，从而提高模型的鲁棒性表示 最后在主流的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KoDF">
-<meta property="og:url" content="http://example.com/2021/09/09/KoDF/index.html">
+<meta property="og:title" content="Dynamic Inconsistency-aware DeepFake Video Detection">
+<meta property="og:url" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/index.html">
 <meta property="og:site_name" content="Qsc&#39;s Blog">
-<meta property="og:description" content="1. 概述​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上ICCV。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比DFDC数据集还大的韩国人数据集。我觉得这个是它能上ICCV最大的原因。  针对问题：  为了促进Deepfake的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题 对未知领域的模型存在着明显鲁棒性下降的问题   解决方法：  采用6种开源的技术">
+<meta property="og:description" content="一、概述 针对问题：Deepfake的生成只是针对于单帧进行重建，然后合并成一个视频，这样就破坏了视频帧的不一致性，而当前的方法中，不一致性问题没有得到充分的利用。  解决办法：  本文设计了一个专门探索帧间不一致性的网络，从而对相邻的两帧进行一致性建模 在网络中提出一个比较新颖的模块，该模块捕捉了两帧之间global&#x2F;local的inconsistency，从而提高模型的鲁棒性表示 最后在主流的">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/09/09/KoDF/adversarial_attack.png">
-<meta property="og:image" content="http://example.com/2021/09/09/KoDF/experiment.png">
-<meta property="article:published_time" content="2021-09-09T01:45:06.000Z">
-<meta property="article:modified_time" content="2021-09-09T02:50:37.122Z">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/pipeline.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/GCB.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/LAB.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/classify.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table1.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table2.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table3.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table4.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table5.png">
+<meta property="og:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table6.png">
+<meta property="article:published_time" content="2021-10-13T09:22:24.000Z">
+<meta property="article:modified_time" content="2021-10-19T03:03:13.622Z">
 <meta property="article:author" content="qishicheng">
 <meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/09/09/KoDF/adversarial_attack.png">
+<meta name="twitter:image" content="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/pipeline.png">
 
 
 
@@ -123,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/09/09/KoDF/"/>
+  <link rel="canonical" href="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/"/>
 
 
 
 
 
-  <title>KoDF | Qsc's Blog</title>
+  <title>Dynamic Inconsistency-aware DeepFake Video Detection | Qsc's Blog</title>
   
 
 
@@ -266,7 +274,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/09/KoDF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -283,7 +291,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">KoDF</h1>
+          <h1 class="post-title" itemprop="name headline">Dynamic Inconsistency-aware DeepFake Video Detection</h1>
         
 
         <div class="post-meta">
@@ -295,8 +303,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-09T09:45:06+08:00">
-                2021-09-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-13T17:22:24+08:00">
+                2021-10-13
               </time>
             
 
@@ -355,31 +363,75 @@
       
 
       
-        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>​    这篇文章比较牵强，可以作为反面教材，反思一下为什么会上<code>ICCV</code>。它的创新点不足，实验不具说服力。工作量在于提供了一个庞大，甚至比<code>DFDC</code>数据集还大的韩国人数据集。我觉得这个是它能上<code>ICCV</code>最大的原因。</p>
+        <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><ul>
+<li><p>针对问题：<code>Deepfake</code>的生成只是针对于单帧进行重建，然后合并成一个视频，这样就破坏了视频帧的不一致性，而当前的方法中，不一致性问题没有得到充分的利用。</p>
+</li>
+<li><p>解决办法：</p>
 <ul>
-<li><p>针对问题：</p>
-<ul>
-<li>为了促进<code>Deepfake</code>的研究发展，平衡数据集中东亚、东南亚地区人种数据缺失问题</li>
-<li>对未知领域的模型存在着明显鲁棒性下降的问题</li>
+<li>本文设计了一个专门探索帧间不一致性的网络，从而对相邻的两帧进行一致性建模</li>
+<li>在网络中提出一个比较新颖的模块，该模块捕捉了两帧之间<code>global/local</code>的<code>inconsistency</code>，从而提高模型的鲁棒性表示</li>
+<li>最后在主流的<code>benchmark</code>上进行实验，从而验证其方法的有效性</li>
 </ul>
 </li>
-<li><p>解决方法：</p>
+<li><p>点评：</p>
 <ul>
-<li>采用<code>6</code>种开源的技术，制作了一个比<code>DFDC</code>还大的数据集</li>
-<li>提出了一种新的训练方法，将数据集合并训练，从而提高模型的迁移能力与鲁棒性问题</li>
+<li>这篇文章的方法非常具有学习价值，针对不一致性这一问题，本文是如何提出这些网络与模块，从而捕捉不一致性，公式是如何利用的，为什么要用这样的公式，这值得思考。</li>
+<li>这篇论文是一个博士写的，文章工整，简洁明了，每一段的写作非常具有参考价值，同时将<code>motivation</code>阐述地非常清楚。</li>
 </ul>
 </li>
 </ul>
-<h2 id="2-具体方法"><a href="#2-具体方法" class="headerlink" title="2. 具体方法"></a>2. 具体方法</h2><p>​    本文的重点不在于方法上的创新，或者是挖了一个新坑。而是在工作量上是巨大的，从真实数据的录制开始就花费了巨大的心思，而且数据增强也不是流程化的，是制作者一个一个视频修改的。</p>
-<p>​    本文唯一新颖的地方在于，在数据集中，加入了对抗攻击的思想，从而使检测模型失效，其中具体方法如下：</p>
-<p><img src="/2021/09/09/KoDF/adversarial_attack.png"></p>
-<p>​    从后面的实验来看，确实将检测模型的效果下降了十个百分点。</p>
-<h2 id="3-实验细节"><a href="#3-实验细节" class="headerlink" title="3. 实验细节"></a>3. 实验细节</h2><p>​    本文的实验做的比较简单，其实就是对几个数据集做交叉测试，从而说明，在训练时，使用多种数据集一起训练会让模型的鲁棒性更好。但是观察下面的实验，就发现一个很大的问题，明明是<code>AUC</code>，但写成了<code>ACC</code>，可见<code>ICCV</code>的水分还是有的。</p>
-<p><img src="/2021/09/09/KoDF/experiment.png"></p>
-<h2 id="4-论文收获"><a href="#4-论文收获" class="headerlink" title="4. 论文收获"></a>4. 论文收获</h2><p><strong>整体评价：</strong>这篇论文虽然创新点不足，但是分析它为什么可以发在<code>ICCV</code>，其实整个数据集的制作流程是讲述的非常清楚的，而且在这个生产线下，数据集做的非常的庞大，这是最值得学习的地方。</p>
-<p><strong>方法：</strong>没有创新点，但对抗样本是个小新颖的地方</p>
-<p><strong>实验：</strong>存在漏洞，不具有参考</p>
-<p><strong>写作：</strong>这篇文章读起来的印象就是特别拗口，而且文章很多存在着废话，思路上不清晰，不具有参考价值。</p>
+<h2 id="二、具体方法"><a href="#二、具体方法" class="headerlink" title="二、具体方法"></a>二、具体方法</h2><p>本文网络的<code>Pipeline</code>如下图所示：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/pipeline.png"></p>
+<ul>
+<li><code>Preprocessing</code>：</li>
+</ul>
+<p>包括裁剪整个脸部的区域与检测脸部关键区域的坐标</p>
+<ul>
+<li><code>Features extractiong module</code>：</li>
+</ul>
+<p>采用<code>ResNet50</code></p>
+<ul>
+<li><code>Cross-Reference module</code>：</li>
+</ul>
+<p>该模块接受两个输入：一个是<code>features map</code>，另一个是<code>coordinates of four local critical areas</code></p>
+<p>接着该模块分成了两个<code>branch</code>，一个捕捉局部的不一致性，一个捕捉全局的不一致性，然后两个模块做融合用于最后的分类网络。</p>
+<p>首先是<code>Global Correlation Branch(GCB)</code>：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/GCB.png"></p>
+<p>这里的公式我是都看懂了，至于它的物理含义不是很懂，但我觉得和<code>self-attention</code>中的公式也有一点点像，有可能是这个因素。</p>
+<p>接着是<code>Local Association branch(LAB)</code>：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/LAB.png"></p>
+<p>这里利用到了<code>ROIPooling</code>网络，然后两两逐元素相乘，得到<code>local</code>的一致性特征。</p>
+<p><strong>这里唯一值得注意的问题在于，这些公式是如何想出来的，其物理意义是什么？这个我在组会里做一次汇报，和大家讨论一下。</strong></p>
+<ul>
+<li>最后是分类网络：</li>
+</ul>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/classify.png"></p>
+<p>这里有点注意的是输出，首先计算出两帧的概率$P_0 P_1$，最后针对这一帧的概率为$P_0/(P_0+P_1)$，最终输出越接近<code>1</code>，说明该张图片是被篡改过的。</p>
+<p>这个帧的<code>label</code>也是有点不一样，如果是真的视频，那么<code>label</code>是<code>[0,1]</code>，如果是<code>fake</code>的视频，<code>label</code>是<code>[1,0]</code>。这个也很符合最后的计算公式，<strong>但是最后的计算公式是如何想出来的，也是值得思考的</strong></p>
+<p><strong>本文的方法很朴素，没有花里胡哨的东西，也没有较难的公式，但如何想出来的这些，是我目前所不能理解的，也是我的一个瓶颈所在。</strong></p>
+<h2 id="三、实验细节"><a href="#三、实验细节" class="headerlink" title="三、实验细节"></a>三、实验细节</h2><p>本文在<code>FF++/Celeb-DF/DFDC Preview</code>三个数据集上，利用<code>AUC/ACC</code>两个指标对网络进行了一系列的实验。</p>
+<h3 id="3-1-对比实验"><a href="#3-1-对比实验" class="headerlink" title="3.1 对比实验"></a>3.1 对比实验</h3><p>首先是在<code>FF++</code>中两种不同版本的数据集下进行测试，结果如图所示：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table1.png"></p>
+<p>可以看到效果还是非常不错的，而且用的还是很经典的<code>baseline</code>。</p>
+<p>接着在<code>DFDC Preview</code>上数据集进行测试：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table2.png"></p>
+<p>其实这个测试的结果不是很好的，但是他只对比了这两种方法，也可以看出写文章的一种手段。</p>
+<p>最后在<code>Celeb-DF</code>数据集上进行了泛化能力测试：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table3.png"></p>
+<p>这三个实验都是非常主流且方便的实验，非常值得借鉴与学习。</p>
+<h3 id="3-2-消融实验"><a href="#3-2-消融实验" class="headerlink" title="3.2 消融实验"></a>3.2 消融实验</h3><p>首先是对选取哪两帧进行了消融实验分析，结果如下：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table4.png"></p>
+<p>这个图表是模仿<code>FF++</code>数据集中的<code>benchmark</code>画出来的，它分析了两帧间隔对实验结果的影响，太近与太远都会使得实验结果差。</p>
+<p>之后对关键区域进行实验，查看哪些关键区域更加重要：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table5.png"></p>
+<p>这里其实有一点是值得注意的，对于<code>NT</code>这一类数据集来说，其修改就主要停留在<code>mouth</code>区域，然而消融实验表明没有<code>mouth</code>是最高的，这其实有一点不合理。</p>
+<p>最后对网络中两个重要的模块<code>GCB/LAB</code>进行了消融实验：</p>
+<p><img src="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/table6.png"></p>
+<p>但是仅用<code>LAB</code>的时候，模型反而精度会下降，但文章给出了解释，<code>LAB</code>模块仅是起一个辅助的作用，而不是主导作用。</p>
+<h2 id="四、论文收获"><a href="#四、论文收获" class="headerlink" title="四、论文收获"></a>四、论文收获</h2><p><strong>整体评价：</strong>非常好的一篇论文，从<code>idea</code>到实验再到文书，写的都非常棒。它的一致性问题仍是值得探究的一个点。</p>
+<p><strong>方法：</strong>一致性问题值得考虑，如何将<code>self-attention</code>应用到一致性上，其实是一个值得关注的点。</p>
+<p><strong>实验：</strong>非常主流的实验设计，但美中不足的地方在于，没有一张可视化的<code>attention</code>图片。</p>
+<p><strong>写作：</strong>这文章的写作足以拿到组会上讨论，而且一直在前面讨论着<code>motivation</code>，从而引出自己的创新点与工作。</p>
 <p><strong>词汇：</strong></p>
 <table>
 <thead>
@@ -391,159 +443,15 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">democratize</td>
+<td align="center">adjacent</td>
 <td align="center"></td>
-<td align="center">connotation</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">discrepancy</td>
-<td align="center"></td>
-<td align="center">underline</td>
+<td align="center">preliminary knowledge</td>
 <td align="center"></td>
 </tr>
 <tr>
-<td align="center">fabrication</td>
+<td align="center">degradation</td>
 <td align="center"></td>
-<td align="center">surpass</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">innocuous</td>
-<td align="center"></td>
-<td align="center">resort</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">maliciously</td>
-<td align="center"></td>
-<td align="center">inference</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">defame</td>
-<td align="center"></td>
-<td align="center">situation</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">propagate</td>
-<td align="center"></td>
-<td align="center">vulnerable</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">fraud</td>
-<td align="center"></td>
-<td align="center">frequently</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">facilitate</td>
-<td align="center"></td>
-<td align="center">exclude</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">conjunction</td>
-<td align="center"></td>
-<td align="center">trivial</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">exceed</td>
-<td align="center"></td>
-<td align="center">countless</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">insufficient</td>
-<td align="center"></td>
-<td align="center">posterior</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">incorporate</td>
-<td align="center"></td>
-<td align="center">equivalent</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">incorporate</td>
-<td align="center"></td>
-<td align="center">resilient</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">complementary</td>
-<td align="center"></td>
-<td align="center">occurrence</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">constitute</td>
-<td align="center"></td>
-<td align="center">ratio</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">defective</td>
-<td align="center"></td>
-<td align="center">excessive</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">tactics</td>
-<td align="center"></td>
-<td align="center">utterances</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">comprise</td>
-<td align="center"></td>
-<td align="center">interven</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">correspond</td>
-<td align="center"></td>
-<td align="center">burgeoning</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">approval</td>
-<td align="center"></td>
-<td align="center">disruptive</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">preliminary</td>
-<td align="center"></td>
-<td align="center">premise</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">portion</td>
-<td align="center"></td>
-<td align="center">deduce</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">ultimate</td>
-<td align="center"></td>
-<td align="center">inevitably</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">compensate</td>
-<td align="center"></td>
-<td align="center">extensive</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">regulate</td>
-<td align="center"></td>
-<td align="center"></td>
+<td align="center">decompose</td>
 <td align="center"></td>
 </tr>
 </tbody></table>
@@ -577,8 +485,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/09/07/Deepfake%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="next" title="Deepfake论文总结">
-                <i class="fa fa-chevron-left"></i> Deepfake论文总结
+              <a href="/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/" rel="next" title="An examination of Fairness of AI Models for Deepfake Detection">
+                <i class="fa fa-chevron-left"></i> An examination of Fairness of AI Models for Deepfake Detection
               </a>
             
           </div>
@@ -586,10 +494,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/09/11/VIT-with-Incremental-Learning/" rel="prev" title="VIT with Incremental Learning">
-                VIT with Incremental Learning <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -725,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. 具体方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">3. 实验细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">4. 论文收获</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、具体方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%AA%8C%E7%BB%86%E8%8A%82"><span class="nav-number">3.</span> <span class="nav-text">三、实验细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AF%B9%E6%AF%94%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 对比实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 消融实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">四、论文收获</span></a></li></ol></div>
             
 
           </div>

@@ -261,6 +261,545 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" itemprop="url">目标检测基础知识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-17T16:35:32+08:00">
+                2021-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/detection/" itemprop="url" rel="index">
+                    <span itemprop="name">detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、目标检测基础知识"><a href="#一、目标检测基础知识" class="headerlink" title="一、目标检测基础知识"></a>一、目标检测基础知识</h2><p><strong>写在前面：</strong>本来这点知识是最初入门<code>CV</code>时学的，但是没想到用在实践中这么地不堪一击，因此决心要脚踏实地，一点一点来。</p>
+<ul>
+<li><p><code>IOU</code>：交并比，指两个<code>Anchor</code>的面积交集比上并集、</p>
+</li>
+<li><p>混淆矩阵：这个概念在分类中是搞得很清楚的，<code>TP/FP/TN/FN</code>分别对应真阳、假阳、真阴、假阴性。</p>
+</li>
+<li><p><code>Faster RCNN(anchor)</code>方法中如何生成最终的结果<code>(NMS)</code>：</p>
+<p>对于生成的<code>BBox</code>集合，采用以下方法：</p>
+<pre><code>选prediction cls 分数最高的作为该anchor的类别；
+对所有的anchor，将分数低于score_thr的都扔掉(这一点与分类要区别开，因为分类就算分数低，也是这张图片的结果，必须得要)
+for category in categories:
+    首先prediction cls最高的分数anchor
+    用这个框，按顺序与其他框计算IOU，当IOU大于一定时，将那个框扔掉
+    接着回到上一步，选次大的anchor作为第二个预测框，依次计算
+最终得到了预测结果
+</code></pre>
+<p><strong>而在DETR中，是没有NMS的，由于Set prediction的思想，因此query全部作为预测框，但是在测试的时候，又会经过一些处理，这时我们可以拿这个结果与测试集手动计算！！！</strong></p>
+</li>
+<li><p><code>TP/FP</code>：</p>
+<ul>
+<li><p>首先要区分分类与目标检测的不同，对于分类任务而言，<code>TN/FN</code>是有用的，而在目标检测中，通过后期的<code>NMS</code>处理后，对于某一类别，我生成的<code>anchor</code>，只要预测成这一类别，就因此肯定是正例，因此重点就在于如何计算<code>TP/FP</code></p>
+</li>
+<li><p>对于单张图片的某一类别而言，以下图为例</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627523370794.png" alt="1627523370794"></p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>def tpfp_func(det_bbox, gt_bbox, iou_thr = 0.5):    # 输入一张图片一个类别的预测框与label
+    
+    # 读取det与gt的数量
+    num_dets = det_bboxes.shape[0]
+    num_gts = gt_bboxes.shape[0]
+    
+    # 开一个数组，对det_box的fp与tp记录
+    record = np.zeros((num_dets), dtype=np.float32)
+    
+    # 如果gt == 0，那么都是fp
+    return record
+    
+    # 如果存在gt，那么计算gt与det最大iou的匹配：
+    ious = bbox_overlaps(det_bboxes, gt_bboxes)
+    # 从置信度高到低开始，依次记录fp与tp
+    for det in dets：
+        如果当前det的最大iou&lt;iou_thr,则为fp
+        如果大于：
+            判断是否是该gt的首次匹配，如果是首次匹配，则为tp
+            否则为fp
+
+def tpfp_fun(gt_bbox, det_bbox, iou_thr=0.5):
+
+    tpfp = np.zeros(len(det_bbox))    # tpfp数组记录
+    if len(gt_bbox) == 0:            # 如果gt=0，说明检测出来的都是fp
+        tpfp = tpfp.tolist()
+        return tpfp
+    
+    # 将det_bbox分开，同时再复制一个score用于索引，一个visited用于记录
+    pred_bbox = [box[0:4] for box in det_bbox]
+    pred_score = [box[4] for box in det_bbox]
+    score_idx = pred_score
+    gt_bbox_visit = np.zeros(len(gt_bbox))
+    pred_score.sort(reverse = True)
+
+    # 将bbox按照score从大到小的顺序，依次判断，同时将匹配的gt记录
+    ious = calculate_iou(gt_bbox, pred_bbox)
+    max_iou = np.max(ious, axis=0)
+    max_iou_idx = np.argmax(ious, axis=0)
+    for i in range(len(pred_bbox)):
+        idx = score_idx.index(pred_score[i])
+        if max_iou[idx] &gt; iou_thr:
+            if gt_bbox_visit[max_iou_idx[idx]] == 0:
+                tpfp[idx] = 1
+                gt_bbox_visit[max_iou_idx[idx]] = 1
+            else:
+                continue
+        else:
+            continue
+    tpfp = tpfp.tolist()
+    return tpfp
+</code></pre>
+<p><strong>值得注意：分类任务注重于score的大小，从而利用AUC来做评价指标，而检测任务是存在数量的问题，因此更重要的AP，而是对于某一类来说，不存在负样本，只要生成确定了这个anchor，就一定是tp或者是fp。</strong></p>
+<ul>
+<li><p><code>Faster RCNN loss</code>：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627525303190.png" alt="1627525303190"></p>
+<p>注意，这个<code>loss</code>是正常的<code>loss</code>，但是在计算<code>loss</code>之前，有一步<code>anchor</code>与<code>gt</code>的匹配问题。<strong>这个以后需要的话，再去仔细研究</strong></p>
+</li>
+<li><p><code>precision：</code>查准率，预测对的结果比上预测结果。</p>
+</li>
+<li><p><code>Recall：</code>召回率，预测对的结果比上真实结果</p>
+</li>
+<li><p><code>AP:</code>大多数情况下，我们希望<code>precision、recall</code>都很高，但这其实是一件矛盾的事情，因此类比于<code>TPR/FNR</code>一样，我们可以画出<code>PR</code>曲线。但其实，<code>score/iou</code>的阈值都会影响到<code>AP</code></p>
+</li>
+<li><p><code>MAP</code>：指的是所有类别的平均<code>AP</code></p>
+</li>
+</ul>
+<p><strong>因此在MMdetection框架中，想对DETR加上清洗的话，得自己写score：</strong></p>
+<ol>
+<li>不管训练，测试完在代码里加上，然后存入</li>
+<li>利用<code>demo</code>得到结果，然后手写，统计计算</li>
+<li>训练的话， 应该还是同<code>1</code>的想法</li>
+</ol>
+<p><strong>最终选择第二种方式来计算了</strong></p>
+<h2 id="二、目标检测数据集清洗"><a href="#二、目标检测数据集清洗" class="headerlink" title="二、目标检测数据集清洗"></a>二、目标检测数据集清洗</h2><p>一个对数据集良好的清洗，可在训练的过程中，提升一些，因此我用太赫兹的数据集为例，总结一些常用的数据清洗。</p>
+<p><strong>图像大小分布：</strong>对图像的大小进行统计，在太赫兹数据集中，图像均为<code>(400, 760)</code></p>
+<p><strong>GT_BBox的大小分布：</strong>对真实<code>bbox</code>的大小进行统计，有利于设定<code>anchor</code>，例如在本数据集中，<code>gt_bbox</code>的大小分布如下：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627713419843.png" alt="1627713419843"></p>
+<p>可以看到基本上在<code>(20, 80)</code>之间，因此在设计<code>anchor</code>时，可以进一步考虑</p>
+<p><strong>每类目标数统计：</strong>有利于直观看到每类的数量，判断是否存在类间不平衡的情况</p>
+<p><strong>每张图片目标数量统计：</strong>直观观察每张图片的目标数量，判断是否在图片中存在着极其不平衡的现象</p>
+<p><strong>每类长宽比：</strong>这个其实与<code>GT_bbox</code>是类似的</p>
+<p><strong>注意：其实这些指标需要记住，但是代码写起来是非常简单的，在此基础上额外多了一个plt的画图而已</strong></p>
+<h2 id="三、MMdetection检测框架使用"><a href="#三、MMdetection检测框架使用" class="headerlink" title="三、MMdetection检测框架使用"></a>三、MMdetection检测框架使用</h2><h3 id="3-1-环境搭建"><a href="#3-1-环境搭建" class="headerlink" title="3.1 环境搭建"></a>3.1 环境搭建</h3><p>其实这个框架的环境还是蛮好搭建的，但是一定要搞清楚两个事情：</p>
+<ul>
+<li>必须在<code>linux</code>下进行</li>
+<li><code>cuda</code>、<code>gpu</code>这些版本一定要对应，否则就会发生意料之外的错误</li>
+</ul>
+<p>其实官方教程已经说的很清楚了，这里我再将命令行汇总一遍：</p>
+<pre><code>conda create -n open-mmlab python=3.7 -y
+conda activate open-mmlab
+
+# 这个要根据自己的电脑，然后在pytorch的官网用官方命令
+conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.1 -c pytorch -y
+
+# 这句话是根据上一句pytorch的版本决定的
+pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
+
+# install mmdetection
+git clone https://github.com/open-mmlab/mmdetection.git
+cd mmdetection
+pip install -r requirements/build.txt
+pip install -v -e .
+</code></pre>
+<p><strong>有一点需要注意，当你如果更改了mmdetection文件夹的名字时，是需要重新bulid的</strong></p>
+<h3 id="3-2-使用教程"><a href="#3-2-使用教程" class="headerlink" title="3.2 使用教程"></a>3.2 使用教程</h3><p>这个框架其实使用起来非常方便，你只需要将你的数据集格式修改成<code>VOC</code>或者<code>COCO</code>的格式，然后放到文件夹中，接着修改一些信息即可，主要按照如下步骤：</p>
+<ol>
+<li><p>上传数据集，在主文件夹下创建<code>data</code>文件夹，然后将自己的数据按照对应格式放入，如图所示：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627715134388.png" alt="1627715134388"></p>
+</li>
+<li><p>修改<code>mmdet/evaluation/mean_ap.py</code>文件，可以加上你需要的<code>precision</code>、<code>F1</code>指标</p>
+</li>
+<li><p>修改对<code>VOC</code>/<code>COCO</code>数据集的设计管理文件：</p>
+<ul>
+<li><p>在<code>mmdet/datasets/voc</code>中，修改成你所需要的类，针对训练。</p>
+</li>
+<li><p>在<code>mmdet/core/evaluation/classname</code>中，修改类名，针对评估与测试。</p>
+</li>
+</ul>
+</li>
+<li><p>在主文件中，生成一个你自己的<code>config</code>文件，尽量避免在原<code>config</code>文件中修改，这里拿<code>atss</code>举例，运行命令行：</p>
+<pre><code>python tools/misc/print_config.py configs/atss/atss_r50_fpn_1x_coco.py
+</code></pre>
+<p>在自己的<code>config</code>文件夹中，生成一个<code>my_atss.py</code>文件，将打印的信息全部粘贴到该文件下，接着我们对该文件进行相对应的修改即可。</p>
+</li>
+<li><p>在自己的<code>config</code>文件里，修改如下配置：</p>
+<ul>
+<li><p><code>img_scale</code>：修改成你对应的图像大小</p>
+</li>
+<li><p><code>batch/lr/step</code>：最初始的是<code>16</code>张图片的学习率，你根据自己的<code>batch</code>然后对学习率进行成倍数的缩小</p>
+</li>
+<li><p>数据路径：修改成如下格式：</p>
+<p><img src="/2021/07/17/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1627716105341.png" alt="1627716105341"></p>
+</li>
+<li><p><code>metric</code>：如果是<code>VOC</code>格式，需要改成<code>mAP</code></p>
+</li>
+<li><p><code>class,score</code>：其中<code>class</code>需要改成自己的类别数量，<code>score</code>是用于测试评估的</p>
+</li>
+</ul>
+</li>
+<li><p>在修改好配置文件后，就可以运行训练了，其中训练命令为：</p>
+<pre><code>./tools/dist_train.sh qsc/my_atss_r50_fpn_1x_coco.py 2(gpu数量)  # 多GPU
+python tools/train.py qsc/my_atss_r50_fpn_1x_coco.py            # 单GPU
+</code></pre>
+</li>
+<li><p>训练好之后，会自动生成一个<code>work_dir</code>的文件夹，采用如下命令进行测试，一般测试时需要看<code>fps</code>与<code>mem</code>，因此都采用单卡：</p>
+<pre><code>python tools/test.py work_dir/my_atss_r50_fpn_1x_coco/my_atss_r50_fpn_1x_coco.py work_dir/my_atss_r50_fpn_1x_coco/epoch_36.pth --eval mAP
+</code></pre>
+</li>
+<li><p>将模型进行可视化，需修改<code>demo</code>文件中<code>image_demo.py</code>文件，接着采用如下命令：</p>
+<pre><code>python demo/image_demo.py demo/test.jpg work_dir/my_atss_r50_fpn_1x_coco/my_atss_r50_fpn_1x_coco.py work_dir/my_atss_r50_fpn_1x_coco/epoch_36.pth
+</code></pre>
+</li>
+</ol>
+<p>以上就是<code>mmdetection</code>框架最简单的使用方式，通过此方式就可以实现很多<code>sota</code>的目标检测模型</p>
+<h3 id="3-3-调参Tricks"><a href="#3-3-调参Tricks" class="headerlink" title="3.3 调参Tricks"></a>3.3 调参Tricks</h3><ol>
+<li><p>根据<code>gt_bbox</code>的长宽分布，从而确定<code>anchor</code>的设置。具体到代码中，修改如下参数：</p>
+<pre><code>anchor_rations = [0.5, 1.0, 2.0]
+</code></pre>
+</li>
+<li><p><code>Albu</code>数据增广 ，这个要看具体任务，受不受光照、形变等影响，像太赫兹任务中，就不需要进行很多的数据增广问题，但可以考虑随机生成<code>abnormal</code>样本</p>
+</li>
+<li><p>多尺度训练与测试, 这个也要看数据集,因为这里就根本不需要多尺度</p>
+</li>
+<li><p>利用软化非极大值抑制策略,  代码如下:</p>
+<pre><code>rcnn=dict(score_thr=0.05, nms=dict(type=&#39;soft_nms&#39;, iou_thr=0.5, min_score=0.001), max_per_img=100)
+</code></pre>
+</li>
+<li><p>一般情况下,用<code>GIoULoss</code>会比<code>L1Loss</code>涨点, 具体代码如下:</p>
+<pre><code>reg_decoded_bbox=True,     # 使用GIoUI时注意添加
+loss_bbox=dict(type=&#39;GIoULoss&#39;, loss_weight=5.0)
+</code></pre>
+</li>
+</ol>
+<p>**肯定还有许多tricks我没有用到, 这是一个经验积累的过程, 慢慢将遇到的方法在此记录就好了. **</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/7484348e1e863797925e9869687131b3.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qsc's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" itemprop="url">第一篇论文记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-06T11:14:52+08:00">
+                2021-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>写在前面：</strong>用这篇博客来记录第一篇论文的前前后后，也算是一个总结吧。</p>
+<h2 id="一、论文发表发展经历"><a href="#一、论文发表发展经历" class="headerlink" title="一、论文发表发展经历"></a>一、论文发表发展经历</h2><p>1.首先是去年10月份拿到的这个方向，大概简略地看了<code>Deepfake</code>的攻击与防御，差不多看到了第二年的一月份，然后确定了实验的对比方向与大概的方法。</p>
+<p>2.然后从1月到5月是毕设，正好就开始训练<code>VIT</code>模型，利用<code>ResNet+Transformer</code>的方法可以在<code>FF++</code>的<code>baseline</code>上达到一个相对较好的水平，因此觉得可以在这个方法上继续深入探究。</p>
+<p>3.确定我这个进一步细致的<code>idea</code>我记得特别清楚，是在<code>4.10</code>那天，但是因为毕设、毕业玩耍等乱七八糟的事情，一直拖到现在。期间学习了一下如何编写语义分割的代码，还是比较头疼的。</p>
+<p>4.然后从<code>7</code>月份开始可以说正式开始这篇论文努力地实验、细化方法等等。</p>
+<h2 id="二、Idea概括"><a href="#二、Idea概括" class="headerlink" title="二、Idea概括"></a>二、Idea概括</h2><p>​    由于<code>Deepfake</code>说到底是一个二分类任务，同时由于脸部伪造痕迹的存在、以及<code>blending</code>的边缘痕迹明显，因此我的<code>idea</code>总结如下：</p>
+<p>1.利用<code>Transformer</code>针对脸部的不一致性建模，从而检测。</p>
+<p>2.针对纯<code>VIT</code>模型，我们认为直接将图片进行编码是一件很蠢的事情，首先直观考虑是利用<code>ResNet</code>对图片进行编码，但是由于<code>VIT</code>的特性，我们仅能用两个<code>Stage</code>的<code>ResNet</code>，其次我们考虑使用语义分割所训练的网络，从而来指导在伪造图像中，伪造区域与原区域的不一致性问题，接着将特征图放入<code>VIT</code>中进行建模。</p>
+<p>3.对于<code>SA</code>模块来说，我们认为有两点需要改进的地方。首先针对其速度，我们需要利用<code>CNN</code>来替代线性计算，同时针对特征图中尺度不一的伪造痕迹，我们认为应该在<code>SA</code>中构造多尺度模块，从而来增强模型的鲁棒性。</p>
+<h2 id="三、每周总结"><a href="#三、每周总结" class="headerlink" title="三、每周总结"></a>三、每周总结</h2><p><strong>2021.6.28~2021.7.4：</strong></p>
+<p>1.做了初步的<code>Seg</code>+<code>Res</code>+<code>VIT</code>的实验，效果不是很理想，结果如下：</p>
+<p><img src="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/1625447955928.png"></p>
+<p>2.利用<code>Res+VIT</code>在<code>Fmfcc</code>数据集上也做了测试，效果只能说凑合，不过得出了一些结论：</p>
+<p>​    2.1 训练时数据增广是一件非常重要的事情，一定要做数据增广</p>
+<p>​    2.2 在切分数据集时，最好要用<code>RetinalFace</code>来脸部区域，使用<code>Dlib</code>库会丢掉很多变形的脸部。</p>
+<p><strong>2021.7.5~2021.7.11：</strong></p>
+<p>1.重新在<code>Fmfcc</code>数据集上进行实验，采用严格的数据处理方式，在训练集中构造了<code>50W</code>个样本，分别训练<code>VIT、Xception、ResNet+VIT</code>，看效果如何。</p>
+<p>2.调试<code>Idea</code>失败的实验，其中包括两部分的内容：</p>
+<p>​    2.1 找出在原实验中，出错误的点在何处，其中包括：</p>
+<ul>
+<li>代码问题：卷积核使用了偶数大小、自己的卷积效果不好、没有加<code>BN/Relu</code>等</li>
+<li>语义分割部分：考虑对语义分割的训练过程是不是不好，从而导致在融合时特征图不咋样。</li>
+<li>训练问题：可能是参数设置有问题？调参解决</li>
+<li>特征融合策略：采用简单的<code>add/cat</code>可能无法很好地利用二者的特征，应设计一个模块来专门解决该问题。</li>
+</ul>
+<p>​    2.2 考虑语义分割与分类网络在特征上如何更好地融合</p>
+<p><strong>2021.7.30:</strong></p>
+<p>最近三周的时间一直在做太赫兹的事情，没有时间管理论文，这个方向再给自己一个月的时间调整，如果实验结果不理想的话，我觉得要放弃，因为这个最重要的问题在于我对<code>transformer</code>的理解还是很浅薄，导致没有什么实质上的进展。</p>
+<p>另外就是在主动防御上，考虑可不可以先发个论文试试看。</p>
+<p>最后就是要自己找一个新坑，然后去发掘，这样从最初始的<code>idea</code>就可以吸引专家。</p>
+<p><strong>2021.8.16：</strong></p>
+<ul>
+<li>语义分割这里存在问题，模型效果整体不好，同时考虑是否加入边缘监督从而强调边缘特征，对图片的<code>label</code>进一步修正<ul>
+<li>训练调参，取最好的情况</li>
+<li>边缘监督 / 对图片的<code>Label</code>进行修改</li>
+</ul>
+</li>
+<li>联合训练：应该对语义分割的权重学习率降到很低，甚至不变</li>
+<li>考虑两个特征的融合模块</li>
+</ul>
+<p><strong>2021.8.18：</strong></p>
+<ul>
+<li>修正数据集，改为<code>blending</code>分割，同时对数据集比例进行修正，这里的含义表示：在语义分割中关注于换脸的边缘检测，拿到这特征图再与整体的做自注意力</li>
+<li>联合训练调参，语义分割少学习</li>
+<li>想一个特征融合模块</li>
+</ul>
+<p><strong>2021.8.23：</strong></p>
+<p>今天写这个话，就是要和这个<code>idea</code>告别了，从去年九月份起到今年一年的时间，可以说整个科研的经历是失败的，但是我相信好事多磨，只要我愿意去做，努力去做就一定还会有成果的，当然失败的科研经历也是好事， 这是一种成长，我会记录下来这种成长。</p>
+<h2 id="四、科研经历总结"><a href="#四、科研经历总结" class="headerlink" title="四、科研经历总结"></a>四、科研经历总结</h2><p>经过了一年的努力颗粒无收，我认为我存在着以下的几点问题：</p>
+<ul>
+<li>将结果看的太重太重。我知道科研的结果就是努力发顶会的，可我太好高骛远，没有将过程走好，一心想着能不能发顶会，这样会和我的目标越差越远</li>
+<li>基础知识不扎实，我没有能力像老朱那样可以提出一个又一个模块来，说明我的论文读的还不够多，要读到个四五十篇的时候，自然而然就肚子里有东西了。当然读论文一定要注意积累，要善于总结，而不是读完就完事了，这也是我以前在读论文中犯的大忌</li>
+<li>行动力太差。一年了，所有的事情也该结束结束了，你的行动力太差，脑子里想的东西太杂，应该脚踏实地，踏踏实实的，一周读3篇文章，一点点的积累，积少成多开始吧。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -726,7 +1265,7 @@ pip install -r ./DeepFaceLab/requirements-cuda.txt
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

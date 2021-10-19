@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Coding," />
+  <meta name="keywords" content="Paper," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="写在前面： ​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、linux命令行使用过程中的一点心得体会。 一、调参技巧pytorch多GPU训练： 多GPU训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡： model &#x3D; Net() model &#x3D; torch.nn.DataParallel(model, device_ids&#x3D;[0,1,2,3]) model.cu">
+<meta name="description" content="一、概述 针对问题：  不同模型的鲁棒性与泛化性在Deepfake中是一个很大的挑战   解决办法：  本文针对当前主流的三种Deepfake检测方法，在一些数据集上做了实验与分析。其中不同人种、不同性别对模型的检测性能影响很大   不足：  本文最大的不足之处在于，当作者提出一个新坑的时候，没有提出一个很好的解决办法，这是让人读起来非常意犹未尽的。    二、具体方法 本文采用了三种主流的Dee">
 <meta property="og:type" content="article">
-<meta property="og:title" content="调参技巧&#x2F;Linux命令行使用">
-<meta property="og:url" content="http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="An examination of Fairness of AI Models for Deepfake Detection">
+<meta property="og:url" content="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/index.html">
 <meta property="og:site_name" content="Qsc&#39;s Blog">
-<meta property="og:description" content="写在前面： ​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、linux命令行使用过程中的一点心得体会。 一、调参技巧pytorch多GPU训练： 多GPU训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡： model &#x3D; Net() model &#x3D; torch.nn.DataParallel(model, device_ids&#x3D;[0,1,2,3]) model.cu">
+<meta property="og:description" content="一、概述 针对问题：  不同模型的鲁棒性与泛化性在Deepfake中是一个很大的挑战   解决办法：  本文针对当前主流的三种Deepfake检测方法，在一些数据集上做了实验与分析。其中不同人种、不同性别对模型的检测性能影响很大   不足：  本文最大的不足之处在于，当作者提出一个新坑的时候，没有提出一个很好的解决办法，这是让人读起来非常意犹未尽的。    二、具体方法 本文采用了三种主流的Dee">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-04-02T07:11:06.000Z">
-<meta property="article:modified_time" content="2021-08-30T01:17:14.732Z">
+<meta property="og:image" content="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table1.png">
+<meta property="og:image" content="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table2.png">
+<meta property="og:image" content="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table3.png">
+<meta property="article:published_time" content="2021-10-13T09:21:50.000Z">
+<meta property="article:modified_time" content="2021-10-18T12:10:17.138Z">
 <meta property="article:author" content="qishicheng">
-<meta property="article:tag" content="Coding">
+<meta property="article:tag" content="Paper">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table1.png">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/04/02/调参技巧-Linux命令行使用/"/>
+  <link rel="canonical" href="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/"/>
 
 
 
 
 
-  <title>调参技巧/Linux命令行使用 | Qsc's Blog</title>
+  <title>An examination of Fairness of AI Models for Deepfake Detection | Qsc's Blog</title>
   
 
 
@@ -263,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/02/%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7-Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -280,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">调参技巧/Linux命令行使用</h1>
+          <h1 class="post-title" itemprop="name headline">An examination of Fairness of AI Models for Deepfake Detection</h1>
         
 
         <div class="post-meta">
@@ -292,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-02T15:11:06+08:00">
-                2021-04-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-13T17:21:50+08:00">
+                2021-10-13
               </time>
             
 
@@ -315,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
+                  <a href="/categories/Deepfake/" itemprop="url" rel="index">
+                    <span itemprop="name">Deepfake</span>
                   </a>
                 </span>
 
@@ -352,121 +356,132 @@
       
 
       
-        <p><strong>写在前面：</strong></p>
-<p>​    这篇文章用来记录我在训练深度学习过程中积累的一些调参技巧、<code>linux</code>命令行使用过程中的一点心得体会。</p>
-<h2 id="一、调参技巧"><a href="#一、调参技巧" class="headerlink" title="一、调参技巧"></a>一、调参技巧</h2><p><strong>pytorch多GPU训练：</strong></p>
-<p>多<code>GPU</code>训练分为一机多卡与多机多卡，由于经费有限，这里只介绍一机多卡：</p>
-<pre><code>model = Net()
-model = torch.nn.DataParallel(model, device_ids=[0,1,2,3])
-model.cuda()
-</code></pre>
-<p>没错，正如你所看到的一样，就是这么简单。</p>
-<p><strong>tensorboard启动：</strong></p>
-<p>具体<code>tensorboard</code>使用教程请参照另一篇博客，这里只介绍启动技巧：</p>
-<pre><code>tensorboard --logdir=./runs
-</code></pre>
-<p><strong>pip安装包时换源：</strong></p>
-<pre><code>pip install xxx -r https://pypi.douban.com/simple/
-</code></pre>
-<p><strong>ToTensor：</strong></p>
-<p>该函数有自动更改维度的功能，调用前是：<code>(H,W,C)</code>，调用后是<code>(C,H,W)</code></p>
-<p><strong>图片出错：</strong></p>
-<p>首先先加载一轮，输出图片的<code>path</code></p>
-<p><strong>常用的防止过拟合方法：</strong></p>
-<pre><code># 优化器层面：
-weight_decay
-    在每个batch跑完之后，optimizer.step()
-lr_scheduler
-    在一轮结束之后，lr.step()
-# 网络方面：
-正则化
-Droupout
-</code></pre>
-<p><strong>给不同网络层设置不同的学习参数：</strong></p>
-<pre><code>dense_block1_params = list(map(id, model.patch_embed.backbone.block1.parameters()))
-dense_block2_params = list(map(id, model.patch_embed.backbone.block2.parameters()))
-dense_block3_params = list(map(id, model.patch_embed.backbone.block3.parameters()))
-base_params = filter(lambda p: id(p) not in dense_block1_params + dense_block2_params + dense_block3_params, model.parameters())
-params = [&#123;&#39;params&#39;: base_params&#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block1.parameters(), &#39;lr&#39;: lr * 0.125 &#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block2.parameters(), &#39;lr&#39;: lr * 0.25&#125;,
-          &#123;&#39;params&#39;: model.patch_embed.backbone.block3.parameters(), &#39;lr&#39;: lr * 0.5&#125;
-]
-</code></pre>
-<p><strong>pytorch最简单的方式自定义网络：</strong></p>
-<pre><code>class Dense(nn.Module):
-
-    def __init__(self, conv0, norm0, pool0, block1, trans1, block2, trans2, block3):
-        super(Dense, self).__init__()
-        self.conv0 = conv0
-        self.norm0 = norm0
-        self.pool0 = pool0
-        self.block1 = block1
-        self.trans1 = trans1
-        self.block2 = block2
-        self.trans2 = trans2
-        self.block3 = block3
-        self.BN = nn.BatchNorm2d(1280)
-        self.ACT = nn.ReLU(inplace=True)
-
-    def forward(self, x):
-        conv0 = self.conv0(x)
-        norm0 = self.norm0(conv0)
-        pool0 = self.pool0(norm0)
-        denseblock1 = self.block1(pool0)
-        transition1 = self.trans1(denseblock1)
-        denseblock2 = self.block2(transition1)
-        transition2 = self.trans2(denseblock2)
-        denseblock3 = self.block3(transition2)
-        bn = self.BN(denseblock3)
-        act = self.ACT(bn)
-        return act
-</code></pre>
-<h2 id="二、Linux命令行技巧"><a href="#二、Linux命令行技巧" class="headerlink" title="二、Linux命令行技巧"></a>二、Linux命令行技巧</h2><p><strong>Ubuntu统计文件个数：</strong></p>
-<p>1.统计当前文件夹内文件数量且包含子目录中的文件数量，命令如下：</p>
-<pre><code>ls -lR|grep &quot;^-&quot;| wc -l
-</code></pre>
-<p>2.统计当前文件夹内文件数量且不包含子目录文件数量，命令如下：</p>
-<pre><code>ls -l|grep &quot;^-&quot;| wc -l
-</code></pre>
-<p>3.统计当前文件夹下的目录个数且包含子目录，命令如下：</p>
-<pre><code>ls -lR|grep &quot;^d&quot;| wc -l
-</code></pre>
-<p>4.统计当前文件夹下的目录个数，命令如下：</p>
-<pre><code>ls -l |grep &quot;^d&quot;| wc -l
-</code></pre>
-<p>5.统计包含部分前缀，命令如下：</p>
-<pre><code>ls -lR data*/|grep &quot;^-&quot;| wc -l # data*/ 代表统计前缀为data的文件
-</code></pre>
-<p>6.查看当前目录下每个文件夹的大小，命令如下：</p>
-<pre><code>du -h --max-depth=1 
-</code></pre>
-<p><strong>unzip使用：</strong></p>
-<p>1.把文件解压到当前目录下：</p>
-<pre><code>unzip test.zip
-</code></pre>
-<p>2.如果要把文件解压到指定的目录下，需要用到<code>-d</code>参数：</p>
-<pre><code>unzip -d /temp test.zip
-</code></pre>
-<p>3.解压的时候，有时候不想覆盖已经存在的文件，那么可以加上<code>-n</code>参数：</p>
-<pre><code>unzip -n test.zip
-unzip -n -d /temp test.zip
-</code></pre>
-<p><strong>Ubuntu sudo python路径修改：</strong></p>
-<p>首先找到要更改后的<code>python</code>的安装路径，例如：<code>/home/anaconda3/envs/qsc/bin/python</code></p>
-<p>1.备份：</p>
-<pre><code>sudo cp /usr/bin/python /usr/bin/python_bak
-</code></pre>
-<p>2.删除指向：</p>
-<pre><code>sudo rm /usr/bin/python
-</code></pre>
-<p>3.修改路径：</p>
-<pre><code>sudo ln -s /home/sss/anaconda3/bin/python /usr/bin/python
-</code></pre>
-<p><strong>ubuntu给文件赋权限：</strong></p>
-<pre><code>sudo chmod 777 xxx.txt # 给一个文件赋权限
-sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
-</code></pre>
+        <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><ul>
+<li><p>针对问题：</p>
+<ul>
+<li>不同模型的鲁棒性与泛化性在<code>Deepfake</code>中是一个很大的挑战</li>
+</ul>
+</li>
+<li><p>解决办法：</p>
+<ul>
+<li>本文针对当前主流的三种<code>Deepfake</code>检测方法，在一些数据集上做了实验与分析。其中不同人种、不同性别对模型的检测性能影响很大</li>
+</ul>
+</li>
+<li><p>不足：</p>
+<ul>
+<li>本文最大的不足之处在于，当作者提出一个新坑的时候，没有提出一个很好的解决办法，这是让人读起来非常意犹未尽的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、具体方法"><a href="#二、具体方法" class="headerlink" title="二、具体方法"></a>二、具体方法</h2><ul>
+<li>本文采用了三种主流的<code>Deepfake</code>检测方法：<code>Meso4、Xception、FaceXRay</code>，同时利用<code>FaceXRay</code>中所提到的方法<code>Blending Image</code>做数据增广，同时测试了三种方法在未知数据集上的泛化性，结果符合<code>SOTA</code>，在此基础上开始公平性检验</li>
+<li>在公平性检验上，本文所使用的数据集有两个：<code>Racial Face-in-the-Wild / UTKFace</code>，这两个数据集具有很好的人口标注</li>
+<li>本文公平性检验中，一共有五个评价指标：<code>AUC/PPV(Precision)/error rate(1-ACC)/TPR/FPR</code></li>
+</ul>
+<h2 id="三、实验结果"><a href="#三、实验结果" class="headerlink" title="三、实验结果"></a>三、实验结果</h2><p>本文值得学习的地方在于，做了大量的实验，其结果包括图、表都非常全面。</p>
+<p>1.首先评价了三个检测方法、利用五个评价指标：</p>
+<p><img src="/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table1.png"></p>
+<p>从这张<code>table</code>中，我们可以得到如下结果分析：</p>
+<ul>
+<li>在性别上，所有的检测器在男性与女性的检测性能相当。在五分之四的检测器中， 女性的<code>TPR/FPR</code>更高，这表明女性被分辨成<code>Fake</code>的概率更高。</li>
+<li>在种族上，不同种族的错误率存在着很大的差异。而不同的网络对于不同肤色的检测性能也不同。同时在对非洲人种的检测上性能表现最差。同时在<code>FPR</code>中差距很大，但是在<code>TPR</code>中相对于平稳。</li>
+</ul>
+<p>2.之后论文统计了<code>FF++</code>与<code>BI</code>中的种族、性别分布如下：</p>
+<p><img src="/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table2.png"></p>
+<p>这个分布统计了数据集中的种族和性别，还统计了一个前景与背景之间差异性，即<code>Irregular</code>，前景与背景不同的<code>fake</code>图片。</p>
+<p>3.最后对<code>FF++</code>与<code>BI</code>数据集进一步做了分布统计，至于得出什么结论就不追究了，其结果如下：</p>
+<p><img src="/2021/10/13/An-examination-of-Fairness-of-AI-Models-for-Deepfake-Detection/table3.png"></p>
+<h2 id="四、论文收获"><a href="#四、论文收获" class="headerlink" title="四、论文收获"></a>四、论文收获</h2><p><strong>整体评价：</strong>这篇论文就是把一件大家都懂的事情，做了一系列的工作表示了出来，但还是有值得学习的地方：</p>
+<ul>
+<li>下一次，我们可以针对论文中所提到的点专门进行提高，从而提高模型的鲁棒性</li>
+<li>本文的实验做的很多，工作量大，而且对实验的分析很充分，在写作上也值得我们借鉴。</li>
+</ul>
+<p><strong>方法：</strong>这篇论文没什么新方法，而且在表述上还有错误。</p>
+<p><strong>实验：</strong>实验工作量大，充分，而且还有很多详细的实验分析。</p>
+<p><strong>写作：</strong>典型的国外式写作，单词词汇很难，不像国内的论文。但是对于<code>Abstract、Introduction、Related work、Methods、Experiment</code>每一模块都很固定。更重要的还是把一件事情说清楚，讲清楚<code>motivation</code>很重要。</p>
+<p><strong>词汇：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">discriminate</td>
+<td align="center"></td>
+<td align="center">disparity</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">overwhelmingly</td>
+<td align="center"></td>
+<td align="center">Synthetic</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">indiscernible</td>
+<td align="center"></td>
+<td align="center">authentic</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">altered identities</td>
+<td align="center"></td>
+<td align="center">malicious/embarrassing actions</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">deceive</td>
+<td align="center"></td>
+<td align="center">emerge as</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">sophisticate</td>
+<td align="center"></td>
+<td align="center">pervasive</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">pornography</td>
+<td align="center"></td>
+<td align="center">subtle fading</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">combat</td>
+<td align="center"></td>
+<td align="center">vulnerability</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">propell</td>
+<td align="center"></td>
+<td align="center">audit</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">demographic</td>
+<td align="center"></td>
+<td align="center">illumination</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">occlusion</td>
+<td align="center"></td>
+<td align="center">ethnically</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">apparent</td>
+<td align="center"></td>
+<td align="center">intersectional</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 
       
     </div>
@@ -484,7 +499,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
       
         <div class="post-tags">
           
-            <a href="/tags/Coding/" rel="tag"># Coding</a>
+            <a href="/tags/Paper/" rel="tag"># Paper</a>
           
         </div>
       
@@ -497,8 +512,8 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/03/24/DeepFaceLab%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="next" title="DeepFaceLab使用教程">
-                <i class="fa fa-chevron-left"></i> DeepFaceLab使用教程
+              <a href="/2021/09/29/Temporal-Dropout-3DCNN/" rel="next" title="Temporal Dropout 3DCNN">
+                <i class="fa fa-chevron-left"></i> Temporal Dropout 3DCNN
               </a>
             
           </div>
@@ -507,8 +522,8 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/07/06/%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" rel="prev" title="第一篇论文记录">
-                第一篇论文记录 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/10/13/Dynamic-Inconsistency-aware-DeepFake-Video-Detection/" rel="prev" title="Dynamic Inconsistency-aware DeepFake Video Detection">
+                Dynamic Inconsistency-aware DeepFake Video Detection <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -645,7 +660,7 @@ sudo chmod -R 777 xxx/ # 给这个文件夹整个赋权限
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7"><span class="nav-number">1.</span> <span class="nav-text">一、调参技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8A%80%E5%B7%A7"><span class="nav-number">2.</span> <span class="nav-text">二、Linux命令行技巧</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、具体方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">三、实验结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%BA%E6%96%87%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">四、论文收获</span></a></li></ol></div>
             
 
           </div>
